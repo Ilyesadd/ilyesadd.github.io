@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CFA INSTA Paris — Elyas Mcirdi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#06080f;--bg2:#0a0d18;--border:rgba(255,255,255,0.07);--border-h:rgba(255,255,255,0.14);--accent:#7aa2f7;--text:#c9d1e8;--muted:#4a5168;--bright:#e8ecf8;--tag-bg:rgba(122,162,247,0.08);--tag-border:rgba(122,162,247,0.2);--font:'Inter',sans-serif;--mono:'JetBrains Mono',monospace}
+html{scroll-behavior:smooth}body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:15px;line-height:1.6;overflow-x:hidden}
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5}
+.wrapper{max-width:820px;margin:0 auto;padding:0 2rem;position:relative;z-index:1}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;border-bottom:1px solid var(--border);backdrop-filter:blur(12px);background:rgba(6,8,15,0.85)}
+.ni{max-width:820px;margin:0 auto;padding:0 2rem;display:flex;justify-content:space-between;align-items:center;height:52px}
+.nl{font-family:var(--mono);font-size:.8rem;color:var(--bright);text-decoration:none;font-weight:500}.nl span{color:var(--accent)}
+.nb{font-family:var(--mono);font-size:.75rem;color:var(--muted);text-decoration:none;transition:color .15s}.nb:hover{color:var(--text)}
+
+.page-top{padding:calc(52px + 3.5rem) 0 2.5rem;border-bottom:1px solid var(--border)}
+.pt-label{font-family:var(--mono);font-size:.68rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:1.2rem}
+h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:600;letter-spacing:-.03em;color:var(--bright);margin-bottom:.9rem;line-height:1.1}
+h1 em{font-style:normal;color:var(--accent)}
+.pt-desc{font-size:.93rem;color:var(--muted);max-width:540px;line-height:1.7;font-weight:300;margin-bottom:1.5rem}
+.pt-meta{display:flex;gap:2.5rem;flex-wrap:wrap}
+.pm{font-family:var(--mono);font-size:.72rem}.pm-l{color:var(--muted);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.15rem}.pm-v{color:var(--text)}
+
+.ns{padding:2.5rem 0;border-top:1px solid var(--border)}
+.ns-header{display:flex;gap:1.5rem;align-items:baseline;margin-bottom:1.5rem}
+.ns-num{font-family:var(--mono);font-size:.72rem;color:var(--muted);letter-spacing:.06em;flex-shrink:0}
+h2{font-size:1.05rem;font-weight:500;color:var(--bright);letter-spacing:-.01em;margin:0}
+
+p.body{font-size:.88rem;color:var(--muted);line-height:1.72;margin-bottom:.8rem;font-weight:300}
+p.body strong{color:var(--text);font-weight:500}
+p.body a{color:var(--accent);text-decoration:none}
+
+/* Photo grid */
+.photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);margin:1.2rem 0;border:1px solid var(--border)}
+.photo-grid img{width:100%;height:200px;object-fit:cover;display:block;filter:saturate(.7) brightness(.8);transition:filter .35s}
+.photo-grid img:hover{filter:saturate(1) brightness(1)}
+.photo-single{margin:1.2rem 0;border:1px solid var(--border);overflow:hidden}
+.photo-single img{width:100%;height:240px;object-fit:cover;display:block;filter:saturate(.7) brightness(.8);transition:filter .35s}
+.photo-single:hover img{filter:saturate(1) brightness(1)}
+.photo-caption{font-family:var(--mono);font-size:.65rem;color:var(--muted);padding:.55rem .75rem;border-top:1px solid var(--border);background:var(--bg2)}
+
+/* Passerelle highlight */
+.passerelle{border:1px solid var(--border);border-left:3px solid var(--accent);padding:1.4rem;margin:1rem 0}
+.pass-label{font-family:var(--mono);font-size:.62rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem}
+.pass-text{font-size:.88rem;color:var(--text);line-height:1.7}
+
+/* Raisons list */
+.raisons{display:flex;flex-direction:column;gap:0}
+.raison{padding:1rem 0;border-bottom:1px solid var(--border);display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:start}
+.raison:first-child{padding-top:0}.raison:last-child{border-bottom:none}
+.r-num{font-family:var(--mono);font-size:.65rem;color:var(--accent);margin-top:.15rem}
+.r-title{font-size:.88rem;font-weight:500;color:var(--bright);margin-bottom:.25rem}
+.r-text{font-family:var(--mono);font-size:.72rem;color:var(--muted);line-height:1.6}
+
+/* Infos clés */
+.infos{display:flex;flex-direction:column;gap:0;border:1px solid var(--border)}
+.info-row{display:flex;gap:1rem;padding:.65rem .9rem;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:.75rem}
+.info-row:last-child{border-bottom:none}
+.ik{color:var(--muted);min-width:130px}.iv{color:var(--text)}
+
+/* Lien externe */
+.ext-link{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 1.3rem;border:1px solid var(--border);text-decoration:none;color:inherit;transition:border-color .15s;margin-top:1rem}
+.ext-link:hover{border-color:var(--border-h)}.ext-link:hover .el-title{color:var(--accent)}
+.el-label{font-family:var(--mono);font-size:.62rem;color:var(--muted);letter-spacing:.06em;margin-bottom:.2rem}
+.el-title{font-size:.88rem;font-weight:500;color:var(--bright);transition:color .15s}
+.el-arr{color:var(--muted);font-size:.9rem;flex-shrink:0}
+
+footer{border-top:1px solid var(--border);position:relative;z-index:1}
+.fi{max-width:820px;margin:0 auto;padding:1.5rem 2rem;display:flex;justify-content:space-between;align-items:center}
+.fc{font-family:var(--mono);font-size:.68rem;color:var(--muted)}
+.flinks{display:flex;gap:1.5rem}
+.flinks a{font-family:var(--mono);font-size:.68rem;color:var(--muted);text-decoration:none;transition:color .15s}
+.flinks a:hover{color:var(--text)}
+
+@media(max-width:700px){.photo-grid{grid-template-columns:1fr}.fi{flex-direction:column;gap:.75rem}.pt-meta{gap:1.5rem}}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+<nav>
+  <div class="ni">
+    <a href="index.html" class="nl">Elyas <span>Mcirdi</span></a>
+    <a href="index.html" class="nb">← Retour</a>
+  </div>
+</nav>
+<div class="wrapper">
+
+  <div class="page-top">
+    <div class="pt-label">Formation — BTS SIO SLAM — 2024 / 2026</div>
+    <h1>CFA <em>INSTA</em> Paris</h1>
+    <p class="pt-desc">Institut National Supérieur des Technologies Avancées — 12 rue de Cléry, Paris 2e. Mon école depuis septembre 2024, choisie pour sa passerelle unique avec Sorbonne Université et son ancrage professionnel fort.</p>
+    <div class="pt-meta">
+      <div class="pm"><div class="pm-l">Adresse</div><div class="pm-v">12 rue de Cléry, 75002 Paris</div></div>
+      <div class="pm"><div class="pm-l">Diplôme</div><div class="pm-v">BTS SIO SLAM</div></div>
+      <div class="pm"><div class="pm-l">Durée</div><div class="pm-v">2 ans en alternance</div></div>
+      <div class="pm"><div class="pm-l">Site</div><div class="pm-v"><a href="https://cfa-insta.fr" target="_blank" style="color:var(--accent)">cfa-insta.fr ↗</a></div></div>
+    </div>
+  </div>
+
+  <!-- Photos -->
+  <div class="ns" style="padding-bottom:0">
+    <div class="ns-header"><span class="ns-num">—</span><h2>L'école en images</h2></div>
+  </div>
+
+  <div class="photo-grid" style="position:relative;z-index:1;margin-bottom:0;margin-top:0">
+    <img src="https://cfa-insta.fr/wp-content/uploads/2024/06/paris.webp"
+         onerror="this.src='https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=600&q=80'"
+         alt="Campus CFA INSTA Paris">
+    <img src="https://cfa-insta.fr/wp-content/uploads/2024/06/3.webp"
+         onerror="this.src='https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600&q=80'"
+         alt="Formation BTS SIO CFA INSTA">
+    <img src="https://cfa-insta.fr/wp-content/uploads/2024/06/3_-min.webp"
+         onerror="this.src='https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80'"
+         alt="Partenariat Sorbonne Université CFA INSTA">
+    <img src="https://cfa-insta.fr/wp-content/uploads/2024/06/8.webp"
+         onerror="this.src='https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=600&q=80'"
+         alt="Formation informatique IA CFA INSTA">
+  </div>
+  <div class="photo-caption" style="position:relative;z-index:1">CFA INSTA Paris — Campus Sentier, 12 rue de Cléry · Photos officielles cfa-insta.fr</div>
+
+  <!-- 01 Pourquoi INSTA -->
+  <div class="ns">
+    <div class="ns-header"><span class="ns-num">01</span><h2>Pourquoi j'ai choisi le CFA INSTA</h2></div>
+    <p class="body">Après une première année de Licence Sciences de l'Ingénieur à la Sorbonne, j'ai cherché une formation plus orientée vers le développement web et le monde professionnel. Le CFA INSTA s'est imposé naturellement grâce à sa passerelle officielle avec Sorbonne Université, mais aussi pour sa pédagogie axée sur l'alternance dès le départ.</p>
+    <p class="body">L'école est fondée en 2009 par une école d'ingénieurs et reste un <strong>centre de formation à but non lucratif</strong>, ce qui m'a rassuré sur la qualité et l'impartialité de l'enseignement. Plus de <strong>600 étudiants</strong> y sont formés chaque année, avec deux campus à Paris et à La Défense.</p>
+
+    <div class="passerelle">
+      <div class="pass-label">Passerelle Sorbonne Université × CFA INSTA</div>
+      <p class="pass-text">Depuis 2012, le CFA INSTA s'est associé à Sorbonne Université pour accompagner les étudiants venant de Licence dans la construction d'un projet professionnel en informatique via le BTS SIO en alternance. Cette passerelle m'a permis de valoriser mon année de Licence tout en reprenant une formation diplômante concrète, sans repartir de zéro.</p>
+    </div>
+  </div>
+
+  <!-- 02 Ce que j'apprécie -->
+  <div class="ns">
+    <div class="ns-header"><span class="ns-num">02</span><h2>Ce que j'apprécie à l'INSTA</h2></div>
+    <div class="raisons">
+      <div class="raison">
+        <div class="r-num">01</div>
+        <div>
+          <div class="r-title">L'alternance dès le premier jour</div>
+          <div class="r-text">Le rythme 2 semaines école / 3 semaines entreprise permet une immersion professionnelle immédiate. On apprend la théorie et on l'applique directement en entreprise — ce va-et-vient est extrêmement formateur.</div>
+        </div>
+      </div>
+      <div class="raison">
+        <div class="r-num">02</div>
+        <div>
+          <div class="r-title">Des projets concrets dès le début</div>
+          <div class="r-text">Les ateliers professionnels (E6) permettent de travailler sur des projets complets en groupe — comme TicketMaster. On apprend à collaborer, à versionner avec GitLab, et à livrer un produit fonctionnel.</div>
+        </div>
+      </div>
+      <div class="raison">
+        <div class="r-num">03</div>
+        <div>
+          <div class="r-title">Un réseau d'entreprises partenaires solide</div>
+          <div class="r-text">L'école dispose d'un réseau de partenaires entreprises qui facilitent la recherche d'alternance. Plus de 70% des étudiants ont une promesse d'embauche avant l'obtention du diplôme.</div>
+        </div>
+      </div>
+      <div class="raison">
+        <div class="r-num">04</div>
+        <div>
+          <div class="r-title">La perspective d'un Master Sorbonne</div>
+          <div class="r-text">À l'issue du BTS, le partenariat avec Sorbonne Université ouvre la voie à un Master informatique (RNCP niveau 7). C'est une continuité naturelle qui m'attire pour la suite de mon parcours.</div>
+        </div>
+      </div>
+      <div class="raison">
+        <div class="r-num">05</div>
+        <div>
+          <div class="r-title">La vie associative et les projets innovants</div>
+          <div class="r-text">L'INSTA participe chaque année à la Coupe de France de Robotique — les étudiants conçoivent et construisent un robot en 6 mois. Ce genre de projet extra-pédagogique reflète l'esprit d'initiative que l'école valorise.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 Infos pratiques -->
+  <div class="ns">
+    <div class="ns-header"><span class="ns-num">03</span><h2>Informations pratiques</h2></div>
+    <div class="infos">
+      <div class="info-row"><span class="ik">Statut</span><span class="iv">CFA à but non lucratif, certifié Qualiopi</span></div>
+      <div class="info-row"><span class="ik">Fondé en</span><span class="iv">2009 — issu d'une école d'ingénieurs</span></div>
+      <div class="info-row"><span class="ik">Campus</span><span class="iv">Paris Sentier (75002) · La Défense</span></div>
+      <div class="info-row"><span class="ik">Formations dispo</span><span class="iv">BTS SIO, BTS CIEL, Cybersécurité, IA, Cloud, Architecture SI</span></div>
+      <div class="info-row"><span class="ik">Partenaire</span><span class="iv">Sorbonne Université (Master informatique)</span></div>
+      <div class="info-row"><span class="ik">Réunions info</span><span class="iv">Tous les mercredis à l'école</span></div>
+      <div class="info-row"><span class="ik">Contact</span><span class="iv">informatique@cfa-insta.fr · 01 43 36 75 56</span></div>
+    </div>
+
+    <a href="https://cfa-insta.fr" target="_blank" rel="noopener" class="ext-link">
+      <div><div class="el-label">Site officiel</div><div class="el-title">cfa-insta.fr</div></div>
+      <span class="el-arr">↗</span>
+    </a>
+    <a href="https://cfa-insta.fr/passerelle/" target="_blank" rel="noopener" class="ext-link">
+      <div><div class="el-label">En savoir plus</div><div class="el-title">La passerelle Sorbonne × CFA INSTA</div></div>
+      <span class="el-arr">↗</span>
+    </a>
+  </div>
+
+</div>
+
+<footer>
+  <div class="fi">
+    <span class="fc">Elyas Mcirdi — BTS SIO — INSTA Paris — 2026</span>
+    <div class="flinks">
+      <a href="index.html">Portfolio</a>
+      <a href="https://github.com/Ilyesadd" target="_blank">GitHub ↗</a>
+      <a href="mailto:Elyasmcirdi@gmail.com">Mail</a>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){const c=document.getElementById('stars'),ctx=c.getContext('2d');let W,H,s=[];function r(){W=c.width=window.innerWidth;H=c.height=window.innerHeight}function i(){s=[];const N=Math.floor(W*H/9000);for(let n=0;n<N;n++)s.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*.9+.1,o:Math.random()*.45+.06,sp:Math.random()*.008+.002,p:Math.random()*Math.PI*2})}let t=0;function d(){ctx.clearRect(0,0,W,H);t+=.01;for(const v of s){const a=v.o*(.4+.6*Math.sin(t*v.sp*60+v.p));ctx.beginPath();ctx.arc(v.x,v.y,v.r,0,Math.PI*2);ctx.fillStyle=`rgba(180,200,255,${a})`;ctx.fill()}requestAnimationFrame(d)}window.addEventListener('resize',()=>{r();i()});r();i();d()})();
+</script>
+</body>
+</html>

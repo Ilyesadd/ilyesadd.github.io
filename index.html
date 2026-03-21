@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Elyas Mcirdi — Portfolio BTS SIO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,300&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#06080f;
+  --border:rgba(255,255,255,0.07);
+  --border-h:rgba(255,255,255,0.18);
+  --accent:#7aa2f7;
+  --text:#c9d1e8;
+  --muted:#8a9bbf; /* mono/secondary text — bien lisible */
+  --bright:#e8ecf8;
+  --tag-bg:rgba(122,162,247,0.08);
+  --tag-border:rgba(122,162,247,0.2);
+  --font:'Inter',sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:15px;line-height:1.6;overflow-x:hidden}
+
+/* ── STARFIELD ── */
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* ── LAYOUT ── */
+.wrapper{max-width:820px;margin:0 auto;padding:0 2rem;position:relative;z-index:1}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;border-bottom:1px solid var(--border);backdrop-filter:blur(14px);background:rgba(6,8,15,0.88)}
+.nav-inner{max-width:820px;margin:0 auto;padding:0 2rem;display:flex;justify-content:space-between;align-items:center;height:52px}
+.nav-logo{font-family:var(--mono);font-size:.8rem;color:var(--bright);text-decoration:none;font-weight:500}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:2rem;list-style:none;align-items:center}
+.nav-links a{font-size:.8rem;color:var(--muted);text-decoration:none;transition:color .15s;font-family:var(--mono)}
+.nav-links a:hover{color:var(--text)}
+.nav-links .ext::after{content:' ↗';font-size:.7rem}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block;margin-right:.5rem;animation:pulse 2.5s ease infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+
+/* ── HERO ── */
+#hero{padding-top:52px;min-height:100vh;display:flex;flex-direction:column;justify-content:center}
+.hero-inner{padding:5rem 0 4rem}
+.hero-label{font-family:var(--mono);font-size:.72rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:1.5rem;display:flex;align-items:center;gap:.5rem}
+.hero-name{font-size:clamp(2.8rem,7vw,5.5rem);font-weight:600;line-height:1.05;letter-spacing:-.03em;color:var(--bright);margin-bottom:1.2rem}
+.hero-name em{font-style:normal;color:var(--accent)}
+.hero-desc{font-size:1rem;color:var(--text);max-width:460px;line-height:1.7;margin-bottom:2.5rem;font-weight:300}
+.hero-actions{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
+
+/* Buttons */
+.btn-main{font-family:var(--mono);font-size:.75rem;color:var(--bg);background:var(--accent);padding:.5rem 1.2rem;text-decoration:none;font-weight:500;transition:opacity .15s;display:inline-flex;align-items:center;gap:.4rem}
+.btn-main:hover{opacity:.85}
+.btn-ghost{font-family:var(--mono);font-size:.75rem;color:var(--muted);border:1px solid var(--border);padding:.5rem 1.2rem;text-decoration:none;transition:all .15s;display:inline-flex;align-items:center;gap:.4rem}
+.btn-ghost:hover{border-color:var(--border-h);color:var(--bright)}
+.btn-ghost svg,.btn-main svg{flex-shrink:0}
+
+/* ── SECTIONS ── */
+section{padding:5rem 0;border-top:1px solid var(--border)}
+.s-label{font-family:var(--mono);font-size:.68rem;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;margin-bottom:2rem}
+h2{font-size:1.7rem;font-weight:600;letter-spacing:-.02em;color:var(--bright);margin-bottom:2.5rem}
+
+/* ── PROJECTS ── */
+.proj-list{display:flex;flex-direction:column;gap:0}
+a.proj-item,div.proj-item{display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:start;padding:1.8rem 0;border-bottom:1px solid var(--border);text-decoration:none;color:inherit}
+.proj-item:first-child{padding-top:0}
+.proj-item:last-child{border-bottom:none}
+a.proj-item:hover .proj-title{color:var(--accent)}
+a.proj-item:hover .arr{opacity:1;transform:translate(3px,-3px)}
+.proj-badge{font-family:var(--mono);font-size:.62rem;color:var(--muted);letter-spacing:.08em;margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem}
+.status{color:var(--accent);border:1px solid var(--tag-border);background:var(--tag-bg);padding:.1rem .45rem;font-size:.6rem;letter-spacing:.06em}
+.proj-title{font-size:1.1rem;font-weight:500;color:var(--bright);margin-bottom:.4rem;transition:color .15s;letter-spacing:-.01em}
+.proj-desc{font-size:.83rem;color:var(--muted);line-height:1.6;margin-bottom:.85rem;max-width:480px}
+.proj-tags{display:flex;flex-wrap:wrap;gap:.35rem}
+.tag{font-family:var(--mono);font-size:.7rem;color:var(--accent);background:var(--tag-bg);border:1px solid var(--tag-border);padding:.2rem .6rem}
+.arr{font-size:1.1rem;color:var(--muted);transition:all .2s;opacity:0;align-self:flex-start;margin-top:.3rem}
+.proj-placeholder{opacity:.4;cursor:default}
+.proj-placeholder .arr{display:none}
+
+/* ── VEILLE ── */
+.veille-link{display:block;border:1px solid var(--border);padding:2rem;text-decoration:none;color:inherit;transition:border-color .2s;position:relative;overflow:hidden}
+.veille-link:hover{border-color:var(--border-h)}
+.veille-link::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(to bottom,var(--accent),transparent)}
+.vl-label{font-family:var(--mono);font-size:.65rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.75rem}
+.vl-title{font-size:1.2rem;font-weight:500;color:var(--bright);letter-spacing:-.015em;margin-bottom:.75rem;line-height:1.35}
+.vl-desc{font-size:.83rem;color:var(--muted);line-height:1.65;max-width:500px}
+.vl-cta{display:inline-block;margin-top:1.2rem;font-family:var(--mono);font-size:.75rem;color:var(--accent)}
+
+/* ── ABOUT — layout comme screenshot ── */
+/* 3 colonnes : bio large | langages | frameworks */
+.about-top{
+  display:grid;
+  grid-template-columns:1.15fr 1fr 1fr;
+  gap:3rem;
+  align-items:start;
+}
+
+/* Colonne bio (gauche) */
+.about-bio p{
+  color:var(--text);
+  font-size:.93rem;
+  line-height:1.75;
+  margin-bottom:.9rem;
+  font-weight:300;
+}
+
+/* Colonnes skills (centre + droite) — style liste underline comme screenshot */
+.skill-col{}
+.skill-col-label{
+  font-family:var(--mono);
+  font-size:.68rem;
+  color:var(--accent);
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  margin-bottom:1.1rem;
+  font-weight:500;
+}
+.skill-list{display:flex;flex-direction:column;gap:0}
+.skill-entry{
+  font-size:.88rem;
+  color:var(--bright);
+  padding:.6rem 0;
+  border-bottom:1px solid var(--border);
+  font-weight:300;
+}
+.skill-entry:last-child{border-bottom:none}
+
+/* Formation + socials sous le bio */
+.about-bottom{
+  margin-top:2.5rem;
+  padding-top:2.5rem;
+  border-top:1px solid var(--border);
+  display:grid;
+  grid-template-columns:1.15fr 2fr;
+  gap:3rem;
+  align-items:start;
+}
+
+.form-list{display:flex;flex-direction:column;gap:0}
+.fl-item{display:flex;justify-content:space-between;align-items:baseline;padding:.75rem 0;border-bottom:1px solid var(--border);gap:1rem;flex-wrap:wrap}
+.fl-item:first-child{padding-top:0}
+.fl-item:last-child{border-bottom:none}
+.fl-school{font-size:.88rem;font-weight:400;color:var(--bright);text-decoration:none;transition:color .15s}
+a.fl-school:hover{color:var(--accent)}
+.fl-degree{font-family:var(--mono);font-size:.68rem;color:var(--accent)}
+.fl-date{font-family:var(--mono);font-size:.65rem;color:var(--muted)}
+
+/* Social buttons + CV */
+.about-right-bottom{display:flex;flex-direction:column;gap:1rem}
+.social-row{display:flex;gap:.75rem;flex-wrap:wrap}
+
+/* CV download */
+.cv-dl{display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:1.1rem 1.4rem;border:1px solid var(--border);transition:border-color .2s}
+.cv-dl:hover{border-color:var(--border-h)}
+.cv-name{font-size:.88rem;font-weight:500;color:var(--bright)}
+.cv-meta{font-family:var(--mono);font-size:.68rem;color:var(--muted);margin-top:.1rem}
+.cv-label-txt{font-family:var(--mono);font-size:.6rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.25rem}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--border);position:relative;z-index:1}
+.fi{max-width:820px;margin:0 auto;padding:1.5rem 2rem;display:flex;justify-content:space-between;align-items:center}
+.fc{font-family:var(--mono);font-size:.68rem;color:var(--muted)}
+.flinks{display:flex;gap:1.5rem}
+.flinks a{font-family:var(--mono);font-size:.68rem;color:var(--muted);text-decoration:none;transition:color .15s}
+.flinks a:hover{color:var(--text)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:750px){
+  .about-top{grid-template-columns:1fr;gap:2rem}
+  .about-bottom{grid-template-columns:1fr;gap:2rem}
+  .nav-links{gap:1rem}
+  a.proj-item,div.proj-item{grid-template-columns:1fr}
+  .arr{display:none}
+  .fi{flex-direction:column;gap:.75rem}
+  .cv-dl{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">Elyas <span>Mcirdi</span></a>
+    <ul class="nav-links">
+      <li><a href="#projets">Projets</a></li>
+      <li><a href="#veille">Veille</a></li>
+      <li><a href="#a-propos">À propos</a></li>
+      <li><a href="https://github.com/Ilyesadd" target="_blank" class="ext">GitHub</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="wrapper">
+
+  <!-- HERO -->
+  <div id="hero">
+    <div class="hero-inner">
+      <div class="hero-label"><span class="dot"></span>Portfolio 2026</div>
+      <h1 class="hero-name">Mcirdi <em>Elyas</em></h1>
+      <p class="hero-desc">Étudiant en BTS SIO à l'INSTA Paris, en alternance chez Jungle Phone. Développement web, bases de données et systèmes.</p>
+      <div class="hero-actions">
+        <a href="#projets" class="btn-main">Voir mes projets →</a>
+        <a href="https://github.com/Ilyesadd" target="_blank" class="btn-ghost">
+          <!-- GitHub icon -->
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          GitHub
+        </a>
+        <a href="https://www.linkedin.com/in/elyas-mcirdi-1abab12b8/" target="_blank" class="btn-ghost">
+          <!-- LinkedIn icon -->
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          LinkedIn
+        </a>
+        <a href="CV_Elyas_Mcirdi.pdf" download class="btn-ghost">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          CV
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJETS -->
+  <section id="projets">
+    <div class="s-label">Travaux réalisés</div>
+    <h2>Projets</h2>
+    <div class="proj-list">
+
+      <a href="ticketmaster.html" class="proj-item">
+        <div>
+          <div class="proj-badge">Atelier professionnel — BTS SIO <span class="status">Projet de groupe</span></div>
+          <div class="proj-title">TicketMaster</div>
+          <p class="proj-desc">Plateforme web de revente de tickets pour événements. Authentification, gestion des annonces (CRUD), messagerie entre utilisateurs et panneau d'administration avec tableau de bord modérateur.</p>
+          <div class="proj-tags">
+            <span class="tag">PHP 7.4</span><span class="tag">MySQL</span><span class="tag">PDO</span>
+            <span class="tag">HTML / CSS</span><span class="tag">JavaScript</span><span class="tag">GitLab</span>
+          </div>
+        </div>
+        <div class="arr">↗</div>
+      </a>
+
+      <div class="proj-item proj-placeholder">
+        <div>
+          <div class="proj-badge">Alternance — Jungle Phone <span class="status">Professionnel</span></div>
+          <div class="proj-title">Site web Jungle Phone</div>
+          <p class="proj-desc">Création et mise à jour du site vitrine de l'enseigne de réparation téléphonique. Gestion des contenus, intégration des offres et optimisation de la présence en ligne.</p>
+          <div class="proj-tags">
+            <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">PHP</span><span class="tag">JavaScript</span><span class="tag">SQL</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-item proj-placeholder">
+        <div>
+          <div class="proj-badge">Défis Frontend <span class="status" style="color:#e5a30e;border-color:rgba(229,163,14,.25);background:rgba(229,163,14,.07)">En cours</span></div>
+          <div class="proj-title">Frontend Mentor — Challenges</div>
+          <p class="proj-desc">Réalisation de plusieurs défis d'intégration HTML / CSS / JS orientés pixel-perfect, visionnables dans le portfolio personnel.</p>
+          <div class="proj-tags">
+            <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- VEILLE -->
+  <section id="veille">
+    <div class="s-label">Veille technologique — E5</div>
+    <h2>L'IA dans les jeux vidéo</h2>
+    <a href="veille.html" class="veille-link">
+      <div class="vl-label">Thème de veille</div>
+      <div class="vl-title">Comment l'intelligence artificielle révolutionne l'industrie du jeu vidéo ?</div>
+      <p class="vl-desc">PNJ intelligents via LLMs (NVIDIA ACE), upscaling graphique par réseaux de neurones (DLSS 4), génération procédurale de contenu et agents IA adaptatifs — l'IA redéfinit la création et l'expérience de jeu.</p>
+      <span class="vl-cta">Lire la veille →</span>
+    </a>
+  </section>
+
+  <!-- À PROPOS -->
+  <section id="a-propos">
+    <div class="s-label">Qui suis-je ?</div>
+    <h2>À propos</h2>
+
+    <!-- Ligne 1 : bio + langages + frameworks (comme le screenshot) -->
+    <div class="about-top">
+
+      <!-- Colonne gauche : bio -->
+      <div class="about-bio">
+        <p>Je m'appelle Elyas Mcirdi, étudiant en deuxième année de BTS SIO option SLAM à l'INSTA Paris.</p>
+        <p>Passionné par le développement web, je me spécialise dans la conception d'applications PHP / JS et la gestion des bases de données. J'apprécie particulièrement concevoir des solutions concrètes et bien structurées.</p>
+        <p>Ce portfolio présente mes réalisations dans le cadre de ma formation ainsi que mon alternance en entreprise.</p>
+      </div>
+
+      <!-- Colonne centre : langages -->
+      <div class="skill-col">
+        <div class="skill-col-label">Langages</div>
+        <div class="skill-list">
+          <div class="skill-entry">PHP</div>
+          <div class="skill-entry">Python</div>
+          <div class="skill-entry">JavaScript</div>
+          <div class="skill-entry">HTML / CSS</div>
+          <div class="skill-entry">MySQL</div>
+          <div class="skill-entry">Java</div>
+        </div>
+      </div>
+
+      <!-- Colonne droite : frameworks -->
+      <div class="skill-col">
+        <div class="skill-col-label">Frameworks & outils</div>
+        <div class="skill-list">
+          <div class="skill-entry">React</div>
+          <div class="skill-entry">Bootstrap</div>
+          <div class="skill-entry">Docker</div>
+          <div class="skill-entry">GitLab</div>
+          <div class="skill-entry">Linux Debian</div>
+          <div class="skill-entry">VS Code</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Ligne 2 : formation + socials/CV -->
+    <div class="about-bottom">
+
+      <!-- Formation -->
+      <div>
+        <div class="form-list">
+          <div class="fl-item">
+            <div>
+              <a href="ecole.html" class="fl-school">BTS SIO — CFA INSTA Paris ↗</a>
+              <div class="fl-degree">BTS SIO SLAM</div>
+            </div>
+            <div class="fl-date">2024 – 2026</div>
+          </div>
+          <div class="fl-item">
+            <div>
+              <div class="fl-school">Sorbonne Université — UPMC</div>
+              <div class="fl-degree">Licence Sciences Ingénieur</div>
+            </div>
+            <div class="fl-date">2022 – 2023</div>
+          </div>
+          <div class="fl-item">
+            <div>
+              <div class="fl-school">Lycée Auguste Blanqui</div>
+              <div class="fl-degree">Baccalauréat — Maths Expertes</div>
+            </div>
+            <div class="fl-date">2019 – 2022</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Boutons sociaux + CV -->
+      <div class="about-right-bottom">
+        <div class="social-row">
+          <a href="https://github.com/Ilyesadd" target="_blank" class="btn-ghost">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            GitHub ↗
+          </a>
+          <a href="https://www.linkedin.com/in/elyas-mcirdi-1abab12b8/" target="_blank" class="btn-ghost">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn ↗
+          </a>
+        </div>
+
+        <div class="cv-dl">
+          <div>
+            <div class="cv-label-txt">Curriculum Vitæ</div>
+            <div class="cv-name">CV_Elyas_Mcirdi.pdf</div>
+            <div class="cv-meta">Mis à jour — Janvier 2026</div>
+          </div>
+          <a href="CV_Elyas_Mcirdi.pdf" download class="btn-main">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Télécharger
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div><!-- /wrapper -->
+
+<footer>
+  <div class="fi">
+    <span class="fc">Elyas Mcirdi — BTS SIO — INSTA Paris — 2026</span>
+    <div class="flinks">
+      <a href="https://github.com/Ilyesadd" target="_blank">GitHub ↗</a>
+      <a href="https://www.linkedin.com/in/elyas-mcirdi-1abab12b8/" target="_blank">LinkedIn ↗</a>
+      <a href="https://elyasmcirdi.fr" target="_blank">Site ↗</a>
+      <a href="mailto:Elyasmcirdi@gmail.com">Mail</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  const canvas = document.getElementById('stars');
+  const ctx = canvas.getContext('2d');
+  let W, H, stars = [], shootingStars = [], nebulae = [];
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function initNebulae() {
+    nebulae = [
+      { x: W * .75, y: H * .15, rx: 320, ry: 180, color: '80,120,255',  a: .045 },
+      { x: W * .15, y: H * .7,  rx: 260, ry: 150, color: '140,80,220',  a: .035 },
+      { x: W * .5,  y: H * .45, rx: 200, ry: 120, color: '60,180,160',  a: .02  },
+    ];
+  }
+
+  function initStars() {
+    stars = [];
+    const layers = [
+      /* tiny distant stars */
+      { n: Math.floor(W * H / 6000),  rMin: .15, rMax: .5,  oMin: .15, oMax: .5,  sp: .003 },
+      /* mid stars */
+      { n: Math.floor(W * H / 10000), rMin: .3,  rMax: .9,  oMin: .25, oMax: .7,  sp: .007 },
+      /* bright foreground */
+      { n: Math.floor(W * H / 20000), rMin: .9,  rMax: 1.6, oMin: .5,  oMax: .95, sp: .014 },
+    ];
+    layers.forEach(l => {
+      for (let i = 0; i < l.n; i++) {
+        stars.push({
+          x: Math.random() * W, y: Math.random() * H,
+          r: l.rMin + Math.random() * (l.rMax - l.rMin),
+          bo: l.oMin + Math.random() * (l.oMax - l.oMin),
+          sp: l.sp + Math.random() * l.sp,
+          ph: Math.random() * Math.PI * 2,
+          vx: (Math.random() - .5) * .012,
+          vy: (Math.random() - .5) * .006,
+          /* occasional blue tint */
+          hue: Math.random() < .12 ? `200,230,255` : `210,220,255`
+        });
+      }
+    });
+  }
+
+  function spawnShooting() {
+    if (Math.random() > .993) {
+      shootingStars.push({
+        x: Math.random() * W * .75,
+        y: Math.random() * H * .45,
+        len: 100 + Math.random() * 160,
+        speed: 6 + Math.random() * 10,
+        angle: Math.PI / 5.5 + (Math.random() - .5) * .4,
+        life: 1,
+        decay: .018 + Math.random() * .022
+      });
+    }
+  }
+
+  let t = 0;
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    t += .012;
+
+    /* Nebula glows */
+    for (const n of nebulae) {
+      const grad = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, Math.max(n.rx, n.ry));
+      grad.addColorStop(0,   `rgba(${n.color}, ${n.a})`);
+      grad.addColorStop(.5,  `rgba(${n.color}, ${n.a * .4})`);
+      grad.addColorStop(1,   `rgba(${n.color}, 0)`);
+      ctx.save();
+      ctx.scale(1, n.ry / n.rx);
+      ctx.beginPath();
+      ctx.arc(n.x, n.y * (n.rx / n.ry), n.rx, 0, Math.PI * 2);
+      ctx.fillStyle = grad;
+      ctx.fill();
+      ctx.restore();
+    }
+
+    /* Stars */
+    for (const s of stars) {
+      const a = s.bo * (.5 + .5 * Math.sin(t * s.sp * 40 + s.ph));
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${s.hue}, ${a})`;
+      ctx.fill();
+      s.x += s.vx; s.y += s.vy;
+      if (s.x < -2) s.x = W + 2; if (s.x > W + 2) s.x = -2;
+      if (s.y < -2) s.y = H + 2; if (s.y > H + 2) s.y = -2;
+    }
+
+    /* Shooting stars */
+    spawnShooting();
+    shootingStars = shootingStars.filter(s => s.life > 0);
+    for (const s of shootingStars) {
+      const ex = s.x + Math.cos(s.angle) * s.len;
+      const ey = s.y + Math.sin(s.angle) * s.len;
+      const g = ctx.createLinearGradient(s.x, s.y, ex, ey);
+      g.addColorStop(0,   `rgba(200,220,255,0)`);
+      g.addColorStop(.25, `rgba(220,235,255,${s.life * .85})`);
+      g.addColorStop(.7,  `rgba(255,255,255,${s.life * .4})`);
+      g.addColorStop(1,   `rgba(200,220,255,0)`);
+      ctx.beginPath();
+      ctx.moveTo(s.x, s.y);
+      ctx.lineTo(ex, ey);
+      ctx.strokeStyle = g;
+      ctx.lineWidth = 1.4;
+      ctx.stroke();
+      /* tiny glow at head */
+      ctx.beginPath();
+      ctx.arc(ex, ey, 1.5, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${s.life * .6})`;
+      ctx.fill();
+      s.x += Math.cos(s.angle) * s.speed;
+      s.y += Math.sin(s.angle) * s.speed;
+      s.life -= s.decay;
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', () => { resize(); initNebulae(); initStars(); });
+  resize(); initNebulae(); initStars(); draw();
+})();
+</script>
+</body>
+</html>
