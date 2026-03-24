@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>GestMat — Elyas Mcirdi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,300&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#06080f;
+  --border:rgba(255,255,255,0.07);
+  --border-h:rgba(255,255,255,0.18);
+  --accent:#7aa2f7;
+  --text:#c9d1e8;
+  --muted:#8a9bbf;
+  --bright:#e8ecf8;
+  --tag-bg:rgba(122,162,247,0.08);
+  --tag-border:rgba(122,162,247,0.2);
+  --font:'Inter',sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:15px;line-height:1.6;overflow-x:hidden}
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none}
+.wrapper{max-width:820px;margin:0 auto;padding:0 2rem;position:relative;z-index:1}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;border-bottom:1px solid var(--border);backdrop-filter:blur(14px);background:rgba(6,8,15,0.88)}
+.nav-inner{max-width:820px;margin:0 auto;padding:0 2rem;display:flex;justify-content:space-between;align-items:center;height:52px}
+.nav-logo{font-family:var(--mono);font-size:.8rem;color:var(--bright);text-decoration:none;font-weight:500}
+.nav-logo span{color:var(--accent)}
+.nav-back{font-family:var(--mono);font-size:.75rem;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:.4rem;transition:color .15s}
+.nav-back:hover{color:var(--bright)}
+
+.proj-hero{padding-top:52px;padding-bottom:0;min-height:auto}
+.proj-hero-inner{padding:4.5rem 0 3.5rem}
+.proj-label{font-family:var(--mono);font-size:.68rem;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;margin-bottom:1.2rem}
+.proj-title{font-size:clamp(2.2rem,6vw,4rem);font-weight:600;line-height:1.05;letter-spacing:-.03em;color:var(--bright);margin-bottom:1rem}
+.proj-title em{font-style:italic;color:var(--accent)}
+.proj-desc{font-size:.97rem;color:var(--text);max-width:540px;line-height:1.75;margin-bottom:2rem;font-weight:300}
+.proj-meta-row{display:flex;gap:2.5rem;flex-wrap:wrap;margin-bottom:2rem;padding-bottom:2rem;border-bottom:1px solid var(--border)}
+.meta-label{font-family:var(--mono);font-size:.62rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.25rem}
+.meta-value{font-size:.88rem;color:var(--bright);font-weight:400}
+.hero-links{display:flex;gap:.75rem;flex-wrap:wrap}
+.btn-main{font-family:var(--mono);font-size:.75rem;color:var(--bg);background:var(--accent);padding:.5rem 1.2rem;text-decoration:none;font-weight:500;transition:opacity .15s;display:inline-flex;align-items:center;gap:.4rem}
+.btn-main:hover{opacity:.85}
+.btn-ghost{font-family:var(--mono);font-size:.75rem;color:var(--muted);border:1px solid var(--border);padding:.5rem 1.2rem;text-decoration:none;transition:all .15s;display:inline-flex;align-items:center;gap:.4rem}
+.btn-ghost:hover{border-color:var(--border-h);color:var(--bright)}
+
+.proj-section{padding:3.5rem 0;border-top:1px solid var(--border)}
+.section-num{font-family:var(--mono);font-size:.65rem;color:var(--muted);letter-spacing:.1em;margin-bottom:1.2rem;display:flex;align-items:center;gap:.75rem}
+.section-num::after{content:'';flex:1;height:1px;background:var(--border)}
+h2{font-size:1.5rem;font-weight:600;letter-spacing:-.02em;color:var(--bright);margin-bottom:1.5rem}
+p{color:var(--text);font-size:.9rem;line-height:1.8;font-weight:300;margin-bottom:1rem}
+p:last-child{margin-bottom:0}
+
+/* MOCKUP GESTMAT */
+.screen-wrap{margin:2rem 0;border-radius:12px;overflow:hidden;border:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,.5);background:#0d1117}
+.screen-bar{background:#1a1f2e;padding:.6rem 1rem;display:flex;align-items:center;gap:.5rem;border-bottom:1px solid var(--border)}
+.screen-dot{width:10px;height:10px;border-radius:50%}
+.screen-url{font-family:var(--mono);font-size:.65rem;color:var(--muted);margin-left:.75rem;letter-spacing:.02em}
+.screen-body{background:#f0f4f8;padding:1.25rem}
+
+/* Dashboard simulation */
+.dash-nav{background:#1e293b;border-radius:8px 8px 0 0;padding:.7rem 1.2rem;display:flex;align-items:center;gap:.75rem;margin-bottom:1rem}
+.dash-nav-brand{font-size:.75rem;font-weight:700;color:#fff;letter-spacing:-.5px}
+.dash-nav-sub{font-size:.6rem;color:#64748b}
+.dash-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;margin-bottom:1rem}
+.kpi{background:#fff;border-radius:10px;padding:.7rem;box-shadow:0 2px 8px rgba(0,0,0,.06);display:flex;align-items:center;gap:.6rem}
+.kpi-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.9rem}
+.kpi-val{font-size:.95rem;font-weight:700;color:#1e293b}
+.kpi-lab{font-size:.55rem;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px}
+.dash-table-wrap{background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.06);overflow:hidden}
+.dash-table-head{background:#1e293b;padding:.5rem .9rem;display:grid;grid-template-columns:2fr 1fr 1fr 80px;gap:.5rem}
+.dash-th{font-size:.55rem;color:#94a3b8;letter-spacing:1px;text-transform:uppercase}
+.dash-row{padding:.5rem .9rem;display:grid;grid-template-columns:2fr 1fr 1fr 80px;gap:.5rem;align-items:center;border-bottom:1px solid #f1f5f9}
+.dash-row:last-child{border-bottom:none}
+.dash-row-red{background:#fff5f5}
+.dash-cell-main{font-size:.7rem;font-weight:600;color:#1e293b}
+.dash-cell-sub{font-size:.58rem;color:#94a3b8}
+.dash-cell-txt{font-size:.65rem;color:#64748b}
+.dash-badge{font-size:.55rem;font-weight:700;letter-spacing:.5px;padding:2px 7px;border-radius:50px;display:inline-block}
+.badge-g{background:#d1fae5;color:#065f46}
+.badge-r{background:#fee2e2;color:#991b1b}
+.badge-e{background:#c0392b;color:#fff}
+.dash-btn{font-size:.58rem;font-weight:600;padding:3px 8px;border-radius:5px;display:inline-block}
+.btn-blue{background:#0d6efd;color:#fff}
+.btn-green-o{background:#fff;color:#198754;border:1px solid #198754}
+
+.tags-grid{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.75rem}
+.tag{font-family:var(--mono);font-size:.7rem;color:var(--accent);background:var(--tag-bg);border:1px solid var(--tag-border);padding:.25rem .7rem}
+
+.feat-list{display:flex;flex-direction:column;gap:0}
+.feat-item{padding:1.1rem 0;border-bottom:1px solid var(--border);display:grid;grid-template-columns:auto 1fr;gap:1.2rem;align-items:start}
+.feat-item:last-child{border-bottom:none}
+.feat-num{font-family:var(--mono);font-size:.62rem;color:var(--accent);font-weight:500;padding-top:.15rem}
+.feat-content{}
+.feat-title{font-size:.9rem;font-weight:500;color:var(--bright);margin-bottom:.25rem}
+.feat-desc{font-size:.82rem;color:var(--muted);line-height:1.6}
+
+.sec-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:.5rem}
+.sec-card{border:1px solid var(--border);padding:1.25rem;transition:border-color .2s}
+.sec-card:hover{border-color:var(--border-h)}
+.sec-num{font-family:var(--mono);font-size:.62rem;color:var(--accent);margin-bottom:.5rem}
+.sec-title{font-size:.88rem;font-weight:500;color:var(--bright);margin-bottom:.35rem}
+.sec-desc{font-size:.78rem;color:var(--muted);line-height:1.55}
+
+/* ARCHITECTURE */
+.archi-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:.5rem}
+.archi-card{border:1px solid var(--border);padding:1.1rem;background:rgba(122,162,247,.03)}
+.archi-file{font-family:var(--mono);font-size:.78rem;color:var(--accent);margin-bottom:.35rem}
+.archi-desc{font-size:.78rem;color:var(--muted);line-height:1.5}
+
+.comp-block{margin-bottom:1.5rem}
+.comp-block-title{font-family:var(--mono);font-size:.68rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.75rem;border-left:2px solid var(--accent);padding-left:.75rem}
+.comp-list{display:flex;flex-direction:column;gap:0}
+.comp-item{font-size:.83rem;color:var(--muted);padding:.55rem 0;border-bottom:1px solid var(--border);line-height:1.5}
+.comp-item:last-child{border-bottom:none}
+.comp-item::before{content:'—';color:var(--accent);margin-right:.5rem;font-family:var(--mono)}
+
+.links-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.link-card{display:block;border:1px solid var(--border);padding:1.5rem;text-decoration:none;color:inherit;transition:border-color .2s,background .2s;position:relative}
+.link-card:hover{border-color:var(--border-h);background:rgba(255,255,255,.02)}
+.link-card-label{font-family:var(--mono);font-size:.62rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem}
+.link-card-title{font-size:.88rem;color:var(--bright);font-weight:500;margin-bottom:.2rem}
+.link-card-url{font-family:var(--mono);font-size:.68rem;color:var(--accent)}
+.link-arrow{position:absolute;top:1.5rem;right:1.5rem;font-size:.9rem;color:var(--muted)}
+
+footer{border-top:1px solid var(--border);position:relative;z-index:1}
+.fi{max-width:820px;margin:0 auto;padding:1.5rem 2rem;display:flex;justify-content:space-between;align-items:center}
+.fc{font-family:var(--mono);font-size:.68rem;color:var(--muted)}
+.flinks{display:flex;gap:1.5rem}
+.flinks a{font-family:var(--mono);font-size:.68rem;color:var(--muted);text-decoration:none;transition:color .15s}
+.flinks a:hover{color:var(--text)}
+
+@media(max-width:640px){
+  .proj-meta-row{gap:1.5rem}
+  .sec-grid{grid-template-columns:1fr}
+  .links-grid{grid-template-columns:1fr}
+  .archi-grid{grid-template-columns:1fr}
+  .dash-kpis{grid-template-columns:1fr 1fr}
+  .screen-url{display:none}
+}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Elyas <span>Mcirdi</span></a>
+    <a href="index.html" class="nav-back">← Retour</a>
+  </div>
+</nav>
+
+<div class="wrapper">
+  <!-- HERO -->
+  <div class="proj-hero">
+    <div class="proj-hero-inner">
+      <div class="proj-label">Projet personnel — BTS SIO SLAM</div>
+      <h1 class="proj-title"><em>GestMat</em> — Gestion d'Emprunts Matériel</h1>
+      <p class="proj-desc">Application web multi-pages PHP/MySQL de gestion de parc informatique. Tableau de bord avec KPIs en temps réel, alertes automatiques de retard, CRUD complet et transactions SQL pour la cohérence des données.</p>
+
+      <div class="proj-meta-row">
+        <div class="meta-item">
+          <div class="meta-label">Cadre</div>
+          <div class="meta-value">BTS SIO — Individuel</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Période</div>
+          <div class="meta-value">2024 – 2025</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Langage principal</div>
+          <div class="meta-value">PHP / MySQL</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Interface</div>
+          <div class="meta-value">Bootstrap 5</div>
+        </div>
+      </div>
+
+      <div class="hero-links">
+        <a href="https://mcirdi.alwaysdata.net/emprunt/" target="_blank" class="btn-main">Voir la démo ↗</a>
+        <a href="index.html" class="btn-ghost">← Portfolio</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOCKUP DASHBOARD -->
+  <div class="screen-wrap">
+    <div class="screen-bar">
+      <div class="screen-dot" style="background:#ff5f57"></div>
+      <div class="screen-dot" style="background:#febc2e"></div>
+      <div class="screen-dot" style="background:#28c840"></div>
+      <span class="screen-url">mcirdi.alwaysdata.net/emprunt/</span>
+    </div>
+    <div class="screen-body">
+      <div class="dash-nav">
+        <span style="font-size:1rem">💻</span>
+        <span class="dash-nav-brand">MatériElTech</span>
+        <span class="dash-nav-sub">Système de gestion d'emprunts</span>
+      </div>
+      <div class="dash-kpis">
+        <div class="kpi">
+          <div class="kpi-icon" style="background:#e0f2fe">📦</div>
+          <div><div class="kpi-val">8</div><div class="kpi-lab">Total</div></div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-icon" style="background:#d1fae5">✅</div>
+          <div><div class="kpi-val" style="color:#065f46">5</div><div class="kpi-lab">Disponibles</div></div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-icon" style="background:#fef9c3">📤</div>
+          <div><div class="kpi-val" style="color:#92400e">3</div><div class="kpi-lab">Empruntés</div></div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-icon" style="background:#fee2e2">⚠️</div>
+          <div><div class="kpi-val" style="color:#991b1b">1</div><div class="kpi-lab">En retard</div></div>
+        </div>
+      </div>
+      <div class="dash-table-wrap">
+        <div class="dash-table-head">
+          <div class="dash-th">Matériel</div>
+          <div class="dash-th">Type</div>
+          <div class="dash-th">Statut</div>
+          <div class="dash-th">Action</div>
+        </div>
+        <div class="dash-row">
+          <div><div class="dash-cell-main">Dell Latitude 5540</div></div>
+          <div class="dash-cell-txt">Laptop</div>
+          <div><span class="dash-badge badge-g">● Disponible</span></div>
+          <div><span class="dash-btn btn-blue">Emprunter</span></div>
+        </div>
+        <div class="dash-row dash-row-red">
+          <div>
+            <div class="dash-cell-main" style="color:#c0392b">MacBook Pro 14"</div>
+            <div class="dash-cell-sub" style="color:#c0392b">⏰ Retard de 3 jour(s)</div>
+          </div>
+          <div class="dash-cell-txt" style="color:#c0392b">Laptop</div>
+          <div><span class="dash-badge badge-e">⚠ En retard</span></div>
+          <div><span class="dash-btn btn-green-o">Rendre</span></div>
+        </div>
+        <div class="dash-row">
+          <div><div class="dash-cell-main">Samsung 27" Odyssey</div></div>
+          <div class="dash-cell-txt">Écran</div>
+          <div><span class="dash-badge badge-r">● Emprunté</span></div>
+          <div><span class="dash-btn btn-green-o">Rendre</span></div>
+        </div>
+        <div class="dash-row">
+          <div><div class="dash-cell-main">Raspberry Pi 4B 8GB</div></div>
+          <div class="dash-cell-txt">Nano-PC</div>
+          <div><span class="dash-badge badge-g">● Disponible</span></div>
+          <div><span class="dash-btn btn-blue">Emprunter</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTEXTE -->
+  <div class="proj-section">
+    <div class="section-num">01</div>
+    <h2>Contexte</h2>
+    <p>GestMat est une application web de gestion de parc informatique développée en PHP/MySQL dans le cadre de mon BTS SIO SLAM à l'INSTA Paris. L'objectif pédagogique était de concevoir une application multi-pages complète reposant sur une base de données relationnelle, avec une logique métier robuste et une interface responsive.</p>
+    <p>Le projet simule un système réel de prêt de matériel au sein d'un établissement scolaire ou d'une entreprise : chaque équipement peut être emprunté par un utilisateur pour une durée définie, puis restitué. L'application suit en temps réel l'état du parc et déclenche des alertes visuelles automatiques lorsqu'un matériel n'a pas été rendu à temps.</p>
+    <p>L'accent a été mis sur la <strong style="color:var(--bright)">cohérence des données</strong> via les transactions SQL (<code style="font-family:var(--mono);font-size:.82rem;color:var(--accent)">BEGIN / COMMIT / ROLLBACK</code>) et la <strong style="color:var(--bright)">sécurité</strong> via PDO avec requêtes préparées — zéro concaténation directe de variables SQL.</p>
+  </div>
+
+  <!-- TECHNOLOGIES -->
+  <div class="proj-section">
+    <div class="section-num">02</div>
+    <h2>Langages & Technologies</h2>
+    <div class="tags-grid">
+      <span class="tag">PHP</span>
+      <span class="tag">MySQL</span>
+      <span class="tag">PDO</span>
+      <span class="tag">Bootstrap 5</span>
+      <span class="tag">Bootstrap Icons</span>
+      <span class="tag">HTML5</span>
+      <span class="tag">CSS3</span>
+      <span class="tag">SQL Transactions</span>
+      <span class="tag">LEFT JOIN</span>
+      <span class="tag">phpMyAdmin</span>
+    </div>
+  </div>
+
+  <!-- FONCTIONNALITÉS -->
+  <div class="proj-section">
+    <div class="section-num">03</div>
+    <h2>Fonctionnalités réalisées</h2>
+    <div class="feat-list">
+      <div class="feat-item">
+        <div class="feat-num">—</div>
+        <div class="feat-content">
+          <div class="feat-title">Tableau de bord avec KPIs en temps réel</div>
+          <div class="feat-desc">4 compteurs calculés dynamiquement à chaque chargement : Total du parc, Disponibles, Empruntés, En retard. La logique repose sur une requête SQL avec LEFT JOIN entre les tables <code style="font-family:var(--mono);font-size:.78rem">materiels</code> et <code style="font-family:var(--mono);font-size:.78rem">emprunts</code>.</div>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-num">—</div>
+        <div class="feat-content">
+          <div class="feat-title">CRUD complet — Inventaire & Emprunts</div>
+          <div class="feat-desc">Gestion complète de l'inventaire (8 équipements de démonstration), enregistrement d'un emprunt (formulaire validé côté serveur) et restitution d'un matériel. Chaque opération met à jour en cohérence les deux tables de la base.</div>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-num">—</div>
+        <div class="feat-content">
+          <div class="feat-title">Transactions SQL atomiques</div>
+          <div class="feat-desc">Chaque emprunt et chaque retour sont effectués en <strong style="color:var(--bright)">transaction</strong> : si l'une des 2 requêtes échoue (INSERT + UPDATE ou UPDATE + UPDATE), un ROLLBACK annule l'ensemble — aucun état intermédiaire incohérent n'est possible.</div>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-num">—</div>
+        <div class="feat-content">
+          <div class="feat-title">Alertes automatiques de retard</div>
+          <div class="feat-desc">Chaque ligne du tableau est comparée à la date du jour via l'objet PHP <code style="font-family:var(--mono);font-size:.78rem">DateTime</code>. Si la date de retour prévue est dépassée et le matériel toujours emprunté, la ligne passe en rouge et affiche le nombre de jours de retard.</div>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-num">—</div>
+        <div class="feat-content">
+          <div class="feat-title">Interface responsive Bootstrap 5</div>
+          <div class="feat-desc">Tableau de bord avec cartes KPI, tableau interactif avec badges de statut colorés, formulaire d'emprunt avec validation HTML5 et affichage d'erreurs serveur. Colonnes secondaires masquées automatiquement sur mobile.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ARCHITECTURE -->
+  <div class="proj-section">
+    <div class="section-num">04</div>
+    <h2>Architecture MVC légère</h2>
+    <p>Le projet adopte une architecture MVC simplifiée, sans framework, pour séparer clairement les responsabilités :</p>
+    <div class="archi-grid">
+      <div class="archi-card">
+        <div class="archi-file">config.php</div>
+        <div class="archi-desc">Connexion PDO centralisée via pattern Singleton léger. Constantes de connexion, options PDO (exceptions, fetch associatif, vraies requêtes préparées).</div>
+      </div>
+      <div class="archi-card">
+        <div class="archi-file">index.php</div>
+        <div class="archi-desc">Vue principale : inventaire complet avec LEFT JOIN, calcul des KPIs, détection des retards et affichage des messages flash (succès/erreur).</div>
+      </div>
+      <div class="archi-card">
+        <div class="archi-file">emprunter.php</div>
+        <div class="archi-desc">Contrôleur + Vue : vérification de disponibilité, validation du formulaire côté serveur, transaction SQL (INSERT emprunts + UPDATE materiels).</div>
+      </div>
+      <div class="archi-card">
+        <div class="archi-file">rendre.php</div>
+        <div class="archi-desc">Contrôleur pur (pas d'interface) : vérification de l'emprunt, transaction SQL (UPDATE emprunts rendu='oui' + UPDATE materiels statut='disponible'), redirection.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SÉCURITÉ -->
+  <div class="proj-section">
+    <div class="section-num">05</div>
+    <h2>Sécurité & Bonnes pratiques</h2>
+    <div class="sec-grid">
+      <div class="sec-card">
+        <div class="sec-num">01</div>
+        <div class="sec-title">Requêtes préparées PDO</div>
+        <div class="sec-desc">Toutes les requêtes SQL utilisent PDO avec paramètres liés (<code style="font-family:var(--mono);font-size:.75rem">execute([':param' => $val])</code>). Aucune concaténation directe — protection totale contre les injections SQL.</div>
+      </div>
+      <div class="sec-card">
+        <div class="sec-num">02</div>
+        <div class="sec-title">Transactions atomiques</div>
+        <div class="sec-desc">BEGIN / COMMIT / ROLLBACK garantissent qu'aucune opération partielle ne peut corrompre la base. Si l'une des requêtes échoue, tout est annulé.</div>
+      </div>
+      <div class="sec-card">
+        <div class="sec-num">03</div>
+        <div class="sec-title">Validation serveur & XSS</div>
+        <div class="sec-desc">Toutes les entrées utilisateur sont validées côté serveur (longueur, format de date) avant traitement. L'affichage passe systématiquement par <code style="font-family:var(--mono);font-size:.75rem">htmlspecialchars()</code>.</div>
+      </div>
+      <div class="sec-card">
+        <div class="sec-num">04</div>
+        <div class="sec-title">Cast sécurisé des IDs</div>
+        <div class="sec-desc">Les identifiants reçus en GET sont systématiquement castés en <code style="font-family:var(--mono);font-size:.75rem">(int)</code>, empêchant toute manipulation de l'URL par injection de chaînes.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPÉTENCES BTS -->
+  <div class="proj-section">
+    <div class="section-num">06</div>
+    <h2>Compétences couvertes</h2>
+    <div class="comp-block">
+      <div class="comp-block-title">Bloc 1 — Services informatiques aux organisations</div>
+      <div class="comp-list">
+        <div class="comp-item">Gérer des habilitations et l'accès aux ressources (gestion du statut matériel)</div>
+        <div class="comp-item">Traiter des demandes concernant les applications (emprunt, retour, inventaire)</div>
+        <div class="comp-item">Participer à l'évolution d'un site Web exploitant les données de l'organisation</div>
+      </div>
+    </div>
+    <div class="comp-block">
+      <div class="comp-block-title">Bloc 2 — Conception et développement d'applications</div>
+      <div class="comp-list">
+        <div class="comp-item">Identifier, développer et utiliser des composants logiciels (PHP, PDO, Bootstrap)</div>
+        <div class="comp-item">Utiliser des composants d'accès aux données (MySQL, requêtes préparées, transactions)</div>
+        <div class="comp-item">Concevoir et réaliser une interface utilisateur responsive (Bootstrap 5)</div>
+        <div class="comp-item">Rédiger des documentations technique et d'utilisation (SQL, architecture MVC)</div>
+        <div class="comp-item">Analyser et corriger des dysfonctionnements (gestion des erreurs PDO)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIENS -->
+  <div class="proj-section">
+    <div class="section-num">07</div>
+    <h2>Liens</h2>
+    <div class="links-grid">
+      <a href="https://mcirdi.alwaysdata.net/emprunt/" target="_blank" class="link-card">
+        <span class="link-arrow">↗</span>
+        <div class="link-card-label">Démo en ligne</div>
+        <div class="link-card-title">Voir l'application</div>
+        <div class="link-card-url">mcirdi.alwaysdata.net/emprunt/</div>
+      </a>
+      <a href="index.html" class="link-card">
+        <span class="link-arrow">←</span>
+        <div class="link-card-label">Portfolio</div>
+        <div class="link-card-title">Retour au portfolio</div>
+        <div class="link-card-url">ilyesadd.github.io</div>
+      </a>
+    </div>
+  </div>
+
+</div><!-- /wrapper -->
+
+<footer>
+  <div class="fi">
+    <span class="fc">Elyas Mcirdi — BTS SIO — INSTA Paris — 2026</span>
+    <div class="flinks">
+      <a href="index.html">Portfolio</a>
+      <a href="https://github.com/Ilyesadd" target="_blank">GitHub ↗</a>
+      <a href="mailto:Elyasmcirdi@gmail.com">Mail</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const canvas=document.getElementById('stars');
+  const ctx=canvas.getContext('2d');
+  let W,H,stars=[],shootingStars=[],nebulae=[];
+  function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+  function initNebulae(){nebulae=[
+    {x:W*.75,y:H*.15,rx:320,ry:180,color:'80,120,255',a:.045},
+    {x:W*.15,y:H*.7,rx:260,ry:150,color:'140,80,220',a:.035},
+    {x:W*.5,y:H*.45,rx:200,ry:120,color:'60,180,160',a:.02},
+  ];}
+  function initStars(){
+    stars=[];
+    [{n:Math.floor(W*H/6000),rMin:.15,rMax:.5,oMin:.15,oMax:.5,sp:.003},
+     {n:Math.floor(W*H/10000),rMin:.3,rMax:.9,oMin:.25,oMax:.7,sp:.007},
+     {n:Math.floor(W*H/20000),rMin:.9,rMax:1.6,oMin:.5,oMax:.95,sp:.014}
+    ].forEach(l=>{for(let i=0;i<l.n;i++)stars.push({
+      x:Math.random()*W,y:Math.random()*H,
+      r:l.rMin+Math.random()*(l.rMax-l.rMin),
+      bo:l.oMin+Math.random()*(l.oMax-l.oMin),
+      sp:l.sp+Math.random()*l.sp,ph:Math.random()*Math.PI*2,
+      vx:(Math.random()-.5)*.012,vy:(Math.random()-.5)*.006,
+      hue:Math.random()<.12?'200,230,255':'210,220,255'
+    });});
+  }
+  function spawnShooting(){if(Math.random()>.993)shootingStars.push({
+    x:Math.random()*W*.75,y:Math.random()*H*.45,
+    len:100+Math.random()*160,speed:6+Math.random()*10,
+    angle:Math.PI/5.5+(Math.random()-.5)*.4,life:1,decay:.018+Math.random()*.022
+  });}
+  let t=0;
+  function draw(){
+    ctx.clearRect(0,0,W,H);t+=.012;
+    for(const n of nebulae){
+      const grad=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,Math.max(n.rx,n.ry));
+      grad.addColorStop(0,`rgba(${n.color},${n.a})`);
+      grad.addColorStop(.5,`rgba(${n.color},${n.a*.4})`);
+      grad.addColorStop(1,`rgba(${n.color},0)`);
+      ctx.save();ctx.scale(1,n.ry/n.rx);ctx.beginPath();
+      ctx.arc(n.x,n.y*(n.rx/n.ry),n.rx,0,Math.PI*2);
+      ctx.fillStyle=grad;ctx.fill();ctx.restore();
+    }
+    for(const s of stars){
+      const a=s.bo*(.5+.5*Math.sin(t*s.sp*40+s.ph));
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(${s.hue},${a})`;ctx.fill();
+      s.x+=s.vx;s.y+=s.vy;
+      if(s.x<-2)s.x=W+2;if(s.x>W+2)s.x=-2;
+      if(s.y<-2)s.y=H+2;if(s.y>H+2)s.y=-2;
+    }
+    spawnShooting();
+    shootingStars=shootingStars.filter(s=>s.life>0);
+    for(const s of shootingStars){
+      const ex=s.x+Math.cos(s.angle)*s.len,ey=s.y+Math.sin(s.angle)*s.len;
+      const g=ctx.createLinearGradient(s.x,s.y,ex,ey);
+      g.addColorStop(0,'rgba(200,220,255,0)');
+      g.addColorStop(.25,`rgba(220,235,255,${s.life*.85})`);
+      g.addColorStop(.7,`rgba(255,255,255,${s.life*.4})`);
+      g.addColorStop(1,'rgba(200,220,255,0)');
+      ctx.beginPath();ctx.moveTo(s.x,s.y);ctx.lineTo(ex,ey);
+      ctx.strokeStyle=g;ctx.lineWidth=1.4;ctx.stroke();
+      ctx.beginPath();ctx.arc(ex,ey,1.5,0,Math.PI*2);
+      ctx.fillStyle=`rgba(255,255,255,${s.life*.6})`;ctx.fill();
+      s.x+=Math.cos(s.angle)*s.speed;s.y+=Math.sin(s.angle)*s.speed;s.life-=s.decay;
+    }
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize',()=>{resize();initNebulae();initStars();});
+  resize();initNebulae();initStars();draw();
+})();
+</script>
+</body>
+</html>

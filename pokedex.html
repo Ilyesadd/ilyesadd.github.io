@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Pokédex Interactif — Elyas Mcirdi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,300&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#06080f;
+  --border:rgba(255,255,255,0.07);
+  --border-h:rgba(255,255,255,0.18);
+  --accent:#7aa2f7;
+  --text:#c9d1e8;
+  --muted:#8a9bbf;
+  --bright:#e8ecf8;
+  --tag-bg:rgba(122,162,247,0.08);
+  --tag-border:rgba(122,162,247,0.2);
+  --font:'Inter',sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:15px;line-height:1.6;overflow-x:hidden}
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none}
+.wrapper{max-width:820px;margin:0 auto;padding:0 2rem;position:relative;z-index:1}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;border-bottom:1px solid var(--border);backdrop-filter:blur(14px);background:rgba(6,8,15,0.88)}
+.nav-inner{max-width:820px;margin:0 auto;padding:0 2rem;display:flex;justify-content:space-between;align-items:center;height:52px}
+.nav-logo{font-family:var(--mono);font-size:.8rem;color:var(--bright);text-decoration:none;font-weight:500}
+.nav-logo span{color:var(--accent)}
+.nav-back{font-family:var(--mono);font-size:.75rem;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:.4rem;transition:color .15s}
+.nav-back:hover{color:var(--bright)}
+
+/* HERO */
+.proj-hero{padding-top:52px;padding-bottom:0;min-height:auto}
+.proj-hero-inner{padding:4.5rem 0 3.5rem}
+.proj-label{font-family:var(--mono);font-size:.68rem;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;margin-bottom:1.2rem}
+.proj-title{font-size:clamp(2.2rem,6vw,4rem);font-weight:600;line-height:1.05;letter-spacing:-.03em;color:var(--bright);margin-bottom:1rem}
+.proj-title em{font-style:italic;color:var(--accent)}
+.proj-desc{font-size:.97rem;color:var(--text);max-width:540px;line-height:1.75;margin-bottom:2rem;font-weight:300}
+.proj-meta-row{display:flex;gap:2.5rem;flex-wrap:wrap;margin-bottom:2rem;padding-bottom:2rem;border-bottom:1px solid var(--border)}
+.meta-item{}
+.meta-label{font-family:var(--mono);font-size:.62rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.25rem}
+.meta-value{font-size:.88rem;color:var(--bright);font-weight:400}
+.hero-links{display:flex;gap:.75rem;flex-wrap:wrap}
+.btn-main{font-family:var(--mono);font-size:.75rem;color:var(--bg);background:var(--accent);padding:.5rem 1.2rem;text-decoration:none;font-weight:500;transition:opacity .15s;display:inline-flex;align-items:center;gap:.4rem}
+.btn-main:hover{opacity:.85}
+.btn-ghost{font-family:var(--mono);font-size:.75rem;color:var(--muted);border:1px solid var(--border);padding:.5rem 1.2rem;text-decoration:none;transition:all .15s;display:inline-flex;align-items:center;gap:.4rem}
+.btn-ghost:hover{border-color:var(--border-h);color:var(--bright)}
+
+/* SECTIONS */
+.proj-section{padding:3.5rem 0;border-top:1px solid var(--border)}
+.section-num{font-family:var(--mono);font-size:.65rem;color:var(--muted);letter-spacing:.1em;margin-bottom:1.2rem;display:flex;align-items:center;gap:.75rem}
+.section-num::after{content:'';flex:1;height:1px;background:var(--border)}
+h2{font-size:1.5rem;font-weight:600;letter-spacing:-.02em;color:var(--bright);margin-bottom:1.5rem}
+p{color:var(--text);font-size:.9rem;line-height:1.8;font-weight:300;margin-bottom:1rem}
+p:last-child{margin-bottom:0}
+
+/* SCREENSHOT MOCKUP */
+.screen-wrap{margin:2rem 0;border-radius:12px;overflow:hidden;border:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,.5);background:#0d1117}
+.screen-bar{background:#1a1f2e;padding:.6rem 1rem;display:flex;align-items:center;gap:.5rem;border-bottom:1px solid var(--border)}
+.screen-dot{width:10px;height:10px;border-radius:50%}
+.screen-url{font-family:var(--mono);font-size:.65rem;color:var(--muted);margin-left:.75rem;letter-spacing:.02em}
+.screen-body{padding:0;background:#fff}
+/* Simulation de l'interface Pokédex */
+.poke-preview{
+  background:linear-gradient(135deg,#F7B731,#FFE259);
+  min-height:420px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:1.5rem;
+  padding:2rem;
+  position:relative;
+  overflow:hidden;
+}
+.poke-preview::before{
+  content:'';
+  position:absolute;
+  width:300px;height:300px;
+  border-radius:50%;
+  background:rgba(255,255,255,.08);
+  top:-60px;right:-60px;
+}
+.poke-ui-title{font-family:'JetBrains Mono',monospace;font-size:1.8rem;font-weight:900;color:#1A1A2E;letter-spacing:-2px}
+.poke-ui-card{
+  background:#fff;
+  border-radius:18px;
+  padding:1.5rem;
+  width:220px;
+  box-shadow:0 12px 40px rgba(0,0,0,.15);
+  text-align:center;
+}
+.poke-ui-img{font-size:5rem;line-height:1;margin-bottom:.75rem;display:block}
+.poke-ui-name{font-family:'JetBrains Mono',monospace;font-size:1rem;font-weight:700;color:#1A1A2E;margin-bottom:.4rem}
+.poke-ui-types{display:flex;gap:.4rem;justify-content:center;margin-bottom:.75rem}
+.poke-ui-type{font-size:.6rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:50px;color:#fff;background:#F7B731}
+.poke-ui-stats{display:grid;grid-template-columns:1fr 1fr;gap:.4rem;text-align:left}
+.poke-ui-stat-l{font-size:.6rem;color:#8a9bbf;text-transform:uppercase;letter-spacing:.5px}
+.poke-ui-stat-v{font-size:.75rem;font-weight:700;color:#1A1A2E}
+.poke-ui-search{background:#fff;border-radius:50px;padding:.5rem 1rem;display:flex;gap:.5rem;align-items:center;width:260px;border:2px solid rgba(255,255,255,.6)}
+.poke-ui-search-text{font-size:.75rem;color:#8a9bbf;flex:1}
+.poke-ui-btn{background:#F7B731;color:#1A1A2E;font-size:.65rem;font-weight:700;padding:4px 12px;border-radius:50px;letter-spacing:1px}
+.poke-ui-suggestions{display:flex;gap:.4rem;flex-wrap:wrap;justify-content:center;max-width:280px}
+.poke-ui-sug{background:rgba(255,255,255,.3);border-radius:50px;padding:3px 10px;font-size:.65rem;color:#1A1A2E;font-weight:500}
+
+/* TAGS GRID */
+.tags-grid{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.75rem}
+.tag{font-family:var(--mono);font-size:.7rem;color:var(--accent);background:var(--tag-bg);border:1px solid var(--tag-border);padding:.25rem .7rem}
+
+/* FEATURES LIST */
+.feat-list{display:flex;flex-direction:column;gap:0}
+.feat-item{padding:1.1rem 0;border-bottom:1px solid var(--border);display:grid;grid-template-columns:auto 1fr;gap:1.2rem;align-items:start}
+.feat-item:last-child{border-bottom:none}
+.feat-num{font-family:var(--mono);font-size:.62rem;color:var(--accent);font-weight:500;padding-top:.15rem}
+.feat-content{}
+.feat-title{font-size:.9rem;font-weight:500;color:var(--bright);margin-bottom:.25rem}
+.feat-desc{font-size:.82rem;color:var(--muted);line-height:1.6}
+
+/* SECURITY GRID */
+.sec-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:.5rem}
+.sec-card{border:1px solid var(--border);padding:1.25rem;transition:border-color .2s}
+.sec-card:hover{border-color:var(--border-h)}
+.sec-num{font-family:var(--mono);font-size:.62rem;color:var(--accent);margin-bottom:.5rem}
+.sec-title{font-size:.88rem;font-weight:500;color:var(--bright);margin-bottom:.35rem}
+.sec-desc{font-size:.78rem;color:var(--muted);line-height:1.55}
+
+/* COMPETENCES */
+.comp-block{margin-bottom:1.5rem}
+.comp-block-title{font-family:var(--mono);font-size:.68rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.75rem;border-left:2px solid var(--accent);padding-left:.75rem}
+.comp-list{display:flex;flex-direction:column;gap:0}
+.comp-item{font-size:.83rem;color:var(--muted);padding:.55rem 0;border-bottom:1px solid var(--border);line-height:1.5}
+.comp-item:last-child{border-bottom:none}
+.comp-item::before{content:'—';color:var(--accent);margin-right:.5rem;font-family:var(--mono)}
+
+/* LINKS SECTION */
+.links-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.link-card{display:block;border:1px solid var(--border);padding:1.5rem;text-decoration:none;color:inherit;transition:border-color .2s,background .2s;position:relative}
+.link-card:hover{border-color:var(--border-h);background:rgba(255,255,255,.02)}
+.link-card-label{font-family:var(--mono);font-size:.62rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem}
+.link-card-title{font-size:.88rem;color:var(--bright);font-weight:500;margin-bottom:.2rem}
+.link-card-url{font-family:var(--mono);font-size:.68rem;color:var(--accent)}
+.link-arrow{position:absolute;top:1.5rem;right:1.5rem;font-size:.9rem;color:var(--muted)}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);position:relative;z-index:1}
+.fi{max-width:820px;margin:0 auto;padding:1.5rem 2rem;display:flex;justify-content:space-between;align-items:center}
+.fc{font-family:var(--mono);font-size:.68rem;color:var(--muted)}
+.flinks{display:flex;gap:1.5rem}
+.flinks a{font-family:var(--mono);font-size:.68rem;color:var(--muted);text-decoration:none;transition:color .15s}
+.flinks a:hover{color:var(--text)}
+
+@media(max-width:640px){
+  .proj-meta-row{gap:1.5rem}
+  .sec-grid{grid-template-columns:1fr}
+  .links-grid{grid-template-columns:1fr}
+  .screen-url{display:none}
+}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Elyas <span>Mcirdi</span></a>
+    <a href="index.html" class="nav-back">← Retour</a>
+  </div>
+</nav>
+
+<div class="wrapper">
+  <!-- HERO -->
+  <div class="proj-hero">
+    <div class="proj-hero-inner">
+      <div class="proj-label">Projet personnel — BTS SIO SLAM</div>
+      <h1 class="proj-title"><em>Pokédex</em> Interactif</h1>
+      <p class="proj-desc">Application web monopage PHP interrogeant l'API PokéBuild FR pour afficher la fiche complète d'un Pokémon. Thème visuel adaptatif selon le type principal, recherche par nom ou numéro.</p>
+
+      <div class="proj-meta-row">
+        <div class="meta-item">
+          <div class="meta-label">Cadre</div>
+          <div class="meta-value">BTS SIO — Individuel</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Période</div>
+          <div class="meta-value">2024 – 2025</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Langage principal</div>
+          <div class="meta-value">PHP</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">API</div>
+          <div class="meta-value">PokéBuild FR</div>
+        </div>
+      </div>
+
+      <div class="hero-links">
+        <a href="https://mcirdi.alwaysdata.net/pokedex/" target="_blank" class="btn-main">Voir la démo ↗</a>
+        <a href="index.html" class="btn-ghost">← Portfolio</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOCKUP -->
+  <div class="screen-wrap">
+    <div class="screen-bar">
+      <div class="screen-dot" style="background:#ff5f57"></div>
+      <div class="screen-dot" style="background:#febc2e"></div>
+      <div class="screen-dot" style="background:#28c840"></div>
+      <span class="screen-url">mcirdi.alwaysdata.net/pokedex/</span>
+    </div>
+    <div class="screen-body">
+      <div class="poke-preview">
+        <div class="poke-ui-title">Pokédex</div>
+        <div class="poke-ui-search">
+          <span class="poke-ui-search-text">Nom français ou n° … ex : Bulbizarre</span>
+          <span class="poke-ui-btn">GO</span>
+        </div>
+        <div class="poke-ui-card">
+          <span class="poke-ui-img">⚡</span>
+          <div class="poke-ui-name">Pikachu</div>
+          <div class="poke-ui-types">
+            <span class="poke-ui-type" style="background:#F7B731">Électrik</span>
+          </div>
+          <div class="poke-ui-stats">
+            <div><div class="poke-ui-stat-l">PV</div><div class="poke-ui-stat-v">35</div></div>
+            <div><div class="poke-ui-stat-l">Attaque</div><div class="poke-ui-stat-v">55</div></div>
+            <div><div class="poke-ui-stat-l">Défense</div><div class="poke-ui-stat-v">40</div></div>
+            <div><div class="poke-ui-stat-l">Vitesse</div><div class="poke-ui-stat-v">90</div></div>
+          </div>
+        </div>
+        <div class="poke-ui-suggestions">
+          <span class="poke-ui-sug">Bulbizarre</span>
+          <span class="poke-ui-sug">Salamèche</span>
+          <span class="poke-ui-sug">Carapuce</span>
+          <span class="poke-ui-sug">Mewtwo</span>
+          <span class="poke-ui-sug">Évoli</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTEXTE -->
+  <div class="proj-section">
+    <div class="section-num">01</div>
+    <h2>Contexte</h2>
+    <p>Ce Pokédex Interactif est un projet personnel réalisé durant mon année de BTS SIO SLAM à l'INSTA Paris. L'objectif était de consolider mes compétences en PHP côté serveur en travaillant avec une API REST externe, sans recours à un framework — uniquement du PHP natif, HTML et CSS.</p>
+    <p>Le projet consiste en une application monopage qui interroge l'API publique <strong style="color:var(--bright)">PokéBuild FR</strong> via <code style="font-family:var(--mono);font-size:.82rem;color:var(--accent)">file_get_contents()</code> pour récupérer les données de chaque Pokémon en temps réel, puis les affiche dynamiquement. La recherche accepte aussi bien le nom français que le numéro du Pokédex.</p>
+    <p>Ce qui rend le projet visuellement mémorable : le thème couleur de toute la page (dégradé du fond, couleur du titre, des badges) change dynamiquement en fonction du <strong style="color:var(--bright)">type principal</strong> du Pokémon affiché — Feu → orange, Eau → bleu, Électrik → jaune, etc.</p>
+  </div>
+
+  <!-- TECHNOLOGIES -->
+  <div class="proj-section">
+    <div class="section-num">02</div>
+    <h2>Langages & Technologies</h2>
+    <div class="tags-grid">
+      <span class="tag">PHP</span>
+      <span class="tag">API REST</span>
+      <span class="tag">HTML5</span>
+      <span class="tag">CSS3</span>
+      <span class="tag">Google Fonts</span>
+      <span class="tag">PokéBuild FR</span>
+      <span class="tag">file_get_contents()</span>
+      <span class="tag">JSON</span>
+      <span class="tag">urlencode()</span>
+    </div>
+  </div>
+
+  <!-- FONCTIONNALITÉS -->
+  <div class="proj-section">
+    <div class="section-num">03</div>
+    <h2>Fonctionnalités réalisées</h2>
+    <div class="feat-list">
+      <div class="feat-item">
+        <div class="feat-num">—</div>
+        <div class="feat-content">
+          <div class="feat-title">Consommation d'API REST externe</div>
+          <div class="feat-desc">Appel à l'API PokéBuild FR via <code style="font-family:var(--mono);font-size:.78rem">file_get_contents()</code> avec gestion du contexte HTTP, timeout à 5 secondes et vérification du code de réponse. Décodage du JSON retourné pour extraire les données utiles.</div>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-num">—</div>
+        <div class="feat-content">
+          <div class="feat-title">Affichage dynamique des statistiques</div>
+          <div class="feat-desc">Affichage de : Numéro Pokédex, Nom, Types, PV, Attaque, Défense, Vitesse, Génération et sprite officiel. Toutes les données sont extraites de la réponse JSON de l'API.</div>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-num">—</div>
+        <div class="feat-content">
+          <div class="feat-title">Thème couleur adaptatif par type</div>
+          <div class="feat-desc">Chaque type (Feu, Eau, Plante, Électrik, Psy, Dragon…) est associé à une paire de couleurs définie côté PHP. Le dégradé CSS, le titre et les badges sont générés dynamiquement à partir de ces variables — changement instantané à chaque recherche.</div>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-num">—</div>
+        <div class="feat-content">
+          <div class="feat-title">Recherche par nom ou par numéro</div>
+          <div class="feat-desc">Le formulaire accepte le nom français du Pokémon (ex : Bulbizarre) ou son numéro Pokédex (ex : 25). L'URL est encodée via <code style="font-family:var(--mono);font-size:.78rem">urlencode()</code> avant l'appel API.</div>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-num">—</div>
+        <div class="feat-content">
+          <div class="feat-title">Suggestions de Pokémon populaires</div>
+          <div class="feat-desc">Raccourcis cliquables sous le formulaire (Pikachu, Bulbizarre, Salamèche, Carapuce, Mewtwo, Évoli, Ectoplasma, Ronflex) pour naviguer rapidement sans taper.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SÉCURITÉ -->
+  <div class="proj-section">
+    <div class="section-num">04</div>
+    <h2>Sécurité & Bonnes pratiques</h2>
+    <div class="sec-grid">
+      <div class="sec-card">
+        <div class="sec-num">01</div>
+        <div class="sec-title">Protection XSS</div>
+        <div class="sec-desc">Toutes les données affichées (nom du Pokémon, query de l'utilisateur) passent par <code style="font-family:var(--mono);font-size:.75rem">htmlspecialchars()</code> pour neutraliser toute injection HTML ou JavaScript.</div>
+      </div>
+      <div class="sec-card">
+        <div class="sec-num">02</div>
+        <div class="sec-title">Gestion des erreurs HTTP</div>
+        <div class="sec-desc">Vérification du header de réponse HTTP (<code style="font-family:var(--mono);font-size:.75rem">$http_response_header</code>) — si l'API retourne une erreur 404 ou 500, un message d'erreur explicite est affiché sans exposer les détails techniques.</div>
+      </div>
+      <div class="sec-card">
+        <div class="sec-num">03</div>
+        <div class="sec-title">Encodage des URL</div>
+        <div class="sec-desc">La saisie utilisateur est encodée avec <code style="font-family:var(--mono);font-size:.75rem">urlencode()</code> avant d'être insérée dans l'URL d'appel à l'API, empêchant toute manipulation de l'URL.</div>
+      </div>
+      <div class="sec-card">
+        <div class="sec-num">04</div>
+        <div class="sec-title">Timeout de requête</div>
+        <div class="sec-desc">Un timeout de 5 secondes est configuré via le contexte HTTP. En cas de non-réponse de l'API, l'application affiche un message d'erreur et ne reste pas bloquée.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPÉTENCES BTS -->
+  <div class="proj-section">
+    <div class="section-num">05</div>
+    <h2>Compétences couvertes</h2>
+    <div class="comp-block">
+      <div class="comp-block-title">Bloc 1 — Services informatiques aux organisations</div>
+      <div class="comp-list">
+        <div class="comp-item">Exploiter les ressources du Web (API REST, documentation externe)</div>
+        <div class="comp-item">Participer à l'évolution d'un site Web exploitant les données de l'organisation</div>
+      </div>
+    </div>
+    <div class="comp-block">
+      <div class="comp-block-title">Bloc 2 — Conception et développement d'applications</div>
+      <div class="comp-list">
+        <div class="comp-item">Identifier, développer et utiliser des composants logiciels (PHP, JSON, API)</div>
+        <div class="comp-item">Intégrer et adapter des composants d'interface (CSS dynamique via variables PHP)</div>
+        <div class="comp-item">Analyser et corriger des dysfonctionnements (gestion d'erreurs HTTP)</div>
+        <div class="comp-item">Rédiger des documentations technique et d'utilisation</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIENS -->
+  <div class="proj-section">
+    <div class="section-num">06</div>
+    <h2>Liens</h2>
+    <div class="links-grid">
+      <a href="https://mcirdi.alwaysdata.net/pokedex/" target="_blank" class="link-card">
+        <span class="link-arrow">↗</span>
+        <div class="link-card-label">Démo en ligne</div>
+        <div class="link-card-title">Voir l'application</div>
+        <div class="link-card-url">mcirdi.alwaysdata.net/pokedex/</div>
+      </a>
+      <a href="index.html" class="link-card">
+        <span class="link-arrow">←</span>
+        <div class="link-card-label">Portfolio</div>
+        <div class="link-card-title">Retour au portfolio</div>
+        <div class="link-card-url">ilyesadd.github.io</div>
+      </a>
+    </div>
+  </div>
+
+</div><!-- /wrapper -->
+
+<footer>
+  <div class="fi">
+    <span class="fc">Elyas Mcirdi — BTS SIO — INSTA Paris — 2026</span>
+    <div class="flinks">
+      <a href="index.html">Portfolio</a>
+      <a href="https://github.com/Ilyesadd" target="_blank">GitHub ↗</a>
+      <a href="mailto:Elyasmcirdi@gmail.com">Mail</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const canvas=document.getElementById('stars');
+  const ctx=canvas.getContext('2d');
+  let W,H,stars=[],shootingStars=[],nebulae=[];
+  function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+  function initNebulae(){nebulae=[
+    {x:W*.75,y:H*.15,rx:320,ry:180,color:'80,120,255',a:.045},
+    {x:W*.15,y:H*.7,rx:260,ry:150,color:'140,80,220',a:.035},
+    {x:W*.5,y:H*.45,rx:200,ry:120,color:'60,180,160',a:.02},
+  ];}
+  function initStars(){
+    stars=[];
+    [{n:Math.floor(W*H/6000),rMin:.15,rMax:.5,oMin:.15,oMax:.5,sp:.003},
+     {n:Math.floor(W*H/10000),rMin:.3,rMax:.9,oMin:.25,oMax:.7,sp:.007},
+     {n:Math.floor(W*H/20000),rMin:.9,rMax:1.6,oMin:.5,oMax:.95,sp:.014}
+    ].forEach(l=>{for(let i=0;i<l.n;i++)stars.push({
+      x:Math.random()*W,y:Math.random()*H,
+      r:l.rMin+Math.random()*(l.rMax-l.rMin),
+      bo:l.oMin+Math.random()*(l.oMax-l.oMin),
+      sp:l.sp+Math.random()*l.sp,ph:Math.random()*Math.PI*2,
+      vx:(Math.random()-.5)*.012,vy:(Math.random()-.5)*.006,
+      hue:Math.random()<.12?'200,230,255':'210,220,255'
+    });});
+  }
+  function spawnShooting(){if(Math.random()>.993)shootingStars.push({
+    x:Math.random()*W*.75,y:Math.random()*H*.45,
+    len:100+Math.random()*160,speed:6+Math.random()*10,
+    angle:Math.PI/5.5+(Math.random()-.5)*.4,life:1,decay:.018+Math.random()*.022
+  });}
+  let t=0;
+  function draw(){
+    ctx.clearRect(0,0,W,H);t+=.012;
+    for(const n of nebulae){
+      const grad=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,Math.max(n.rx,n.ry));
+      grad.addColorStop(0,`rgba(${n.color},${n.a})`);
+      grad.addColorStop(.5,`rgba(${n.color},${n.a*.4})`);
+      grad.addColorStop(1,`rgba(${n.color},0)`);
+      ctx.save();ctx.scale(1,n.ry/n.rx);ctx.beginPath();
+      ctx.arc(n.x,n.y*(n.rx/n.ry),n.rx,0,Math.PI*2);
+      ctx.fillStyle=grad;ctx.fill();ctx.restore();
+    }
+    for(const s of stars){
+      const a=s.bo*(.5+.5*Math.sin(t*s.sp*40+s.ph));
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(${s.hue},${a})`;ctx.fill();
+      s.x+=s.vx;s.y+=s.vy;
+      if(s.x<-2)s.x=W+2;if(s.x>W+2)s.x=-2;
+      if(s.y<-2)s.y=H+2;if(s.y>H+2)s.y=-2;
+    }
+    spawnShooting();
+    shootingStars=shootingStars.filter(s=>s.life>0);
+    for(const s of shootingStars){
+      const ex=s.x+Math.cos(s.angle)*s.len,ey=s.y+Math.sin(s.angle)*s.len;
+      const g=ctx.createLinearGradient(s.x,s.y,ex,ey);
+      g.addColorStop(0,'rgba(200,220,255,0)');
+      g.addColorStop(.25,`rgba(220,235,255,${s.life*.85})`);
+      g.addColorStop(.7,`rgba(255,255,255,${s.life*.4})`);
+      g.addColorStop(1,'rgba(200,220,255,0)');
+      ctx.beginPath();ctx.moveTo(s.x,s.y);ctx.lineTo(ex,ey);
+      ctx.strokeStyle=g;ctx.lineWidth=1.4;ctx.stroke();
+      ctx.beginPath();ctx.arc(ex,ey,1.5,0,Math.PI*2);
+      ctx.fillStyle=`rgba(255,255,255,${s.life*.6})`;ctx.fill();
+      s.x+=Math.cos(s.angle)*s.speed;s.y+=Math.sin(s.angle)*s.speed;s.life-=s.decay;
+    }
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize',()=>{resize();initNebulae();initStars();});
+  resize();initNebulae();initStars();draw();
+})();
+</script>
+</body>
+</html>
