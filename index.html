@@ -195,7 +195,6 @@ a.proj-item,div.proj-item{grid-template-columns:1fr}
         <div class="arr">↗</div>
       </a>
 
-      <!-- ✅ NOUVEAU — Pokédex Interactif -->
       <a href="pokedex.html" class="proj-item">
         <div>
           <div class="proj-badge">Projet personnel — BTS SIO <span class="status">PHP / API</span></div>
@@ -208,7 +207,6 @@ a.proj-item,div.proj-item{grid-template-columns:1fr}
         <div class="arr">↗</div>
       </a>
 
-      <!-- ✅ NOUVEAU — Snake Android -->
       <a href="snake.html" class="proj-item">
         <div>
           <div class="proj-badge">Atelier professionnel — BTS SIO <span class="status">Projet de groupe</span></div>
@@ -221,7 +219,6 @@ a.proj-item,div.proj-item{grid-template-columns:1fr}
         <div class="arr">↗</div>
       </a>
 
-      <!-- ✅ NOUVEAU — GestMat -->
       <a href="gestmat.html" class="proj-item">
         <div>
           <div class="proj-badge">Projet personnel — BTS SIO <span class="status">Gestion</span></div>
@@ -343,12 +340,12 @@ a.proj-item,div.proj-item{grid-template-columns:1fr}
       <a href="https://github.com/Ilyesadd" target="_blank">GitHub ↗</a>
       <a href="https://www.linkedin.com/in/elyas-mcirdi-1abab12b8/" target="_blank">LinkedIn ↗</a>
       <a href="https://elyasmcirdi.fr" target="_blank">Site ↗</a>
-      <a href="/cdn-cgi/l/email-protection#e8ad8491899b858b819a8c81a88f85898184c68b8785">Mail</a>
+      <a href="mailto:elyas.mcirdi@gmail.com">Mail</a>
     </div>
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 (function () {
   const canvas = document.getElementById('stars');
   const ctx = canvas.getContext('2d');
@@ -378,7 +375,7 @@ a.proj-item,div.proj-item{grid-template-columns:1fr}
           ph: Math.random() * Math.PI * 2,
           vx: (Math.random() - .5) * .012,
           vy: (Math.random() - .5) * .006,
-          hue: Math.random() < .12 ? `200,230,255` : `210,220,255`
+          hue: Math.random() < .12 ? '200,230,255' : '210,220,255'
         });
       }
     });
@@ -399,9 +396,9 @@ a.proj-item,div.proj-item{grid-template-columns:1fr}
     t += .012;
     for (const n of nebulae) {
       const grad = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, Math.max(n.rx, n.ry));
-      grad.addColorStop(0, `rgba(${n.color}, ${n.a})`);
-      grad.addColorStop(.5, `rgba(${n.color}, ${n.a * .4})`);
-      grad.addColorStop(1, `rgba(${n.color}, 0)`);
+      grad.addColorStop(0, 'rgba(' + n.color + ', ' + n.a + ')');
+      grad.addColorStop(.5, 'rgba(' + n.color + ', ' + (n.a * .4) + ')');
+      grad.addColorStop(1, 'rgba(' + n.color + ', 0)');
       ctx.save();
       ctx.scale(1, n.ry / n.rx);
       ctx.beginPath();
@@ -414,7 +411,7 @@ a.proj-item,div.proj-item{grid-template-columns:1fr}
       const a = s.bo * (.5 + .5 * Math.sin(t * s.sp * 40 + s.ph));
       ctx.beginPath();
       ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${s.hue}, ${a})`;
+      ctx.fillStyle = 'rgba(' + s.hue + ', ' + a + ')';
       ctx.fill();
       s.x += s.vx; s.y += s.vy;
       if (s.x < -2) s.x = W + 2; if (s.x > W + 2) s.x = -2;
@@ -426,10 +423,10 @@ a.proj-item,div.proj-item{grid-template-columns:1fr}
       const ex = s.x + Math.cos(s.angle) * s.len;
       const ey = s.y + Math.sin(s.angle) * s.len;
       const g = ctx.createLinearGradient(s.x, s.y, ex, ey);
-      g.addColorStop(0, `rgba(200,220,255,0)`);
-      g.addColorStop(.25, `rgba(220,235,255,${s.life * .85})`);
-      g.addColorStop(.7, `rgba(255,255,255,${s.life * .4})`);
-      g.addColorStop(1, `rgba(200,220,255,0)`);
+      g.addColorStop(0, 'rgba(200,220,255,0)');
+      g.addColorStop(.25, 'rgba(220,235,255,' + (s.life * .85) + ')');
+      g.addColorStop(.7, 'rgba(255,255,255,' + (s.life * .4) + ')');
+      g.addColorStop(1, 'rgba(200,220,255,0)');
       ctx.beginPath();
       ctx.moveTo(s.x, s.y);
       ctx.lineTo(ex, ey);
@@ -438,7 +435,7 @@ a.proj-item,div.proj-item{grid-template-columns:1fr}
       ctx.stroke();
       ctx.beginPath();
       ctx.arc(ex, ey, 1.5, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255,255,255,${s.life * .6})`;
+      ctx.fillStyle = 'rgba(255,255,255,' + (s.life * .6) + ')';
       ctx.fill();
       s.x += Math.cos(s.angle) * s.speed;
       s.y += Math.sin(s.angle) * s.speed;
@@ -446,4 +443,9 @@ a.proj-item,div.proj-item{grid-template-columns:1fr}
     }
     requestAnimationFrame(draw);
   }
-  window.addEv
+  window.addEventListener('resize', () => { resize(); initNebulae(); initStars(); });
+  resize(); initNebulae(); initStars(); draw();
+})();
+</script>
+</body>
+</html>
