@@ -8,9 +8,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#06080f;--bg2:#0a0d18;--border:rgba(255,255,255,0.07);--border-h:rgba(255,255,255,0.14);--accent:#7aa2f7;--text:#c9d1e8;--muted:#4a5168;--bright:#e8ecf8;--tag-bg:rgba(122,162,247,0.08);--tag-border:rgba(122,162,247,0.2);--font:'Inter',sans-serif;--mono:'JetBrains Mono',monospace}
+:root{--bg:#06080f;--bg2:#0a0d18;--border:rgba(255,255,255,0.07);--border-h:rgba(255,255,255,0.14);--accent:#7aa2f7;--text:#c9d1e8;--muted:#8a9bbf;--bright:#e8ecf8;--tag-bg:rgba(122,162,247,0.08);--tag-border:rgba(122,162,247,0.2);--font:'Inter',sans-serif;--mono:'JetBrains Mono',monospace}
 html{scroll-behavior:smooth}body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:15px;line-height:1.6;overflow-x:hidden}
-#stars{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5}
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none}
 .wrapper{max-width:820px;margin:0 auto;padding:0 2rem;position:relative;z-index:1}
 nav{position:fixed;top:0;left:0;right:0;z-index:100;border-bottom:1px solid var(--border);backdrop-filter:blur(12px);background:rgba(6,8,15,0.85)}
 .ni{max-width:820px;margin:0 auto;padding:0 2rem;display:flex;justify-content:space-between;align-items:center;height:52px}
@@ -248,12 +248,79 @@ footer{border-top:1px solid var(--border);position:relative;z-index:1}
     <div class="flinks">
       <a href="index.html">Portfolio</a>
       <a href="https://github.com/Ilyesadd" target="_blank">GitHub ↗</a>
-      <a href="mailto:Elyasmcirdi@gmail.com">Mail</a>
+      <a href="/cdn-cgi/l/email-protection#52173e2b33213f313b20363b12353f333b3e7c313d3f">Mail</a>
     </div>
   </div>
 </footer>
 <script>
-(function(){const c=document.getElementById('stars'),ctx=c.getContext('2d');let W,H,s=[];function r(){W=c.width=window.innerWidth;H=c.height=window.innerHeight}function i(){s=[];const N=Math.floor(W*H/9000);for(let n=0;n<N;n++)s.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*.9+.1,o:Math.random()*.45+.06,sp:Math.random()*.008+.002,p:Math.random()*Math.PI*2})}let t=0;function d(){ctx.clearRect(0,0,W,H);t+=.01;for(const v of s){const a=v.o*(.4+.6*Math.sin(t*v.sp*60+v.p));ctx.beginPath();ctx.arc(v.x,v.y,v.r,0,Math.PI*2);ctx.fillStyle=`rgba(180,200,255,${a})`;ctx.fill()}requestAnimationFrame(d)}window.addEventListener('resize',()=>{r();i()});r();i();d()})();
-</script>
-</body>
-</html>
+(function(){
+  const canvas=document.getElementById('stars');
+  const ctx=canvas.getContext('2d');
+  let W,H,stars=[],shootingStars=[],nebulae=[];
+  function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+  function initNebulae(){nebulae=[
+    {x:W*.75,y:H*.15,rx:320,ry:180,color:'80,120,255',a:.045},
+    {x:W*.15,y:H*.7,rx:260,ry:150,color:'140,80,220',a:.035},
+    {x:W*.5,y:H*.45,rx:200,ry:120,color:'60,180,160',a:.02},
+  ];}
+  function initStars(){
+    stars=[];
+    [{n:Math.floor(W*H/6000),rMin:.15,rMax:.5,oMin:.15,oMax:.5,sp:.003},
+     {n:Math.floor(W*H/10000),rMin:.3,rMax:.9,oMin:.25,oMax:.7,sp:.007},
+     {n:Math.floor(W*H/20000),rMin:.9,rMax:1.6,oMin:.5,oMax:.95,sp:.014}
+    ].forEach(l=>{for(let i=0;i<l.n;i++)stars.push({
+      x:Math.random()*W,y:Math.random()*H,
+      r:l.rMin+Math.random()*(l.rMax-l.rMin),
+      bo:l.oMin+Math.random()*(l.oMax-l.oMin),
+      sp:l.sp+Math.random()*l.sp,ph:Math.random()*Math.PI*2,
+      vx:(Math.random()-.5)*.012,vy:(Math.random()-.5)*.006,
+      hue:Math.random()<.12?'200,230,255':'210,220,255'
+    });});
+  }
+  function spawnShooting(){if(Math.random()>.993)shootingStars.push({
+    x:Math.random()*W*.75,y:Math.random()*H*.45,
+    len:100+Math.random()*160,speed:6+Math.random()*10,
+    angle:Math.PI/5.5+(Math.random()-.5)*.4,life:1,decay:.018+Math.random()*.022
+  });}
+  let t=0;
+  function draw(){
+    ctx.clearRect(0,0,W,H);t+=.012;
+    for(const n of nebulae){
+      const grad=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,Math.max(n.rx,n.ry));
+      grad.addColorStop(0,`rgba(${n.color},${n.a})`);
+      grad.addColorStop(.5,`rgba(${n.color},${n.a*.4})`);
+      grad.addColorStop(1,`rgba(${n.color},0)`);
+      ctx.save();ctx.scale(1,n.ry/n.rx);ctx.beginPath();
+      ctx.arc(n.x,n.y*(n.rx/n.ry),n.rx,0,Math.PI*2);
+      ctx.fillStyle=grad;ctx.fill();ctx.restore();
+    }
+    for(const s of stars){
+      const a=s.bo*(.5+.5*Math.sin(t*s.sp*40+s.ph));
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(${s.hue},${a})`;ctx.fill();
+      s.x+=s.vx;s.y+=s.vy;
+      if(s.x<-2)s.x=W+2;if(s.x>W+2)s.x=-2;
+      if(s.y<-2)s.y=H+2;if(s.y>H+2)s.y=-2;
+    }
+    spawnShooting();
+    shootingStars=shootingStars.filter(s=>s.life>0);
+    for(const s of shootingStars){
+      const ex=s.x+Math.cos(s.angle)*s.len,ey=s.y+Math.sin(s.angle)*s.len;
+      const g=ctx.createLinearGradient(s.x,s.y,ex,ey);
+      g.addColorStop(0,'rgba(200,220,255,0)');
+      g.addColorStop(.25,`rgba(220,235,255,${s.life*.85})`);
+      g.addColorStop(.7,`rgba(255,255,255,${s.life*.4})`);
+      g.addColorStop(1,'rgba(200,220,255,0)');
+      ctx.beginPath();ctx.moveTo(s.x,s.y);ctx.lineTo(ex,ey);
+      ctx.strokeStyle=g;ctx.lineWidth=1.4;ctx.stroke();
+      ctx.beginPath();ctx.arc(ex,ey,1.5,0,Math.PI*2);
+      ctx.fillStyle=`rgba(255,255,255,${s.life*.6})`;ctx.fill();
+      s.x+=Math.cos(s.angle)*s.speed;s.y+=Math.sin(s.angle)*s.speed;s.life-=s.decay;
+    }
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize',()=>{resize();initNebulae();initStars();});
+  resize();initNebulae();initStars();draw();
+})();
+</script><script>
+(function(){const c=document.getElementById('stars'),ctx=c.getContext('2d');let W,H,s=[];function r(){W=c.width=window.innerWidth;H=c.height=window.innerHeight}function i(){s=[];const N=Math.floor(W*H/9000);for(let n=0;n<N;n++)s.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*.9+.1,o:Math.random()*.45+.06,sp:Math.random()*.008+.002,p:Math.random()*Math.PI*2})}let t=0;function d(){ctx.clearRect(0,0,W,H);t+=.01;for(const v of s){const a=v.o*(.4+.6*Math.sin(t*v.sp*60+v.p));ctx.beginPath();ctx.arc(v.x,v.y,v.r,0,Math.PI*2);ctx.fillStyle=

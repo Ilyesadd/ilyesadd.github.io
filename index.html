@@ -183,7 +183,7 @@ a.proj-item,div.proj-item{grid-template-columns:1fr}
         </div>
       </div>
 
-      <div class="proj-item proj-placeholder">
+      <a href="frontend-mentor.html" class="proj-item">
         <div>
           <div class="proj-badge">Défis Frontend <span class="status" style="color:#e5a30e;border-color:rgba(229,163,14,.25);background:rgba(229,163,14,.07)">En cours</span></div>
           <div class="proj-title">Frontend Mentor — Challenges</div>
@@ -192,7 +192,8 @@ a.proj-item,div.proj-item{grid-template-columns:1fr}
             <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span>
           </div>
         </div>
-      </div>
+        <div class="arr">↗</div>
+      </a>
 
       <!-- ✅ NOUVEAU — Pokédex Interactif -->
       <a href="pokedex.html" class="proj-item">
@@ -202,6 +203,19 @@ a.proj-item,div.proj-item{grid-template-columns:1fr}
           <p class="proj-desc">Application web monopage interrogeant l'API PokéBuild FR pour afficher la fiche complète d'un Pokémon (nom, types, statistiques, génération, sprite officiel). Thème visuel adaptatif selon le type principal. Recherche par nom ou par numéro.</p>
           <div class="proj-tags">
             <span class="tag">PHP</span><span class="tag">API REST</span><span class="tag">HTML / CSS</span><span class="tag">Google Fonts</span>
+          </div>
+        </div>
+        <div class="arr">↗</div>
+      </a>
+
+      <!-- ✅ NOUVEAU — Snake Android -->
+      <a href="snake.html" class="proj-item">
+        <div>
+          <div class="proj-badge">Atelier professionnel — BTS SIO <span class="status">Projet de groupe</span></div>
+          <div class="proj-title">Snake Android</div>
+          <p class="proj-desc">Jeu Snake développé en Java sous Android Studio. Grille 20×20 adaptative, score en temps réel, meilleur score persistant, contrôles swipe tactile et D-Pad, thème sombre.</p>
+          <div class="proj-tags">
+            <span class="tag">Java</span><span class="tag">Android Studio</span><span class="tag">Canvas 2D</span><span class="tag">SharedPreferences</span>
           </div>
         </div>
         <div class="arr">↗</div>
@@ -329,12 +343,12 @@ a.proj-item,div.proj-item{grid-template-columns:1fr}
       <a href="https://github.com/Ilyesadd" target="_blank">GitHub ↗</a>
       <a href="https://www.linkedin.com/in/elyas-mcirdi-1abab12b8/" target="_blank">LinkedIn ↗</a>
       <a href="https://elyasmcirdi.fr" target="_blank">Site ↗</a>
-      <a href="mailto:Elyasmcirdi@gmail.com">Mail</a>
+      <a href="/cdn-cgi/l/email-protection#e8ad8491899b858b819a8c81a88f85898184c68b8785">Mail</a>
     </div>
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 (function () {
   const canvas = document.getElementById('stars');
   const ctx = canvas.getContext('2d');
@@ -432,9 +446,4 @@ a.proj-item,div.proj-item{grid-template-columns:1fr}
     }
     requestAnimationFrame(draw);
   }
-  window.addEventListener('resize', () => { resize(); initNebulae(); initStars(); });
-  resize(); initNebulae(); initStars(); draw();
-})();
-</script>
-</body>
-</html>
+  window.addEv
