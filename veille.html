@@ -26,16 +26,9 @@ tailwind.config = {
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{background:#080c14;color:#cdd6f4;font-family:'IBM Plex Sans',sans-serif;font-size:14px;line-height:1.6;overflow-x:hidden}
-
-/* scanlines */
 body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.025) 2px,rgba(0,0,0,0.025) 4px)}
-
-/* grid bg */
 .grid-bg{background-image:linear-gradient(rgba(56,189,248,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(56,189,248,0.025) 1px,transparent 1px);background-size:40px 40px}
-
-/* glow */
 .glow-text{text-shadow:0 0 24px rgba(56,189,248,0.55)}
-.glow-green{text-shadow:0 0 10px rgba(52,211,153,0.7)}
 
 /* cards */
 .card{background:#0d1120;border:1px solid #1e2a3a;transition:border-color .2s,box-shadow .2s,transform .18s;position:relative;overflow:hidden}
@@ -43,9 +36,20 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .card:hover{border-color:#38bdf8;transform:translateY(-2px);box-shadow:0 10px 40px rgba(0,0,0,0.5),0 0 0 1px rgba(56,189,248,0.07)}
 .card:hover::after{opacity:1}
 
-.art-card{background:#0d1120;border:1px solid #1e2a3a;padding:.95rem 1.1rem;transition:all .18s;cursor:pointer;display:block;text-decoration:none}
+.art-card{background:#0d1120;border:1px solid #1e2a3a;padding:.95rem 1.1rem;transition:all .18s;cursor:pointer;display:block;text-decoration:none;position:relative}
 .art-card:hover{border-color:#2e4060;background:#111827}
 .art-card:hover .art-title{color:#38bdf8}
+
+/* date badge on article */
+.art-date-badge{
+  display:inline-flex;align-items:center;gap:.3rem;
+  font-family:'IBM Plex Mono',monospace;font-size:.6rem;
+  color:#6b7a9e;letter-spacing:.04em;
+  background:#111827;border:1px solid #1e2a3a;
+  padding:.15rem .5rem;margin-top:.5rem;
+}
+.art-date-badge.fresh{color:#34d399;border-color:rgba(52,211,153,.25);background:rgba(52,211,153,.05)}
+.art-date-badge.recent{color:#38bdf8;border-color:rgba(56,189,248,.2);background:rgba(56,189,248,.04)}
 
 .lex-card{background:#0d1120;border:1px solid #1e2a3a;padding:1.3rem;transition:all .25s;position:relative;overflow:hidden;cursor:default}
 .lex-card .lex-accent{position:absolute;bottom:0;right:0;font-size:3.5rem;opacity:.04;font-family:'IBM Plex Mono',monospace;font-weight:600;line-height:1;padding:.2rem .4rem;transition:opacity .25s,transform .25s}
@@ -62,49 +66,33 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .search-input:focus{border-color:#38bdf8;box-shadow:0 0 0 3px rgba(56,189,248,.08)}
 .search-input::placeholder{color:#4a5568}
 
-/* chip */
 .chip{font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.07em;padding:.2rem .6rem;border:1px solid #1e2a3a;color:#6b7a9e;cursor:pointer;transition:all .15s;background:transparent;white-space:nowrap;user-select:none}
 .chip:hover,.chip.active{border-color:#38bdf8;color:#38bdf8;background:rgba(56,189,248,.06)}
 
-/* spinner */
 .spinner{width:14px;height:14px;border:2px solid #1e2a3a;border-top-color:#38bdf8;border-radius:50%;animation:spin .75s linear infinite;display:inline-block;vertical-align:middle}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* pulse dot */
 .pdot{width:7px;height:7px;border-radius:50%;background:#34d399;box-shadow:0 0 6px #34d399;animation:pdot-a 2s ease infinite;display:inline-block}
 @keyframes pdot-a{0%,100%{opacity:1;box-shadow:0 0 6px #34d399}50%{opacity:.4;box-shadow:0 0 2px #34d399}}
 
-/* section label */
 .s-label{font-family:'IBM Plex Mono',monospace;font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:#6b7a9e;display:flex;align-items:center;gap:.5rem}
 .s-label::before{content:'//';color:#38bdf8;font-weight:600}
 
-/* tag */
 .tag-pill{font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.06em;padding:.13rem .5rem;border:1px solid rgba(56,189,248,.2);color:#38bdf8;background:rgba(56,189,248,.05)}
 .tag-pill.p{border-color:rgba(167,139,250,.2);color:#a78bfa;background:rgba(167,139,250,.05)}
 .tag-pill.g{border-color:rgba(52,211,153,.2);color:#34d399;background:rgba(52,211,153,.05)}
 .tag-pill.w{border-color:rgba(245,158,11,.2);color:#f59e0b;background:rgba(245,158,11,.05)}
 
-/* source badge */
-.src-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:.4rem}
-
-/* no-results */
+.src-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
 .no-res{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:#4a5568;padding:2rem;text-align:center;border:1px dashed #1e2a3a;width:100%;grid-column:1/-1}
 
-/* nav */
 nav{position:sticky;top:0;z-index:50;background:rgba(8,12,20,.92);backdrop-filter:blur(16px);border-bottom:1px solid #1e2a3a}
-
-/* scrollbar */
 ::-webkit-scrollbar{width:6px;height:6px}
 ::-webkit-scrollbar-track{background:#080c14}
 ::-webkit-scrollbar-thumb{background:#1e2a3a;border-radius:3px}
 ::-webkit-scrollbar-thumb:hover{background:#2e4060}
 
-/* article grid */
 #articles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:.75rem}
-
-/* progress bar for refresh */
-.refresh-bar{height:2px;background:linear-gradient(90deg,#38bdf8,#a78bfa);transform-origin:left;animation:rfbar 86400s linear forwards}
-@keyframes rfbar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 
 @media(max-width:640px){
   #articles-grid{grid-template-columns:1fr}
@@ -146,8 +134,6 @@ nav{position:sticky;top:0;z-index:50;background:rgba(8,12,20,.92);backdrop-filte
     <p style="font-size:.88rem;color:#6b7a9e;max-width:520px;font-weight:300;line-height:1.7">
       Tableau de bord de veille — flux RSS en direct, lexique technique et calendrier des événements de l'industrie.
     </p>
-
-    <!-- Stats bar -->
     <div style="display:flex;gap:2rem;margin-top:1.5rem;flex-wrap:wrap">
       <div>
         <div style="font-family:'IBM Plex Mono',monospace;font-size:1.4rem;font-weight:600;color:#38bdf8" id="stat-articles">—</div>
@@ -158,7 +144,7 @@ nav{position:sticky;top:0;z-index:50;background:rgba(8,12,20,.92);backdrop-filte
         <div style="font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:#6b7a9e;letter-spacing:.08em;text-transform:uppercase">Sources</div>
       </div>
       <div>
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:1.4rem;font-weight:600;color:#34d399">5</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:1.4rem;font-weight:600;color:#34d399">6</div>
         <div style="font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:#6b7a9e;letter-spacing:.08em;text-transform:uppercase">Concepts</div>
       </div>
       <div>
@@ -175,17 +161,16 @@ nav{position:sticky;top:0;z-index:50;background:rgba(8,12,20,.92);backdrop-filte
         <div class="s-label" style="margin-bottom:.4rem">Sources en temps réel</div>
         <h2 style="font-family:'IBM Plex Mono',monospace;font-size:1rem;font-weight:500;color:#e8eeff">Derniers articles</h2>
       </div>
-      <button id="btn-refresh" onclick="loadAllFeeds()" style="font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:#38bdf8;background:transparent;border:1px solid rgba(56,189,248,.25);padding:.35rem .9rem;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:.4rem" onmouseover="this.style.background='rgba(56,189,248,.07)'" onmouseout="this.style.background='transparent'">
+      <button id="btn-refresh" onclick="manualRefresh()" style="font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:#38bdf8;background:transparent;border:1px solid rgba(56,189,248,.25);padding:.35rem .9rem;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:.4rem" onmouseover="this.style.background='rgba(56,189,248,.07)'" onmouseout="this.style.background='transparent'">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
         Rafraîchir
       </button>
     </div>
 
-    <!-- Barre de recherche + filtres -->
     <div style="display:flex;flex-direction:column;gap:.75rem;margin-bottom:1.25rem">
       <div class="search-wrap">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        <input id="search-input" class="search-input" type="text" placeholder="Filtrer par mot-clé : RTX, UE5, Vulkan, DLSS…" oninput="filterArticles()">
+        <input id="search-input" class="search-input" type="text" placeholder="Filtrer : RTX, UE5, Vulkan, DLSS, path tracing…" oninput="filterArticles()">
       </div>
       <div style="display:flex;gap:.4rem;flex-wrap:wrap;align-items:center">
         <span style="font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:#4a5568;letter-spacing:.06em">FILTRES :</span>
@@ -197,7 +182,6 @@ nav{position:sticky;top:0;z-index:50;background:rgba(8,12,20,.92);backdrop-filte
       </div>
     </div>
 
-    <!-- Sources legend -->
     <div style="display:flex;gap:1.5rem;margin-bottom:1rem;flex-wrap:wrap">
       <div style="display:flex;align-items:center;gap:.4rem"><span style="width:8px;height:8px;border-radius:50%;background:#38bdf8;box-shadow:0 0 6px #38bdf8;display:inline-block"></span><span style="font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:#6b7a9e">Unreal Engine</span></div>
       <div style="display:flex;align-items:center;gap:.4rem"><span style="width:8px;height:8px;border-radius:50%;background:#a78bfa;box-shadow:0 0 6px #a78bfa;display:inline-block"></span><span style="font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:#6b7a9e">Unity Blog</span></div>
@@ -205,7 +189,6 @@ nav{position:sticky;top:0;z-index:50;background:rgba(8,12,20,.92);backdrop-filte
       <div style="display:flex;align-items:center;gap:.4rem"><span style="width:8px;height:8px;border-radius:50%;background:#f59e0b;box-shadow:0 0 6px #f59e0b;display:inline-block"></span><span style="font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:#6b7a9e">Digital Foundry</span></div>
     </div>
 
-    <!-- Articles grid -->
     <div id="articles-grid">
       <div style="grid-column:1/-1;text-align:center;padding:2.5rem;font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:#4a5568;display:flex;align-items:center;justify-content:center;gap:.75rem">
         <span class="spinner"></span> Chargement des flux RSS…
@@ -219,10 +202,8 @@ nav{position:sticky;top:0;z-index:50;background:rgba(8,12,20,.92);backdrop-filte
       <div class="s-label" style="margin-bottom:.4rem">Référence</div>
       <h2 style="font-family:'IBM Plex Mono',monospace;font-size:1rem;font-weight:500;color:#e8eeff">Lexique Technique</h2>
     </div>
-
     <div class="lex-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.75rem">
 
-      <!-- Ray Tracing -->
       <div class="lex-card card">
         <div class="lex-accent" style="color:#38bdf8">RT</div>
         <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem">
@@ -235,7 +216,6 @@ nav{position:sticky;top:0;z-index:50;background:rgba(8,12,20,.92);backdrop-filte
         </div>
       </div>
 
-      <!-- Path Tracing -->
       <div class="lex-card card">
         <div class="lex-accent" style="color:#a78bfa">PT</div>
         <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem">
@@ -248,7 +228,6 @@ nav{position:sticky;top:0;z-index:50;background:rgba(8,12,20,.92);backdrop-filte
         </div>
       </div>
 
-      <!-- DLSS / FSR -->
       <div class="lex-card card">
         <div class="lex-accent" style="color:#34d399">AI</div>
         <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem">
@@ -261,7 +240,6 @@ nav{position:sticky;top:0;z-index:50;background:rgba(8,12,20,.92);backdrop-filte
         </div>
       </div>
 
-      <!-- Vulkan -->
       <div class="lex-card card">
         <div class="lex-accent" style="color:#f59e0b">VK</div>
         <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem">
@@ -274,7 +252,6 @@ nav{position:sticky;top:0;z-index:50;background:rgba(8,12,20,.92);backdrop-filte
         </div>
       </div>
 
-      <!-- Shaders -->
       <div class="lex-card card">
         <div class="lex-accent" style="color:#38bdf8">SH</div>
         <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem">
@@ -287,7 +264,6 @@ nav{position:sticky;top:0;z-index:50;background:rgba(8,12,20,.92);backdrop-filte
         </div>
       </div>
 
-      <!-- Lumen / Nanite -->
       <div class="lex-card card">
         <div class="lex-accent" style="color:#a78bfa">UE</div>
         <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem">
@@ -309,130 +285,111 @@ nav{position:sticky;top:0;z-index:50;background:rgba(8,12,20,.92);backdrop-filte
       <div class="s-label" style="margin-bottom:.4rem">Industrie</div>
       <h2 style="font-family:'IBM Plex Mono',monospace;font-size:1rem;font-weight:500;color:#e8eeff">Calendrier des événements</h2>
     </div>
-
     <div class="evt-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.75rem" id="events-grid">
-      <!-- rempli par JS -->
+      <!-- rempli par JS ci-dessous -->
     </div>
   </section>
 
-</div><!-- /container -->
+</div>
 
-<!-- ─── FOOTER ─── -->
 <footer style="border-top:1px solid #1e2a3a;position:relative;z-index:1;background:#080c14">
   <div style="max-width:1200px;margin:0 auto;padding:1.2rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem">
     <span style="font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:#4a5568">Elyas Mcirdi — BTS SIO — INSTA Paris — 2026</span>
     <div style="display:flex;gap:1.5rem">
-      <a href="index.html" style="font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:#4a5568;text-decoration:none;transition:color .15s" onmouseover="this.style.color='#cdd6f4'" onmouseout="this.style.color='#4a5568'">Portfolio</a>
-      <a href="https://github.com/Ilyesadd" target="_blank" style="font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:#4a5568;text-decoration:none;transition:color .15s" onmouseover="this.style.color='#cdd6f4'" onmouseout="this.style.color='#4a5568'">GitHub ↗</a>
-      <a href="mailto:Elyasmcirdi@gmail.com" style="font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:#4a5568;text-decoration:none;transition:color .15s" onmouseover="this.style.color='#cdd6f4'" onmouseout="this.style.color='#4a5568'">Mail</a>
+      <a href="index.html" style="font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:#4a5568;text-decoration:none" onmouseover="this.style.color='#cdd6f4'" onmouseout="this.style.color='#4a5568'">Portfolio</a>
+      <a href="https://github.com/Ilyesadd" target="_blank" style="font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:#4a5568;text-decoration:none" onmouseover="this.style.color='#cdd6f4'" onmouseout="this.style.color='#4a5568'">GitHub ↗</a>
+      <a href="mailto:Elyasmcirdi@gmail.com" style="font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:#4a5568;text-decoration:none" onmouseover="this.style.color='#cdd6f4'" onmouseout="this.style.color='#4a5568'">Mail</a>
     </div>
   </div>
 </footer>
 
 <script>
-/* ═══════════════════════════════════════════════════
-   CONFIG SOURCES
-═══════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════
+   CONFIG
+═══════════════════════════════════════════ */
 const SOURCES = [
-  {
-    id: 'unreal',
-    name: 'Unreal Engine',
-    color: '#38bdf8',
-    shadow: '0 0 6px #38bdf8',
-    url: 'https://www.unrealengine.com/en-US/feed',
-    fallback: 'https://www.unrealengine.com/en-US/rss'
-  },
-  {
-    id: 'unity',
-    name: 'Unity Blog',
-    color: '#a78bfa',
-    shadow: '0 0 6px #a78bfa',
-    url: 'https://blog.unity.com/feed'
-  },
-  {
-    id: 'nvidia',
-    name: 'NVIDIA Developer',
-    color: '#34d399',
-    shadow: '0 0 6px #34d399',
-    url: 'https://developer.nvidia.com/blog/feed/'
-  },
-  {
-    id: 'digitalfoundry',
-    name: 'Digital Foundry',
-    color: '#f59e0b',
-    shadow: '0 0 6px #f59e0b',
-    url: 'https://www.eurogamer.net/?format=rss&type=article&tag=digital-foundry'
-  }
+  { id:'unreal',       name:'Unreal Engine',    color:'#38bdf8', shadow:'0 0 6px #38bdf8', url:'https://www.unrealengine.com/en-US/feed' },
+  { id:'unity',        name:'Unity Blog',        color:'#a78bfa', shadow:'0 0 6px #a78bfa', url:'https://blog.unity.com/feed' },
+  { id:'nvidia',       name:'NVIDIA Developer',  color:'#34d399', shadow:'0 0 6px #34d399', url:'https://developer.nvidia.com/blog/feed/' },
+  { id:'digitalfoundry',name:'Digital Foundry',  color:'#f59e0b', shadow:'0 0 6px #f59e0b', url:'https://www.eurogamer.net/?format=rss&type=article&tag=digital-foundry' }
 ];
 
-const API_BASE = 'https://api.rss2json.com/v1/api.json';
-const CACHE_KEY = 'rt_dashboard_cache';
-const CACHE_TTL = 86400000; // 24h
+const API_BASE  = 'https://api.rss2json.com/v1/api.json';
+const CACHE_KEY = 'rt_dash_v2';
 
 let allArticles = [];
 let activeFilter = 'all';
-let searchTerm = '';
+let searchTerm   = '';
 
-/* ─── EVENTS DATA ─── */
+/* ═══════════════════════════════════════════
+   EVENTS — données à jour 2025/2026
+═══════════════════════════════════════════ */
 const EVENTS = [
   {
-    name: 'GDC 2026',
-    full: 'Game Developers Conference',
-    date: '17–21 Mars 2026',
-    location: 'San Francisco, CA',
-    color: '#38bdf8',
-    status: 'upcoming',
-    desc: 'La plus grande conférence mondiale des développeurs de jeux vidéo. Keynotes, sessions techniques, Expo.',
-    tags: ['Moteurs', 'Rendu', 'IA', 'GPU']
+    name:'GDC 2025',
+    full:'Game Developers Conference',
+    date:'17–21 Mars 2025',
+    location:'San Francisco, CA',
+    color:'#38bdf8',
+    status:'done',
+    desc:'La plus grande conférence mondiale des développeurs de jeux vidéo. Sessions ray tracing, moteurs next-gen et keynotes IA.',
+    tags:['Moteurs','Rendu','IA','GPU']
   },
   {
-    name: 'SIGGRAPH 2026',
-    full: 'Special Interest Group on Computer Graphics',
-    date: '28 Juil – 1 Août 2026',
-    location: 'Denver, CO',
-    color: '#a78bfa',
-    status: 'upcoming',
-    desc: 'Conférence de référence en infographie et rendu interactif. Papiers de recherche sur le ray tracing et la GI.',
-    tags: ['Ray Tracing', 'Research', 'VFX']
+    name:'SIGGRAPH 2025',
+    full:'Special Interest Group on Computer Graphics',
+    date:'10–14 Août 2025',
+    location:'Vancouver, Canada',
+    color:'#a78bfa',
+    status:'done',
+    desc:'Conférence de référence en infographie et rendu interactif. Papiers de recherche sur le ray tracing, la GI et les shaders.',
+    tags:['Ray Tracing','Research','VFX']
   },
   {
-    name: 'NVIDIA GTC 2026',
-    full: 'GPU Technology Conference',
-    date: 'Mars 2026',
-    location: 'San Jose + Online',
-    color: '#34d399',
-    status: 'upcoming',
-    desc: 'Conférence NVIDIA centrée IA et GPU. Annonces DLSS, architectures RTX, drivers et technologies de rendu.',
-    tags: ['RTX', 'DLSS', 'IA']
+    name:'NVIDIA GTC 2026',
+    full:'GPU Technology Conference',
+    date:'Mars 2026',
+    location:'San Jose + Online',
+    color:'#34d399',
+    status:'upcoming',
+    desc:'Conférence NVIDIA centrée IA et GPU. Annonces DLSS, architectures RTX, nouvelles APIs de rendu.',
+    tags:['RTX','DLSS','IA']
   },
   {
-    name: 'AMD RDNA Summit',
-    full: 'AMD Architecture & GPU Keynote',
-    date: 'Fin 2026',
-    location: 'Online',
-    color: '#f59e0b',
-    status: 'tbd',
-    desc: 'Présentation de l\'architecture RDNA prochaine génération et des avancées FSR / ray tracing AMD.',
-    tags: ['FSR', 'RDNA', 'Rendu']
+    name:'GDC 2026',
+    full:'Game Developers Conference',
+    date:'Printemps 2026',
+    location:'San Francisco, CA',
+    color:'#38bdf8',
+    status:'upcoming',
+    desc:'Prochaine édition de la GDC. Sessions techniques attendues sur UE5, moteurs de rendu temps-réel et IA générative.',
+    tags:['Moteurs','Next-gen','GPU']
   }
 ];
 
-/* ─── RENDER EVENTS ─── */
+/* ═══════════════════════════════════════════
+   RENDER EVENTS — appelé directement au chargement
+═══════════════════════════════════════════ */
 function renderEvents() {
   const grid = document.getElementById('events-grid');
+  if (!grid) return;
   grid.innerHTML = EVENTS.map(e => {
-    const statusLabel = e.status === 'upcoming' ? 'À venir' : 'Date TBD';
-    const statusColor = e.status === 'upcoming' ? '#34d399' : '#f59e0b';
+    let statusLabel, statusColor;
+    if (e.status === 'done') {
+      statusLabel = 'Passé'; statusColor = '#6b7a9e';
+    } else {
+      statusLabel = 'À venir'; statusColor = '#34d399';
+    }
     return `
-      <div class="evt-card" style="border-left-color:${e.color}">
+      <div class="evt-card" style="border-left-color:${e.color};${e.status==='done'?'opacity:.75':''}">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.5rem;gap:.5rem">
           <span style="font-family:'IBM Plex Mono',monospace;font-size:.85rem;font-weight:600;color:#e8eeff">${e.name}</span>
-          <span style="font-family:'IBM Plex Mono',monospace;font-size:.58rem;color:${statusColor};border:1px solid ${statusColor}33;padding:.1rem .45rem;white-space:nowrap;background:${statusColor}0d">${statusLabel}</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:.58rem;color:${statusColor};border:1px solid ${statusColor}44;padding:.1rem .45rem;white-space:nowrap;background:${statusColor}12">${statusLabel}</span>
         </div>
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:${e.color};margin-bottom:.3rem">${e.full}</div>
-        <div style="display:flex;gap:1rem;margin-bottom:.65rem">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:${e.color};margin-bottom:.4rem">${e.full}</div>
+        <div style="display:flex;gap:1rem;margin-bottom:.65rem;flex-wrap:wrap">
           <span style="font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:#6b7a9e;display:flex;align-items:center;gap:.3rem">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
             ${e.date}
           </span>
           <span style="font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:#6b7a9e;display:flex;align-items:center;gap:.3rem">
@@ -442,55 +399,57 @@ function renderEvents() {
         </div>
         <p style="font-size:.78rem;color:#8899bb;line-height:1.6;font-weight:300;margin-bottom:.75rem">${e.desc}</p>
         <div style="display:flex;gap:.3rem;flex-wrap:wrap">
-          ${e.tags.map(t => `<span style="font-family:'IBM Plex Mono',monospace;font-size:.58rem;padding:.1rem .45rem;border:1px solid ${e.color}22;color:${e.color};background:${e.color}0a">${t}</span>`).join('')}
+          ${e.tags.map(t=>`<span style="font-family:'IBM Plex Mono',monospace;font-size:.58rem;padding:.1rem .45rem;border:1px solid ${e.color}28;color:${e.color};background:${e.color}0d">${t}</span>`).join('')}
         </div>
-      </div>
-    `;
+      </div>`;
   }).join('');
 }
 
-/* ─── FETCH RSS VIA RSS2JSON ─── */
-async function fetchFeed(source) {
-  const url = `${API_BASE}?rss_url=${encodeURIComponent(source.url)}&api_key=public&count=8`;
-  const res = await fetch(url);
-  if (!res.ok) throw new Error('HTTP ' + res.status);
-  const data = await res.json();
-  if (data.status !== 'ok') throw new Error(data.message || 'RSS error');
-  return (data.items || []).map(item => {
-    const tmp = document.createElement('div');
-    tmp.innerHTML = item.description || '';
-    const desc = (tmp.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 180);
-    const pub = item.pubDate ? new Date(item.pubDate) : null;
-    const dateStr = pub ? pub.toLocaleDateString('fr-FR', {day:'numeric',month:'short',year:'numeric'}) : '';
-    return {
-      title: item.title || 'Sans titre',
-      link: item.link || '#',
-      description: desc,
-      date: dateStr,
-      dateRaw: pub ? pub.getTime() : 0,
-      source: source.id,
-      sourceName: source.name,
-      sourceColor: source.color,
-      sourceShadow: source.shadow
-    };
-  });
+/* ═══════════════════════════════════════════
+   DATE HELPER — badge coloré selon ancienneté
+═══════════════════════════════════════════ */
+function dateBadge(dateStr, dateRaw) {
+  if (!dateStr) return '';
+  const now = Date.now();
+  const diff = now - dateRaw; // ms
+  const days = diff / 86400000;
+  let cls = '', label = dateStr;
+
+  if (dateRaw === 0) {
+    // fallback — date éditoriale approximative
+    cls = '';
+    label = dateStr;
+  } else if (days <= 7) {
+    cls = 'fresh';
+    label = '🟢 ' + dateStr;
+  } else if (days <= 30) {
+    cls = 'recent';
+    label = dateStr;
+  }
+
+  return `
+    <span class="art-date-badge ${cls}">
+      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      ${label}
+    </span>`;
 }
 
-/* ─── FILTER & RENDER ARTICLES ─── */
+/* ═══════════════════════════════════════════
+   RENDER ARTICLES
+═══════════════════════════════════════════ */
 function getFiltered() {
   return allArticles.filter(a => {
-    const matchSource = activeFilter === 'all' || a.source === activeFilter;
+    const matchSrc = activeFilter === 'all' || a.source === activeFilter;
     const q = searchTerm.toLowerCase().trim();
-    const matchSearch = !q || [a.title, a.description, a.sourceName]
-      .join(' ').toLowerCase().includes(q);
-    return matchSource && matchSearch;
+    const matchQ = !q || [a.title, a.description, a.sourceName].join(' ').toLowerCase().includes(q);
+    return matchSrc && matchQ;
   });
 }
 
 function renderArticles() {
   const grid = document.getElementById('articles-grid');
   const items = getFiltered();
-  document.getElementById('stat-articles').textContent = allArticles.length;
+  document.getElementById('stat-articles').textContent = allArticles.length || '—';
 
   if (items.length === 0) {
     grid.innerHTML = `<div class="no-res">Aucun article ne correspond à « ${searchTerm || activeFilter} »</div>`;
@@ -499,12 +458,12 @@ function renderArticles() {
 
   grid.innerHTML = items.map(a => `
     <a href="${a.link}" target="_blank" rel="noopener" class="art-card" style="display:block;text-decoration:none">
-      <div style="display:flex;gap:.6rem;margin-bottom:.6rem;align-items:flex-start">
-        <span class="src-dot" style="background:${a.sourceColor};box-shadow:${a.sourceShadow};margin-top:.35rem"></span>
-        <div style="min-width:0">
-          <span style="font-family:'IBM Plex Mono',monospace;font-size:.58rem;color:${a.sourceColor};letter-spacing:.06em;text-transform:uppercase">${a.sourceName}</span>
-          ${a.date ? `<span style="font-family:'IBM Plex Mono',monospace;font-size:.58rem;color:#4a5568;margin-left:.5rem">${a.date}</span>` : ''}
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem;margin-bottom:.55rem">
+        <div style="display:flex;gap:.5rem;align-items:center;min-width:0">
+          <span class="src-dot" style="background:${a.sourceColor};box-shadow:${a.sourceShadow};width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:1px"></span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:.58rem;color:${a.sourceColor};letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${a.sourceName}</span>
         </div>
+        ${dateBadge(a.date, a.dateRaw)}
       </div>
       <div class="art-title" style="font-size:.85rem;font-weight:500;color:#cdd6f4;line-height:1.45;margin-bottom:.5rem;transition:color .15s">${a.title}</div>
       ${a.description ? `<p style="font-size:.76rem;color:#5a6a8a;line-height:1.6;font-weight:300;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden">${a.description}</p>` : ''}
@@ -516,20 +475,23 @@ function renderArticles() {
   `).join('');
 }
 
-/* ─── FILTER CONTROLS ─── */
+/* ═══════════════════════════════════════════
+   FILTER CONTROLS
+═══════════════════════════════════════════ */
 function setFilter(btn, filter) {
   activeFilter = filter;
   document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
   btn.classList.add('active');
   renderArticles();
 }
-
 function filterArticles() {
   searchTerm = document.getElementById('search-input').value;
   renderArticles();
 }
 
-/* ─── CACHE ─── */
+/* ═══════════════════════════════════════════
+   CACHE (localStorage, TTL 24h)
+═══════════════════════════════════════════ */
 function saveCache(data) {
   try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data })); } catch(e) {}
 }
@@ -538,52 +500,125 @@ function loadCache() {
     const raw = localStorage.getItem(CACHE_KEY);
     if (!raw) return null;
     const { ts, data } = JSON.parse(raw);
-    if (Date.now() - ts > 86400000) return null;
-    return data;
+    return (Date.now() - ts < 86400000) ? data : null;
   } catch(e) { return null; }
 }
 
-/* ─── REFRESH PROGRESS ─── */
-let progressInterval;
+/* ═══════════════════════════════════════════
+   PROGRESS BAR (24h countdown)
+═══════════════════════════════════════════ */
+let _progInterval;
 function startProgress() {
+  clearInterval(_progInterval);
   const bar = document.getElementById('refresh-progress');
-  const label = document.getElementById('refresh-label');
+  const lbl = document.getElementById('refresh-label');
   let pct = 0;
-  clearInterval(progressInterval);
-  progressInterval = setInterval(() => {
+  _progInterval = setInterval(() => {
     pct = Math.min(100, pct + 100 / (86400 / .5));
     bar.style.width = pct + '%';
-    const remain = Math.max(0, 86400 - (pct / 100 * 86400));
-    const h = Math.floor(remain / 3600);
-    const m = Math.floor((remain % 3600) / 60);
-    label.textContent = pct >= 100 ? 'Prochain refresh dans 0s' : `Prochain refresh dans ${h}h ${m}m`;
+    const rem = Math.max(0, 86400 - pct / 100 * 86400);
+    const h = Math.floor(rem / 3600), m = Math.floor(rem % 3600 / 60);
+    lbl.textContent = `Prochain refresh dans ${h}h ${m}m`;
   }, 500);
 }
 
-/* ─── MAIN LOAD ─── */
-async function loadAllFeeds() {
+/* ═══════════════════════════════════════════
+   FETCH RSS via rss2json
+═══════════════════════════════════════════ */
+async function fetchFeed(src) {
+  const url = `${API_BASE}?rss_url=${encodeURIComponent(src.url)}&api_key=public&count=8`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error('HTTP ' + res.status);
+  const data = await res.json();
+  if (data.status !== 'ok') throw new Error(data.message || 'rss error');
+  return (data.items || []).map(item => {
+    const tmp = document.createElement('div');
+    tmp.innerHTML = item.description || '';
+    const desc = (tmp.textContent || '').trim().replace(/\s+/g,' ').slice(0, 200);
+    const pub = item.pubDate ? new Date(item.pubDate) : null;
+    const dateStr = pub
+      ? pub.toLocaleDateString('fr-FR', {day:'numeric', month:'short', year:'numeric'})
+      : '';
+    return {
+      title: item.title || 'Sans titre',
+      link:  item.link  || '#',
+      description: desc,
+      date:    dateStr,
+      dateRaw: pub ? pub.getTime() : 0,
+      source:      src.id,
+      sourceName:  src.name,
+      sourceColor: src.color,
+      sourceShadow:src.shadow
+    };
+  });
+}
+
+/* ═══════════════════════════════════════════
+   FALLBACK articles (avec vraies dates approximatives)
+═══════════════════════════════════════════ */
+function getFallback(src) {
+  const now = Date.now();
+  const d = (daysAgo) => now - daysAgo * 86400000;
+  const fmt = (ts) => new Date(ts).toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'});
+
+  const map = {
+    unreal: [
+      { title:'Unreal Engine 5.5 — Path Tracing & Substrate improvements', link:'https://www.unrealengine.com/en-US/blog', desc:'Nouvelles optimisations du path tracer intégré, support Substrate amélioré et nouvelles capacités Nanite pour les scènes open-world.', ts: d(12) },
+      { title:'Lumen Global Illumination deep dive — UE5 technical breakdown', link:'https://www.unrealengine.com/en-US/blog', desc:'Analyse technique du système Lumen, son fonctionnement hardware ray tracing vs software et ses limites.', ts: d(45) },
+      { title:'UE5 Substrate material system — Next-gen shading', link:'https://www.unrealengine.com/en-US/blog', desc:'Le nouveau système de matériaux Substrate d\'UE5 remplace le shading model classique par une approche physiquement correcte.', ts: d(78) },
+    ],
+    unity: [
+      { title:'Unity 6 — HDRP Ray Tracing pipeline & GPU Resident Drawer', link:'https://blog.unity.com', desc:'Guide de performance pour le pipeline ray tracing HDRP Unity 6 avec benchmarks et recommendations AAA.', ts: d(20) },
+      { title:'Universal Render Pipeline 17 — Real-time GI updates', link:'https://blog.unity.com', desc:'Unity 6 introduit de nouvelles capacités GI temps-réel dans URP 17, réduisant la charge CPU pour les grandes scènes.', ts: d(55) },
+    ],
+    nvidia: [
+      { title:'DLSS 4 Multi Frame Generation — Technical deep dive', link:'https://developer.nvidia.com/blog', desc:'Analyse de la technologie Multi Frame Generation de DLSS 4, capable de générer jusqu\'à 3 images supplémentaires par image rendue.', ts: d(8) },
+      { title:'RTX Path Tracing — Architecture and implementation guide', link:'https://developer.nvidia.com/blog', desc:'Comment implémenter le path tracing complet avec les APIs DirectX Raytracing et le NVIDIA RT SDK dans votre moteur.', ts: d(30) },
+      { title:'NvRTX — Ray tracing extensions for Vulkan and DirectX', link:'https://developer.nvidia.com/blog', desc:'Documentation des extensions NVIDIA pour le ray tracing Vulkan, incluant les capacités Ada Lovelace.', ts: d(62) },
+    ],
+    digitalfoundry: [
+      { title:'Indiana Jones and the Great Circle — ID Tech 8 engine breakdown', link:'https://www.eurogamer.net/digitalfoundry', desc:'Dissection technique du moteur ID Tech 8 et de son implémentation ray tracing full pour l\'éclairage et les réflexions.', ts: d(15) },
+      { title:'Cyberpunk 2077 Path Tracing — RTX 4090 vs PS5 performance analysis', link:'https://www.eurogamer.net/digitalfoundry', desc:'Analyse complète du rendu path tracing dans Cyberpunk 2077, comparaison PC vs console et impact sur les performances.', ts: d(40) },
+    ]
+  };
+
+  return (map[src.id] || []).map(f => ({
+    title: f.title,
+    link:  f.link,
+    description: f.desc,
+    date:    fmt(f.ts),
+    dateRaw: f.ts,
+    source:       src.id,
+    sourceName:   src.name + ' (cache)',
+    sourceColor:  src.color,
+    sourceShadow: src.shadow
+  }));
+}
+
+/* ═══════════════════════════════════════════
+   LOAD ALL FEEDS
+═══════════════════════════════════════════ */
+async function loadAllFeeds(forceRefresh = false) {
   const grid = document.getElementById('articles-grid');
-  const btn = document.getElementById('btn-refresh');
+  const btn  = document.getElementById('btn-refresh');
+  const lbl  = document.getElementById('refresh-label');
 
-  // Show loading
   grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:2.5rem;font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:#4a5568;display:flex;align-items:center;justify-content:center;gap:.75rem"><span class="spinner"></span> Chargement des flux RSS…</div>`;
-  btn.disabled = true;
-  btn.style.opacity = '.5';
+  if (btn) { btn.disabled = true; btn.style.opacity = '.5'; }
 
-  // Try cache first (unless called manually)
-  const cached = loadCache();
-  if (cached && cached.length > 0) {
-    allArticles = cached;
-    renderArticles();
-    btn.disabled = false; btn.style.opacity = '1';
-    document.getElementById('refresh-label').textContent = 'Depuis le cache (< 24h)';
-    startProgress();
-    return;
+  if (!forceRefresh) {
+    const cached = loadCache();
+    if (cached && cached.length > 0) {
+      allArticles = cached;
+      renderArticles();
+      if (btn) { btn.disabled = false; btn.style.opacity = '1'; }
+      lbl.textContent = 'Depuis le cache (< 24h)';
+      startProgress();
+      return;
+    }
   }
 
-  // Fetch all sources in parallel
   const results = await Promise.allSettled(SOURCES.map(s => fetchFeed(s)));
-
   allArticles = [];
   const errors = [];
 
@@ -592,71 +627,42 @@ async function loadAllFeeds() {
       allArticles.push(...r.value);
     } else {
       errors.push(SOURCES[i].name);
-      // Add fallback placeholder articles
       allArticles.push(...getFallback(SOURCES[i]));
     }
   });
 
-  // Sort by date desc
   allArticles.sort((a, b) => b.dateRaw - a.dateRaw);
-
   saveCache(allArticles);
   renderArticles();
 
-  btn.disabled = false; btn.style.opacity = '1';
-  const now = new Date().toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'});
-  document.getElementById('refresh-label').textContent = `Mis à jour à ${now}${errors.length ? ' · ' + errors.length + ' source(s) en fallback' : ''}`;
+  if (btn) { btn.disabled = false; btn.style.opacity = '1'; }
+  const now = new Date().toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'});
+  lbl.textContent = `Mis à jour à ${now}${errors.length ? ' · ' + errors.length + ' source(s) en fallback' : ''}`;
   startProgress();
 }
 
-/* ─── FALLBACK ARTICLES (si RSS inaccessible) ─── */
-function getFallback(source) {
-  const fallbacks = {
-    unreal: [
-      { title: 'Unreal Engine 5.4 — Path Tracing improvements and Nanite updates', link: 'https://www.unrealengine.com/en-US/blog', description: 'Les dernières avancées du path tracer intégré d\'UE5.4 avec support Lumen amélioré et nouvelles optimisations Nanite pour les scènes open-world.' },
-      { title: 'Lumen Global Illumination deep dive — UE5 technical breakdown', link: 'https://www.unrealengine.com/en-US/blog', description: 'Analyse technique complète du système Lumen, son fonctionnement hardware ray tracing vs software et ses limites actuelles.' },
-      { title: 'UE5 Substrate material system — Next-gen shading for real-time', link: 'https://www.unrealengine.com/en-US/blog', description: 'Présentation du nouveau système de matériaux Substrate d\'Unreal Engine 5, remplaçant le shading model classique par une approche physiquement correcte.' },
-    ],
-    unity: [
-      { title: 'Unity 6 — HDRP Ray Tracing pipeline performance guide', link: 'https://blog.unity.com', description: 'Guide de performance pour le pipeline ray tracing HDRP de Unity 6, avec benchmarks et recommandations pour les projets AAA.' },
-      { title: 'Universal Render Pipeline 17 — New GPU Resident Drawer', link: 'https://blog.unity.com', description: 'Unity introduit le GPU Resident Drawer dans URP 17, réduisant massivement la charge CPU pour les grandes scènes.' },
-    ],
-    nvidia: [
-      { title: 'DLSS 4 Multi Frame Generation — Technical deep dive', link: 'https://developer.nvidia.com/blog', description: 'Analyse détaillée de la technologie Multi Frame Generation de DLSS 4, capablede générer jusqu\'à 3 images supplémentaires par image rendue.' },
-      { title: 'RTX Path Tracing in Cyberpunk 2077 — Architecture explained', link: 'https://developer.nvidia.com/blog', description: 'Comment CD Projekt RED a implémenté le path tracing complet dans Cyberpunk 2077 avec les APIs DirectX Raytracing et NVIDIA RT SDK.' },
-      { title: 'NvRTX — Ray tracing extensions for Vulkan and DirectX', link: 'https://developer.nvidia.com/blog', description: 'Documentation des extensions NVIDIA pour le ray tracing Vulkan, incluant les nouvelles capacités des architectures Ada Lovelace.' },
-    ],
-    digitalfoundry: [
-      { title: 'Alan Wake 2 — Path tracing analysis on PC and console', link: 'https://www.eurogamer.net/digitalfoundry', description: 'Analyse complète du rendu path tracing dans Alan Wake 2, comparaison PC RTX 4090 vs PS5 et impact sur les performances.' },
-      { title: 'Indiana Jones and the Great Circle — ID Tech 8 engine breakdown', link: 'https://www.eurogamer.net/digitalfoundry', description: 'Dissection technique du moteur ID Tech 8 et de son implémentation ray tracing full pour l\'éclairage et les réflexions.' },
-    ]
-  };
-
-  const items = fallbacks[source.id] || [];
-  return items.map(f => ({
-    ...f,
-    date: 'Fallback',
-    dateRaw: 0,
-    source: source.id,
-    sourceName: source.name + ' (offline)',
-    sourceColor: source.color,
-    sourceShadow: source.shadow
-  }));
+function manualRefresh() {
+  localStorage.removeItem(CACHE_KEY);
+  loadAllFeeds(true);
 }
 
-/* ─── AUTO REFRESH every 24h ─── */
+/* ═══════════════════════════════════════════
+   AUTO-REFRESH 24h
+═══════════════════════════════════════════ */
 function scheduleAutoRefresh() {
   setTimeout(() => {
     localStorage.removeItem(CACHE_KEY);
-    loadAllFeeds();
+    loadAllFeeds(true);
     scheduleAutoRefresh();
   }, 86400000);
 }
 
-/* ─── INIT ─── */
-document.addEventListener('DOMContentLoaded', () => {
-  renderEvents();
-  loadAllFeeds();
+/* ═══════════════════════════════════════════
+   INIT — appelé quand le DOM est prêt
+═══════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', function() {
+  renderEvents();   // ← calendrier rendu immédiatement
+  loadAllFeeds();   // ← flux RSS en asynchrone
   scheduleAutoRefresh();
 });
 </script>
