@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>BTS SIO — CFA INSTA Paris — Elyas Mcirdi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#06080f;--bg2:#0a0d18;
+  --border:rgba(255,255,255,0.07);--border-h:rgba(255,255,255,0.16);
+  --accent:#7aa2f7;--accent2:#bb9af7;--accent3:#73daca;
+  --text:#c9d1e8;--muted:#8a9bbf;--bright:#e8ecf8;
+  --tag-bg:rgba(122,162,247,0.08);--tag-border:rgba(122,162,247,0.2);
+  --font:'Inter',sans-serif;--mono:'JetBrains Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:15px;line-height:1.6;overflow-x:hidden}
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.6}
+.wrapper{max-width:820px;margin:0 auto;padding:0 2rem;position:relative;z-index:1}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;border-bottom:1px solid var(--border);backdrop-filter:blur(14px);background:rgba(6,8,15,0.88)}
+.nav-inner{max-width:820px;margin:0 auto;padding:0 2rem;display:flex;justify-content:space-between;align-items:center;height:52px}
+.nav-logo{font-family:var(--mono);font-size:.8rem;color:var(--bright);text-decoration:none;font-weight:500}
+.nav-logo span{color:var(--accent)}
+.nav-back{font-family:var(--mono);font-size:.75rem;color:var(--muted);text-decoration:none;transition:color .15s}
+.nav-back:hover{color:var(--bright)}
+
+.page-top{padding:calc(52px + 4rem) 0 3rem;border-bottom:1px solid var(--border)}
+.pt-label{font-family:var(--mono);font-size:.68rem;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;margin-bottom:1.2rem}
+h1{font-size:clamp(2rem,5vw,3.4rem);font-weight:600;letter-spacing:-.03em;color:var(--bright);margin-bottom:.9rem;line-height:1.1}
+h1 em{font-style:normal;color:var(--accent)}
+.pt-desc{font-size:.95rem;color:var(--muted);max-width:540px;line-height:1.75;font-weight:300;margin-bottom:1.75rem}
+.pt-meta{display:flex;gap:2.5rem;flex-wrap:wrap}
+.pm-l{font-family:var(--mono);font-size:.6rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.15rem}
+.pm-v{font-family:var(--mono);font-size:.78rem;color:var(--text)}
+
+.section{padding:3rem 0;border-top:1px solid var(--border)}
+.section-num{font-family:var(--mono);font-size:.65rem;color:var(--muted);letter-spacing:.1em;margin-bottom:1.2rem;display:flex;align-items:center;gap:.75rem}
+.section-num::after{content:'';flex:1;height:1px;background:var(--border)}
+h2{font-size:1.45rem;font-weight:600;letter-spacing:-.02em;color:var(--bright);margin-bottom:1.4rem}
+h3{font-size:1rem;font-weight:500;color:var(--bright);margin-bottom:.6rem;letter-spacing:-.01em}
+p{color:var(--text);font-size:.9rem;line-height:1.8;font-weight:300;margin-bottom:1rem}
+p:last-child{margin-bottom:0}
+p strong{color:var(--bright);font-weight:500}
+
+/* Option cards SLAM / SISR */
+.option-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);margin-bottom:2rem}
+.option-card{background:var(--bg);padding:1.75rem 1.5rem;position:relative;overflow:hidden}
+.option-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px}
+.option-card.slam::before{background:var(--accent)}
+.option-card.sisr::before{background:var(--accent2)}
+.oc-badge{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.85rem;display:inline-block;padding:.2rem .6rem;border:1px solid}
+.option-card.slam .oc-badge{color:var(--accent);border-color:var(--tag-border);background:var(--tag-bg)}
+.option-card.sisr .oc-badge{color:var(--accent2);border-color:rgba(187,154,247,.2);background:rgba(187,154,247,.06)}
+.oc-title{font-size:1.05rem;font-weight:600;color:var(--bright);margin-bottom:.3rem;letter-spacing:-.01em}
+.oc-full{font-family:var(--mono);font-size:.68rem;color:var(--muted);margin-bottom:1.1rem}
+.oc-list{display:flex;flex-direction:column;gap:0}
+.oc-item{font-size:.82rem;color:var(--muted);padding:.45rem 0;border-bottom:1px solid var(--border);line-height:1.5}
+.oc-item:last-child{border-bottom:none}
+.option-card.slam .oc-item::before{content:'›';color:var(--accent);margin-right:.5rem;font-family:var(--mono)}
+.option-card.sisr .oc-item::before{content:'›';color:var(--accent2);margin-right:.5rem;font-family:var(--mono)}
+
+/* Matières / modules */
+.matieres-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:.75rem}
+.mat-block{border:1px solid var(--border);padding:1.1rem}
+.mat-block-title{font-family:var(--mono);font-size:.63rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.75rem;border-left:2px solid var(--accent);padding-left:.65rem}
+.mat-list{display:flex;flex-direction:column;gap:0}
+.mat-item{font-size:.82rem;color:var(--muted);padding:.45rem 0;border-bottom:1px solid var(--border);line-height:1.5}
+.mat-item:last-child{border-bottom:none}
+
+/* Calendrier alternance */
+.cal-row{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin:.75rem 0}
+.cal-cell{height:28px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.58rem;font-weight:500;letter-spacing:.04em}
+.cal-cell.ecole{background:rgba(122,162,247,.15);color:var(--accent);border:1px solid rgba(122,162,247,.2)}
+.cal-cell.entreprise{background:rgba(115,218,202,.12);color:var(--accent3);border:1px solid rgba(115,218,202,.18)}
+.cal-cell.empty{background:transparent;border:1px dashed var(--border)}
+.cal-legend{display:flex;gap:1.5rem;margin-top:.5rem}
+.cal-dot{width:8px;height:8px;display:inline-block;margin-right:.35rem;vertical-align:middle}
+
+/* Débouchés */
+.debouches-list{display:flex;flex-direction:column;gap:0}
+.debouche-item{padding:.85rem 0;border-bottom:1px solid var(--border);display:grid;grid-template-columns:auto 1fr;gap:1.1rem;align-items:start}
+.debouche-item:last-child{border-bottom:none}
+.deb-icon{font-family:var(--mono);font-size:.65rem;color:var(--accent);padding-top:.15rem}
+.deb-title{font-size:.88rem;font-weight:500;color:var(--bright);margin-bottom:.2rem}
+.deb-desc{font-size:.78rem;color:var(--muted);line-height:1.55}
+
+/* Passerelle */
+.passerelle{border:1px solid var(--border);border-left:3px solid var(--accent);padding:1.5rem;margin:1.25rem 0;background:rgba(122,162,247,.03)}
+.pass-label{font-family:var(--mono);font-size:.62rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.6rem}
+.pass-text{font-size:.88rem;color:var(--text);line-height:1.75;font-weight:300}
+.pass-text strong{color:var(--bright);font-weight:500}
+
+/* Raisons */
+.raisons{display:flex;flex-direction:column;gap:0}
+.raison{padding:1.1rem 0;border-bottom:1px solid var(--border);display:grid;grid-template-columns:auto 1fr;gap:1.2rem;align-items:start}
+.raison:last-child{border-bottom:none}
+.r-num{font-family:var(--mono);font-size:.65rem;color:var(--accent);margin-top:.15rem}
+.r-title{font-size:.88rem;font-weight:500;color:var(--bright);margin-bottom:.25rem}
+.r-text{font-size:.82rem;color:var(--muted);line-height:1.6}
+
+/* Infos INSTA */
+.infos{display:flex;flex-direction:column;gap:0;border:1px solid var(--border)}
+.info-row{display:flex;gap:1rem;padding:.65rem .9rem;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:.75rem}
+.info-row:last-child{border-bottom:none}
+.ik{color:var(--muted);min-width:140px}.iv{color:var(--text)}
+.iv a{color:var(--accent);text-decoration:none}
+.iv a:hover{text-decoration:underline}
+
+/* lien externe */
+.ext-link{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 1.3rem;border:1px solid var(--border);text-decoration:none;color:inherit;transition:border-color .15s;margin-top:1rem}
+.ext-link:hover{border-color:var(--border-h)}
+.ext-link:hover .el-title{color:var(--accent)}
+.el-label{font-family:var(--mono);font-size:.62rem;color:var(--muted);letter-spacing:.06em;margin-bottom:.2rem}
+.el-title{font-size:.88rem;font-weight:500;color:var(--bright);transition:color .15s}
+.el-arr{color:var(--muted);font-size:.9rem;flex-shrink:0}
+
+footer{border-top:1px solid var(--border);position:relative;z-index:1}
+.fi{max-width:820px;margin:0 auto;padding:1.5rem 2rem;display:flex;justify-content:space-between;align-items:center}
+.fc{font-family:var(--mono);font-size:.68rem;color:var(--muted)}
+.flinks{display:flex;gap:1.5rem}
+.flinks a{font-family:var(--mono);font-size:.68rem;color:var(--muted);text-decoration:none;transition:color .15s}
+.flinks a:hover{color:var(--text)}
+
+@media(max-width:700px){
+  .option-grid{grid-template-columns:1fr}
+  .matieres-grid{grid-template-columns:1fr}
+  .cal-row{grid-template-columns:repeat(3,1fr)}
+  .fi{flex-direction:column;gap:.75rem}
+  .pt-meta{gap:1.5rem}
+}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Elyas <span>Mcirdi</span></a>
+    <a href="index.html" class="nav-back">← Retour</a>
+  </div>
+</nav>
+
+<div class="wrapper">
+
+  <!-- HERO -->
+  <div class="page-top">
+    <div class="pt-label">Formation — 2024 / 2026</div>
+    <h1>BTS <em>SIO</em></h1>
+    <p class="pt-desc">Services Informatiques aux Organisations — diplôme national Bac+2 en 2 ans, en alternance au CFA INSTA Paris. Deux options : SLAM (développement logiciel) et SISR (réseaux et systèmes).</p>
+    <div class="pt-meta">
+      <div><div class="pm-l">Niveau</div><div class="pm-v">Bac+2 — RNCP Niv. 5</div></div>
+      <div><div class="pm-l">Durée</div><div class="pm-v">2 ans — alternance</div></div>
+      <div><div class="pm-l">École</div><div class="pm-v">CFA INSTA Paris</div></div>
+      <div><div class="pm-l">Option choisie</div><div class="pm-v">SLAM</div></div>
+    </div>
+  </div>
+
+  <!-- 01 — QU'EST-CE QUE LE BTS SIO -->
+  <div class="section">
+    <div class="section-num">01</div>
+    <h2>Le BTS SIO en un coup d'œil</h2>
+    <p>Le <strong>Brevet de Technicien Supérieur Services Informatiques aux Organisations</strong> est un diplôme national de niveau Bac+2 reconnu par l'État. Il forme des techniciens capables de concevoir, déployer et maintenir des solutions informatiques au sein d'une organisation. La formation dure deux ans et se fait en alternance : on alterne entre périodes en école et périodes en entreprise.</p>
+    <p>Le BTS SIO comporte deux options complémentaires, qui se distinguent par leur spécialité : <strong>SLAM</strong> pour ceux qui veulent développer des applications et des logiciels, et <strong>SISR</strong> pour ceux qui préfèrent administrer des réseaux et des infrastructures. Les épreuves communes (culture générale, anglais, mathématiques, économie-droit) sont partagées par les deux options.</p>
+
+    <!-- Option cards -->
+    <div class="option-grid">
+      <div class="option-card slam">
+        <span class="oc-badge">Mon option</span>
+        <div class="oc-title">SLAM</div>
+        <div class="oc-full">Solutions Logicielles &amp; Applications Métiers</div>
+        <div class="oc-list">
+          <div class="oc-item">Développement d'applications web et mobiles</div>
+          <div class="oc-item">Conception de bases de données (SQL, NoSQL)</div>
+          <div class="oc-item">Intégration d'API et services tiers</div>
+          <div class="oc-item">Tests, recette et maintenance applicative</div>
+          <div class="oc-item">Gestion de projet Agile (Scrum, Kanban)</div>
+          <div class="oc-item">Langages : Java, PHP, Python, JavaScript</div>
+        </div>
+      </div>
+      <div class="option-card sisr">
+        <span class="oc-badge" style="opacity:.55">Autre option</span>
+        <div class="oc-title">SISR</div>
+        <div class="oc-full">Solutions d'Infrastructure, Systèmes &amp; Réseaux</div>
+        <div class="oc-list">
+          <div class="oc-item">Administration de systèmes Windows &amp; Linux</div>
+          <div class="oc-item">Configuration de réseaux (LAN, WAN, Wi-Fi)</div>
+          <div class="oc-item">Virtualisation et cloud (VMware, Azure, AWS)</div>
+          <div class="oc-item">Cybersécurité : pare-feu, VPN, Active Directory</div>
+          <div class="oc-item">Supervision et haute disponibilité</div>
+          <div class="oc-item">Outils : Cisco, pfSense, Zabbix, Ansible</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 — PROGRAMME SLAM -->
+  <div class="section">
+    <div class="section-num">02</div>
+    <h2>Programme BTS SIO SLAM</h2>
+    <p>En option SLAM, le programme allie des matières générales obligatoires à une spécialité technique orientée développement. Les épreuves professionnelles E4 (support), E5 (veille technologique) et E6 (projet) constituent le cœur de l'évaluation.</p>
+    <div class="matieres-grid">
+      <div class="mat-block">
+        <div class="mat-block-title">Tronc commun</div>
+        <div class="mat-list">
+          <div class="mat-item">Culture générale &amp; expression</div>
+          <div class="mat-item">Mathématiques pour l'informatique</div>
+          <div class="mat-item">Anglais de communication professionnelle</div>
+          <div class="mat-item">Économie-Droit &amp; Management</div>
+          <div class="mat-item">Cybersécurité des services informatiques (E4)</div>
+        </div>
+      </div>
+      <div class="mat-block">
+        <div class="mat-block-title">Spécialité SLAM</div>
+        <div class="mat-list">
+          <div class="mat-item">Algorithmique &amp; structures de données</div>
+          <div class="mat-item">Bases de données relationnelles (SQL, PDO)</div>
+          <div class="mat-item">Développement web — PHP, JS, HTML/CSS</div>
+          <div class="mat-item">Développement mobile — Java / Android</div>
+          <div class="mat-item">Atelier de développement (E6 — projets)</div>
+          <div class="mat-item">Veille technologique (E5)</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:2rem">Rythme de l'alternance</h3>
+    <p style="margin-bottom:.75rem">Au CFA INSTA, le rythme habituel est <strong>2 semaines en école / 3 semaines en entreprise</strong>, avec quelques variations selon les périodes d'examens.</p>
+    <div class="cal-row">
+      <div class="cal-cell entreprise">Entreprise</div>
+      <div class="cal-cell entreprise">Entreprise</div>
+      <div class="cal-cell entreprise">Entreprise</div>
+      <div class="cal-cell ecole">École</div>
+      <div class="cal-cell ecole">École</div>
+      <div class="cal-cell entreprise">Entreprise</div>
+      <div class="cal-cell entreprise">Entreprise</div>
+      <div class="cal-cell entreprise">Entreprise</div>
+      <div class="cal-cell ecole">École</div>
+      <div class="cal-cell ecole">École</div>
+      <div class="cal-cell entreprise">Entreprise</div>
+      <div class="cal-cell entreprise">Entreprise</div>
+      <div class="cal-cell entreprise">Entreprise</div>
+      <div class="cal-cell ecole">École</div>
+      <div class="cal-cell ecole">École</div>
+    </div>
+    <div class="cal-legend">
+      <span><span class="cal-dot" style="background:rgba(122,162,247,.5);border:1px solid rgba(122,162,247,.3)"></span><span style="font-family:var(--mono);font-size:.68rem;color:var(--accent)">École</span></span>
+      <span><span class="cal-dot" style="background:rgba(115,218,202,.4);border:1px solid rgba(115,218,202,.25)"></span><span style="font-family:var(--mono);font-size:.68rem;color:var(--accent3)">Entreprise</span></span>
+    </div>
+  </div>
+
+  <!-- 03 — ÉPREUVES -->
+  <div class="section">
+    <div class="section-num">03</div>
+    <h2>Épreuves &amp; certifications</h2>
+    <div class="debouches-list">
+      <div class="debouche-item">
+        <div class="deb-icon">E4</div>
+        <div>
+          <div class="deb-title">Support et mise à disposition de services informatiques</div>
+          <div class="deb-desc">Épreuve écrite commune aux deux options. Évalue la capacité à gérer les incidents, accompagner les utilisateurs et sécuriser les services.</div>
+        </div>
+      </div>
+      <div class="debouche-item">
+        <div class="deb-icon">E5</div>
+        <div>
+          <div class="deb-title">Administration des systèmes et des réseaux (SISR) / Veille et production (SLAM)</div>
+          <div class="deb-desc">Pour le SLAM : présentation d'une veille technologique sur un sujet choisi (ex. l'IA dans les jeux vidéo) et d'une production personnelle. Épreuve orale avec jury.</div>
+        </div>
+      </div>
+      <div class="debouche-item">
+        <div class="deb-icon">E6</div>
+        <div>
+          <div class="deb-title">Cybersécurité des services informatiques</div>
+          <div class="deb-desc">Présentation orale de deux situations professionnelles issues de l'alternance. Deux compétences couvertes parmi un référentiel précis (développement, BDD, réseau…).</div>
+        </div>
+      </div>
+      <div class="debouche-item">
+        <div class="deb-icon">Cert.</div>
+        <div>
+          <div class="deb-title">Certifications recommandées</div>
+          <div class="deb-desc">Le CFA INSTA encourage les certifications PIX (culture numérique), TOEIC (anglais professionnel) et propose des préparations aux certifications Cisco CCNA et Microsoft Azure pour les étudiants SISR.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 04 — DÉBOUCHÉS -->
+  <div class="section">
+    <div class="section-num">04</div>
+    <h2>Débouchés après le BTS SIO</h2>
+    <div class="debouches-list">
+      <div class="debouche-item">
+        <div class="deb-icon">—</div>
+        <div>
+          <div class="deb-title">Emploi direct (SLAM)</div>
+          <div class="deb-desc">Développeur web junior, développeur d'applications mobiles, intégrateur web, technicien en maintenance applicative ou chef de projet junior dans une PME/ESN.</div>
+        </div>
+      </div>
+      <div class="debouche-item">
+        <div class="deb-icon">—</div>
+        <div>
+          <div class="deb-title">Poursuite en Licence Pro (Bac+3)</div>
+          <div class="deb-desc">De nombreux BTS SIO poursuivent en Licence Professionnelle informatique (développement web, cybersécurité, administration réseau) en une année supplémentaire.</div>
+        </div>
+      </div>
+      <div class="debouche-item">
+        <div class="deb-icon">—</div>
+        <div>
+          <div class="deb-title">École d'ingénieurs ou Bachelor (Bac+3/+5)</div>
+          <div class="deb-desc">Accès aux Bachelors informatique des grandes écoles (EPITA, Supinfo, EPITECH…) ou aux BUT informatique. Certains intègrent des écoles d'ingénieurs via des passerelles dédiées.</div>
+        </div>
+      </div>
+      <div class="debouche-item">
+        <div class="deb-icon">★</div>
+        <div>
+          <div class="deb-title">Master Sorbonne Université via la passerelle INSTA (Bac+5)</div>
+          <div class="deb-desc">Grâce au partenariat CFA INSTA × Sorbonne Université, les diplômés peuvent intégrer un Master informatique (RNCP niveau 7) à l'Université Sorbonne. C'est la voie que j'envisage pour la suite.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 05 — CFA INSTA -->
+  <div class="section">
+    <div class="section-num">05</div>
+    <h2>Le CFA INSTA Paris</h2>
+    <p>L'Institut National Supérieur des Technologies Avancées est un centre de formation par apprentissage à but non lucratif, fondé en 2009 et certifié Qualiopi. Il forme plus de 600 étudiants par an sur ses deux campus parisiens (Sentier — 75002 et La Défense) dans des domaines comme le BTS SIO, la cybersécurité, le cloud, l'architecture SI et l'intelligence artificielle.</p>
+
+    <div class="infos" style="margin-top:1.25rem">
+      <div class="info-row"><span class="ik">Statut</span><span class="iv">CFA à but non lucratif — certifié Qualiopi</span></div>
+      <div class="info-row"><span class="ik">Fondé en</span><span class="iv">2009 — issu d'une école d'ingénieurs</span></div>
+      <div class="info-row"><span class="ik">Campus</span><span class="iv">12 rue de Cléry, Paris 2e (Sentier) · La Défense</span></div>
+      <div class="info-row"><span class="ik">Effectif</span><span class="iv">600+ étudiants / an</span></div>
+      <div class="info-row"><span class="ik">Formations</span><span class="iv">BTS SIO, BTS CIEL, Cybersécurité, IA, Cloud, Architecture SI</span></div>
+      <div class="info-row"><span class="ik">Partenaire clé</span><span class="iv">Sorbonne Université (Master informatique RNCP niv. 7)</span></div>
+      <div class="info-row"><span class="ik">Taux d'insertion</span><span class="iv">&gt; 70 % avec promesse d'embauche avant le diplôme</span></div>
+      <div class="info-row"><span class="ik">Contact</span><span class="iv"><a href="mailto:informatique@cfa-insta.fr">informatique@cfa-insta.fr</a> — 01 43 36 75 56</span></div>
+      <div class="info-row"><span class="ik">Site</span><span class="iv"><a href="https://cfa-insta.fr" target="_blank">cfa-insta.fr ↗</a></span></div>
+    </div>
+  </div>
+
+  <!-- 06 — POURQUOI J'AI CHOISI L'INSTA -->
+  <div class="section">
+    <div class="section-num">06</div>
+    <h2>Pourquoi j'ai choisi le CFA INSTA</h2>
+    <p>Après une première année de Licence Sciences de l'Ingénieur à l'Université Paris-Sorbonne, j'ai voulu réorienter mon parcours vers le développement informatique concret, en continuant à apprendre dans un cadre professionnel. Le CFA INSTA s'est imposé comme le choix évident pour trois raisons principales.</p>
+
+    <div class="passerelle">
+      <div class="pass-label">Passerelle Sorbonne Université × CFA INSTA</div>
+      <p class="pass-text">Depuis 2012, le CFA INSTA est partenaire officiel de <strong>Sorbonne Université</strong>. Ce partenariat permet aux étudiants issus d'une Licence Sorbonne de rejoindre le BTS SIO en alternance, puis de poursuivre vers un <strong>Master informatique RNCP niveau 7</strong> au sein de la même université. J'ai ainsi pu valoriser mon année de Licence tout en repartant sur une base technique concrète — sans perdre le bénéfice de mon parcours universitaire.</p>
+    </div>
+
+    <div class="raisons" style="margin-top:1.5rem">
+      <div class="raison">
+        <div class="r-num">01</div>
+        <div>
+          <div class="r-title">La passerelle Sorbonne — une continuité de parcours</div>
+          <div class="r-text">Le partenariat officiel entre le CFA INSTA et Sorbonne Université m'a permis de rejoindre le BTS SIO sans repartir de zéro. Mon année de Licence a été prise en compte, et la voie vers un Master Sorbonne reste ouverte à l'issue du BTS.</div>
+        </div>
+      </div>
+      <div class="raison">
+        <div class="r-num">02</div>
+        <div>
+          <div class="r-title">L'alternance dès le premier jour</div>
+          <div class="r-text">Le rythme 2 semaines école / 3 semaines entreprise permet une immersion professionnelle immédiate. J'apprends la théorie en cours et je l'applique directement chez Jungle Phone — ce va-et-vient est extrêmement formateur pour ancrer les connaissances.</div>
+        </div>
+      </div>
+      <div class="raison">
+        <div class="r-num">03</div>
+        <div>
+          <div class="r-title">Des projets concrets dès le début</div>
+          <div class="r-text">Les ateliers professionnels (E6) permettent de travailler sur des projets complets en groupe — comme TicketMaster. On apprend à collaborer, versionner sur GitLab et livrer un produit fonctionnel dans un vrai contexte de développement.</div>
+        </div>
+      </div>
+      <div class="raison">
+        <div class="r-num">04</div>
+        <div>
+          <div class="r-title">Un réseau d'entreprises partenaires solide</div>
+          <div class="r-text">L'école dispose d'un réseau d'entreprises partenaires qui facilite la recherche d'alternance. Plus de 70 % des étudiants ont une promesse d'embauche avant l'obtention du diplôme — ce qui était rassurant pour moi au moment du choix.</div>
+        </div>
+      </div>
+      <div class="raison">
+        <div class="r-num">05</div>
+        <div>
+          <div class="r-title">Un statut non lucratif qui rassure sur la qualité</div>
+          <div class="r-text">Le CFA INSTA est un centre de formation à but non lucratif certifié Qualiopi. Cela m'a rassuré sur l'impartialité pédagogique — l'objectif est la réussite des étudiants, pas la rentabilité commerciale.</div>
+        </div>
+      </div>
+    </div>
+
+    <a href="https://cfa-insta.fr" target="_blank" rel="noopener" class="ext-link">
+      <div><div class="el-label">Site officiel</div><div class="el-title">cfa-insta.fr</div></div>
+      <span class="el-arr">↗</span>
+    </a>
+    <a href="https://cfa-insta.fr/passerelle/" target="_blank" rel="noopener" class="ext-link">
+      <div><div class="el-label">En savoir plus</div><div class="el-title">La passerelle Sorbonne Université × CFA INSTA</div></div>
+      <span class="el-arr">↗</span>
+    </a>
+  </div>
+
+</div><!-- /wrapper -->
+
+<footer>
+  <div class="fi">
+    <span class="fc">Elyas Mcirdi — BTS SIO — INSTA Paris — 2026</span>
+    <div class="flinks">
+      <a href="index.html">Portfolio</a>
+      <a href="https://github.com/Ilyesadd" target="_blank">GitHub ↗</a>
+      <a href="mailto:Elyasmcirdi@gmail.com">Mail</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const c=document.getElementById('stars'),ctx=c.getContext('2d');
+  let W,H,stars=[],nebulae=[];
+  function resize(){W=c.width=window.innerWidth;H=c.height=window.innerHeight;}
+  function initNebulae(){nebulae=[
+    {x:W*.8,y:H*.1,rx:280,ry:160,color:'80,120,255',a:.04},
+    {x:W*.1,y:H*.75,rx:220,ry:130,color:'140,80,220',a:.03},
+  ];}
+  function initStars(){
+    stars=[];
+    const N=Math.floor(W*H/8000);
+    for(let i=0;i<N;i++)stars.push({
+      x:Math.random()*W,y:Math.random()*H,
+      r:Math.random()*.8+.1,
+      bo:Math.random()*.4+.07,
+      sp:Math.random()*.008+.002,
+      ph:Math.random()*Math.PI*2
+    });
+  }
+  let t=0;
+  function draw(){
+    ctx.clearRect(0,0,W,H);t+=.01;
+    for(const n of nebulae){
+      const g=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,Math.max(n.rx,n.ry));
+      g.addColorStop(0,`rgba(${n.color},${n.a})`);
+      g.addColorStop(1,`rgba(${n.color},0)`);
+      ctx.save();ctx.scale(1,n.ry/n.rx);ctx.beginPath();
+      ctx.arc(n.x,n.y*(n.rx/n.ry),n.rx,0,Math.PI*2);
+      ctx.fillStyle=g;ctx.fill();ctx.restore();
+    }
+    for(const s of stars){
+      const a=s.bo*(.5+.5*Math.sin(t*s.sp*60+s.ph));
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(180,200,255,${a})`;ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize',()=>{resize();initNebulae();initStars();});
+  resize();initNebulae();initStars();draw();
+})();
+</script>
+</body>
+</html>
