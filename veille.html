@@ -36,11 +36,16 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .card:hover{border-color:#38bdf8;transform:translateY(-2px);box-shadow:0 10px 40px rgba(0,0,0,0.5),0 0 0 1px rgba(56,189,248,0.07)}
 .card:hover::after{opacity:1}
 
+/* identity cards */
+.id-card{background:#0d1120;border:1px solid #1e2a3a;padding:1.1rem 1.3rem;position:relative;overflow:hidden;transition:border-color .18s}
+.id-card::before{content:'';position:absolute;top:0;left:0;width:2px;height:100%;background:linear-gradient(180deg,var(--accent-c),transparent)}
+.id-card:hover{border-color:#2e4060}
+
+/* article cards */
 .art-card{background:#0d1120;border:1px solid #1e2a3a;padding:.95rem 1.1rem;transition:all .18s;cursor:pointer;display:block;text-decoration:none;position:relative}
 .art-card:hover{border-color:#2e4060;background:#111827}
 .art-card:hover .art-title{color:#38bdf8}
 
-/* date badge on article */
 .art-date-badge{
   display:inline-flex;align-items:center;gap:.3rem;
   font-family:'IBM Plex Mono',monospace;font-size:.6rem;
@@ -51,11 +56,13 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .art-date-badge.fresh{color:#34d399;border-color:rgba(52,211,153,.25);background:rgba(52,211,153,.05)}
 .art-date-badge.recent{color:#38bdf8;border-color:rgba(56,189,248,.2);background:rgba(56,189,248,.04)}
 
+/* lexique */
 .lex-card{background:#0d1120;border:1px solid #1e2a3a;padding:1.3rem;transition:all .25s;position:relative;overflow:hidden;cursor:default}
 .lex-card .lex-accent{position:absolute;bottom:0;right:0;font-size:3.5rem;opacity:.04;font-family:'IBM Plex Mono',monospace;font-weight:600;line-height:1;padding:.2rem .4rem;transition:opacity .25s,transform .25s}
 .lex-card:hover{border-color:#2e4060}
 .lex-card:hover .lex-accent{opacity:.08;transform:scale(1.1)}
 
+/* events */
 .evt-card{background:#0d1120;border:1px solid #1e2a3a;border-left:2px solid;padding:1rem 1.2rem;transition:background .18s}
 .evt-card:hover{background:#111827}
 
@@ -78,6 +85,8 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .s-label{font-family:'IBM Plex Mono',monospace;font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:#6b7a9e;display:flex;align-items:center;gap:.5rem}
 .s-label::before{content:'//';color:#38bdf8;font-weight:600}
 
+.sec-num{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:#38bdf8;font-weight:600;letter-spacing:.1em;margin-bottom:.3rem}
+
 .tag-pill{font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.06em;padding:.13rem .5rem;border:1px solid rgba(56,189,248,.2);color:#38bdf8;background:rgba(56,189,248,.05)}
 .tag-pill.p{border-color:rgba(167,139,250,.2);color:#a78bfa;background:rgba(167,139,250,.05)}
 .tag-pill.g{border-color:rgba(52,211,153,.2);color:#34d399;background:rgba(52,211,153,.05)}
@@ -85,6 +94,34 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 
 .src-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
 .no-res{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:#4a5568;padding:2rem;text-align:center;border:1px dashed #1e2a3a;width:100%;grid-column:1/-1}
+
+/* section divider */
+.section-divider{display:flex;align-items:center;gap:1rem;margin-bottom:2rem}
+.section-divider .num{font-family:'IBM Plex Mono',monospace;font-size:2.5rem;font-weight:600;color:#1e2a3a;line-height:1;user-select:none}
+.section-divider .line{flex:1;height:1px;background:linear-gradient(90deg,#1e2a3a,transparent)}
+
+/* analysis list */
+.ana-list{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+.ana-list li{display:flex;align-items:flex-start;gap:.6rem;font-size:.82rem;color:#8899bb;font-weight:300;line-height:1.6}
+.ana-list li::before{content:'▸';color:#38bdf8;font-size:.7rem;margin-top:.22rem;flex-shrink:0}
+.ana-list.p li::before{color:#a78bfa}
+.ana-list.g li::before{color:#34d399}
+
+/* stat blocks */
+.stat-block{text-align:left}
+.stat-num{font-family:'IBM Plex Mono',monospace;font-size:1.35rem;font-weight:600;line-height:1}
+.stat-lbl{font-family:'IBM Plex Mono',monospace;font-size:.58rem;color:#6b7a9e;letter-spacing:.1em;text-transform:uppercase;margin-top:.15rem}
+
+/* source link */
+.src-link{display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;background:#0d1120;border:1px solid #1e2a3a;text-decoration:none;transition:all .18s;position:relative;overflow:hidden}
+.src-link::after{content:'';position:absolute;top:0;left:0;width:2px;height:100%}
+.src-link:hover{border-color:#2e4060;background:#111827;transform:translateX(2px)}
+.src-link:hover .src-arrow{opacity:1;transform:translateX(2px)}
+.src-arrow{opacity:.4;transition:all .15s;flex-shrink:0}
+
+/* quote block */
+.quote-block{border-left:2px solid #38bdf8;padding:1.1rem 1.4rem;background:rgba(56,189,248,.03);position:relative}
+.quote-block::before{content:'"';position:absolute;top:-.3rem;left:.8rem;font-size:4rem;color:#38bdf8;opacity:.1;font-family:'IBM Plex Mono',monospace;line-height:1}
 
 nav{position:sticky;top:0;z-index:50;background:rgba(8,12,20,.92);backdrop-filter:blur(16px);border-bottom:1px solid #1e2a3a}
 ::-webkit-scrollbar{width:6px;height:6px}
@@ -98,6 +135,8 @@ nav{position:sticky;top:0;z-index:50;background:rgba(8,12,20,.92);backdrop-filte
   #articles-grid{grid-template-columns:1fr}
   .lex-grid{grid-template-columns:1fr 1fr !important}
   .evt-grid{grid-template-columns:1fr !important}
+  .id-grid{grid-template-columns:1fr 1fr !important}
+  .ana-grid{grid-template-columns:1fr !important}
 }
 </style>
 </head>
@@ -121,47 +160,236 @@ nav{position:sticky;top:0;z-index:50;background:rgba(8,12,20,.92);backdrop-filte
   </div>
 </nav>
 
-<div style="max-width:1200px;margin:0 auto;padding:2rem 1.5rem;position:relative;z-index:1">
+<div style="max-width:1200px;margin:0 auto;padding:2.5rem 1.5rem;position:relative;z-index:1">
 
-  <!-- ─── HEADER ─── -->
-  <header style="margin-bottom:3rem">
-    <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.75rem">
+  <!-- ─── HERO ─── -->
+  <header style="margin-bottom:3.5rem">
+    <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.9rem">
       <span class="s-label">Veille technologique — BTS SIO</span>
     </div>
-    <h1 style="font-family:'IBM Plex Mono',monospace;font-size:clamp(1.4rem,3.5vw,2.2rem);font-weight:600;color:#e8eeff;letter-spacing:-.02em;line-height:1.15;margin-bottom:.6rem" class="glow-text">
-      Ray Tracing &amp; Moteurs<br>de Rendu
+    <h1 style="font-family:'IBM Plex Mono',monospace;font-size:clamp(1.6rem,4vw,2.6rem);font-weight:600;color:#e8eeff;letter-spacing:-.02em;line-height:1.12;margin-bottom:.8rem" class="glow-text">
+      Le Ray Tracing va-t-il<br>révolutionner le <em style="color:#38bdf8;font-style:italic">rendu temps-réel ?</em>
     </h1>
-    <p style="font-size:.88rem;color:#6b7a9e;max-width:520px;font-weight:300;line-height:1.7">
-      Tableau de bord de veille — flux RSS en direct, lexique technique et calendrier des événements de l'industrie.
+    <p style="font-size:.9rem;color:#6b7a9e;max-width:580px;font-weight:300;line-height:1.75">
+      En tant que futur développeur passionné de graphisme, j'ai suivi de près l'évolution du ray tracing dans les moteurs temps-réel. Unreal Engine 5, NVIDIA RTX, DLSS 4… Ces technologies redéfinissent ce qui est possible en rendu interactif. Mais à quel prix ?
     </p>
-    <div style="display:flex;gap:2rem;margin-top:1.5rem;flex-wrap:wrap">
-      <div>
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:1.4rem;font-weight:600;color:#38bdf8" id="stat-articles">—</div>
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:#6b7a9e;letter-spacing:.08em;text-transform:uppercase">Articles</div>
+
+    <!-- Identity cards -->
+    <div class="id-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;margin-top:2rem">
+      <div class="id-card" style="--accent-c:#38bdf8">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:.58rem;color:#4a5568;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.35rem">Candidat</div>
+        <div style="font-size:.88rem;font-weight:500;color:#e8eeff">Elyas Mcirdi</div>
       </div>
-      <div>
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:1.4rem;font-weight:600;color:#a78bfa">4</div>
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:#6b7a9e;letter-spacing:.08em;text-transform:uppercase">Sources</div>
+      <div class="id-card" style="--accent-c:#a78bfa">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:.58rem;color:#4a5568;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.35rem">Formation</div>
+        <div style="font-size:.88rem;font-weight:500;color:#e8eeff">BTS SIO SLAM</div>
       </div>
-      <div>
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:1.4rem;font-weight:600;color:#34d399">6</div>
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:#6b7a9e;letter-spacing:.08em;text-transform:uppercase">Concepts</div>
+      <div class="id-card" style="--accent-c:#34d399">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:.58rem;color:#4a5568;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.35rem">Période de veille</div>
+        <div style="font-size:.88rem;font-weight:500;color:#e8eeff">2024 — 2026</div>
       </div>
-      <div>
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:1.4rem;font-weight:600;color:#f59e0b">4</div>
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:#6b7a9e;letter-spacing:.08em;text-transform:uppercase">Événements</div>
+      <div class="id-card" style="--accent-c:#f59e0b">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:.58rem;color:#4a5568;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.35rem">Sujet</div>
+        <div style="font-size:.88rem;font-weight:500;color:#e8eeff">Ray Tracing & Moteurs</div>
       </div>
     </div>
   </header>
 
-  <!-- ─── SECTION 1 : FLUX RSS ─── -->
-  <section style="margin-bottom:3.5rem">
-    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:1.25rem;gap:1rem;flex-wrap:wrap">
+  <!-- ─── SECTION 01 : ANALYSE ─── -->
+  <section style="margin-bottom:4rem">
+    <div class="section-divider">
+      <span class="num">01</span>
       <div>
-        <div class="s-label" style="margin-bottom:.4rem">Sources en temps réel</div>
-        <h2 style="font-family:'IBM Plex Mono',monospace;font-size:1rem;font-weight:500;color:#e8eeff">Derniers articles</h2>
+        <div class="s-label" style="margin-bottom:.2rem">Dossier</div>
+        <h2 style="font-family:'IBM Plex Mono',monospace;font-size:1rem;font-weight:500;color:#e8eeff">Analyse</h2>
       </div>
-      <button id="btn-refresh" onclick="manualRefresh()" style="font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:#38bdf8;background:transparent;border:1px solid rgba(56,189,248,.25);padding:.35rem .9rem;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:.4rem" onmouseover="this.style.background='rgba(56,189,248,.07)'" onmouseout="this.style.background='transparent'">
+      <div class="line"></div>
+    </div>
+
+    <!-- Stats row -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.75rem;margin-bottom:2rem">
+      <div class="card" style="padding:1.1rem 1.2rem">
+        <div class="stat-num" style="color:#38bdf8">&gt; 40%</div>
+        <div class="stat-lbl">des GPUs Steam<br>supportent le RT</div>
+      </div>
+      <div class="card" style="padding:1.1rem 1.2rem">
+        <div class="stat-num" style="color:#a78bfa">8×</div>
+        <div class="stat-lbl">gain FPS max<br>avec DLSS 4</div>
+      </div>
+      <div class="card" style="padding:1.1rem 1.2rem">
+        <div class="stat-num" style="color:#34d399">10 Md$</div>
+        <div class="stat-lbl">marché rendu 3D<br>prévu en 2027</div>
+      </div>
+      <div class="card" style="padding:1.1rem 1.2rem">
+        <div class="stat-num" style="color:#f59e0b">UE5</div>
+        <div class="stat-lbl">Lumen + Nanite<br>standard next-gen</div>
+      </div>
+    </div>
+
+    <!-- Analysis grid -->
+    <div class="ana-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem">
+
+      <div class="card" style="padding:1.3rem 1.4rem">
+        <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:1rem">
+          <span style="width:3px;height:1rem;background:#34d399;display:inline-block;box-shadow:0 0 6px #34d399"></span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:#34d399;font-weight:500;letter-spacing:.06em">CE QUE LE RT FAIT BIEN</span>
+        </div>
+        <ul class="ana-list g">
+          <li>Éclairage global réaliste et ombres douces physiquement correctes</li>
+          <li>Réflexions et réfractions photoréalistes sans tricks de rasterization</li>
+          <li>Occlusion ambiante précise au niveau des détails géométriques fins</li>
+          <li>Illumination indirecte dynamique et rebonds de lumière cohérents</li>
+          <li>Suppression des artefacts des lightmaps statiques</li>
+        </ul>
+      </div>
+
+      <div class="card" style="padding:1.3rem 1.4rem">
+        <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:1rem">
+          <span style="width:3px;height:1rem;background:#f59e0b;display:inline-block;box-shadow:0 0 6px #f59e0b"></span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:#f59e0b;font-weight:500;letter-spacing:.06em">CE QUE LE RT NE FAIT PAS ENCORE</span>
+        </div>
+        <ul class="ana-list" style="--accent-c:#f59e0b">
+          <li style="color:#8899bb"><span style="color:#f59e0b;margin-right:.3rem">▸</span>Performances temps-réel à 60fps+ sans DLSS/FSR sur hardware mid-range</li>
+          <li style="color:#8899bb"><span style="color:#f59e0b;margin-right:.3rem">▸</span>Path tracing complet sur consoles ou GPU d'entrée de gamme</li>
+          <li style="color:#8899bb"><span style="color:#f59e0b;margin-right:.3rem">▸</span>Adoption universelle dans les moteurs mobile et WebGL</li>
+          <li style="color:#8899bb"><span style="color:#f59e0b;margin-right:.3rem">▸</span>Remplacement total du rasterization pour toutes les scènes</li>
+          <li style="color:#8899bb"><span style="color:#f59e0b;margin-right:.3rem">▸</span>Rendu full RT sans compromis sur les titres AAA ouverts</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Tools followed -->
+    <div class="card" style="padding:1.3rem 1.4rem;margin-bottom:1.5rem">
+      <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:1rem">
+        <span style="width:3px;height:1rem;background:#38bdf8;display:inline-block;box-shadow:0 0 6px #38bdf8"></span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:#38bdf8;font-weight:500;letter-spacing:.06em">LES TECHNOLOGIES SUIVIES</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.6rem">
+        <div style="display:flex;gap:.75rem;align-items:flex-start;padding:.6rem .8rem;background:#111827;border:1px solid #1e2a3a">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:#38bdf8;font-weight:600;flex-shrink:0;margin-top:.05rem">UE5</span>
+          <span style="font-size:.78rem;color:#8899bb;font-weight:300">Unreal Engine 5 — Lumen GI, Nanite, Path Tracer intégré</span>
+        </div>
+        <div style="display:flex;gap:.75rem;align-items:flex-start;padding:.6rem .8rem;background:#111827;border:1px solid #1e2a3a">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:#a78bfa;font-weight:600;flex-shrink:0;margin-top:.05rem">RTX</span>
+          <span style="font-size:.78rem;color:#8899bb;font-weight:300">NVIDIA DLSS 4 + Multi Frame Generation, architecture Ada Lovelace</span>
+        </div>
+        <div style="display:flex;gap:.75rem;align-items:flex-start;padding:.6rem .8rem;background:#111827;border:1px solid #1e2a3a">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:#34d399;font-weight:600;flex-shrink:0;margin-top:.05rem">AMD</span>
+          <span style="font-size:.78rem;color:#8899bb;font-weight:300">FSR 4 — upscaling open-source basé machine learning</span>
+        </div>
+        <div style="display:flex;gap:.75rem;align-items:flex-start;padding:.6rem .8rem;background:#111827;border:1px solid #1e2a3a">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:#f59e0b;font-weight:600;flex-shrink:0;margin-top:.05rem">VK</span>
+          <span style="font-size:.78rem;color:#8899bb;font-weight:300">Vulkan RT + DirectX Raytracing (DXR) — APIs bas niveau RT</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Personal analysis -->
+    <div class="quote-block">
+      <p style="font-size:.88rem;color:#cdd6f4;line-height:1.8;font-weight:300;font-style:italic">
+        "Le ray tracing ne remplacera pas le rasterization du jour au lendemain — mais l'hybridation est déjà là. Les moteurs modernes combinent les deux approches pour maximiser le réalisme tout en maintenant des performances jouables. La vraie révolution, c'est l'IA (DLSS 4, FSR 4) qui rend enfin le ray tracing accessible au grand public. L'avenir du rendu temps-réel, c'est un pipeline RT/raster intelligent, piloté par des réseaux de neurones."
+      </p>
+      <div style="margin-top:.9rem;font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:#6b7a9e">— Mon analyse · 2026</div>
+    </div>
+  </section>
+
+  <!-- ─── SECTION 02 : SOURCES ─── -->
+  <section style="margin-bottom:4rem">
+    <div class="section-divider">
+      <span class="num">02</span>
+      <div>
+        <div class="s-label" style="margin-bottom:.2rem">Méthodologie</div>
+        <h2 style="font-family:'IBM Plex Mono',monospace;font-size:1rem;font-weight:500;color:#e8eeff">Sources de veille</h2>
+      </div>
+      <div class="line"></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:.6rem">
+
+      <a href="https://www.unrealengine.com/en-US/blog" target="_blank" rel="noopener" class="src-link" style="--accent-c:#38bdf8">
+        <div style="position:absolute;top:0;left:0;width:2px;height:100%;background:#38bdf8"></div>
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.25rem">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:.6rem;color:#38bdf8;letter-spacing:.1em;text-transform:uppercase">Blog</span>
+            <span style="font-size:.82rem;font-weight:500;color:#e8eeff">Unreal Engine Blog</span>
+          </div>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:#4a5568">unrealengine.com</span>
+        </div>
+        <svg class="src-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+
+      <a href="https://blog.unity.com" target="_blank" rel="noopener" class="src-link">
+        <div style="position:absolute;top:0;left:0;width:2px;height:100%;background:#a78bfa"></div>
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.25rem">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:.6rem;color:#a78bfa;letter-spacing:.1em;text-transform:uppercase">Blog</span>
+            <span style="font-size:.82rem;font-weight:500;color:#e8eeff">Unity Blog</span>
+          </div>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:#4a5568">blog.unity.com</span>
+        </div>
+        <svg class="src-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+
+      <a href="https://developer.nvidia.com/blog" target="_blank" rel="noopener" class="src-link">
+        <div style="position:absolute;top:0;left:0;width:2px;height:100%;background:#34d399"></div>
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.25rem">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:.6rem;color:#34d399;letter-spacing:.1em;text-transform:uppercase">Tech</span>
+            <span style="font-size:.82rem;font-weight:500;color:#e8eeff">NVIDIA Developer Blog</span>
+          </div>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:#4a5568">developer.nvidia.com</span>
+        </div>
+        <svg class="src-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+
+      <a href="https://www.eurogamer.net/digitalfoundry" target="_blank" rel="noopener" class="src-link">
+        <div style="position:absolute;top:0;left:0;width:2px;height:100%;background:#f59e0b"></div>
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.25rem">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:.6rem;color:#f59e0b;letter-spacing:.1em;text-transform:uppercase">Analyse</span>
+            <span style="font-size:.82rem;font-weight:500;color:#e8eeff">Digital Foundry</span>
+          </div>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:#4a5568">eurogamer.net / digitalfoundry</span>
+        </div>
+        <svg class="src-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+
+      <a href="https://siggraph.org" target="_blank" rel="noopener" class="src-link">
+        <div style="position:absolute;top:0;left:0;width:2px;height:100%;background:#38bdf8;opacity:.5"></div>
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.25rem">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:.6rem;color:#7dd3fc;letter-spacing:.1em;text-transform:uppercase">Recherche</span>
+            <span style="font-size:.82rem;font-weight:500;color:#e8eeff">SIGGRAPH</span>
+          </div>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:#4a5568">siggraph.org</span>
+        </div>
+        <svg class="src-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#7dd3fc" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+
+      <a href="https://www.khronos.org/vulkan/" target="_blank" rel="noopener" class="src-link">
+        <div style="position:absolute;top:0;left:0;width:2px;height:100%;background:#a78bfa;opacity:.5"></div>
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.25rem">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:.6rem;color:#c4b5fd;letter-spacing:.1em;text-transform:uppercase">Spécification</span>
+            <span style="font-size:.82rem;font-weight:500;color:#e8eeff">Khronos / Vulkan</span>
+          </div>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:#4a5568">khronos.org</span>
+        </div>
+        <svg class="src-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#c4b5fd" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ─── SECTION 03 : FLUX RSS ─── -->
+  <section style="margin-bottom:3.5rem">
+    <div class="section-divider">
+      <span class="num">03</span>
+      <div>
+        <div class="s-label" style="margin-bottom:.2rem">Sources en temps réel</div>
+        <h2 style="font-family:'IBM Plex Mono',monospace;font-size:1rem;font-weight:500;color:#e8eeff">Actualités en direct</h2>
+      </div>
+      <div class="line"></div>
+      <button id="btn-refresh" onclick="manualRefresh()" style="font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:#38bdf8;background:transparent;border:1px solid rgba(56,189,248,.25);padding:.35rem .9rem;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:.4rem;white-space:nowrap;flex-shrink:0" onmouseover="this.style.background='rgba(56,189,248,.07)'" onmouseout="this.style.background='transparent'">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
         Rafraîchir
       </button>
@@ -196,11 +424,15 @@ nav{position:sticky;top:0;z-index:50;background:rgba(8,12,20,.92);backdrop-filte
     </div>
   </section>
 
-  <!-- ─── SECTION 2 : LEXIQUE ─── -->
+  <!-- ─── SECTION 04 : LEXIQUE ─── -->
   <section style="margin-bottom:3.5rem">
-    <div style="margin-bottom:1.25rem">
-      <div class="s-label" style="margin-bottom:.4rem">Référence</div>
-      <h2 style="font-family:'IBM Plex Mono',monospace;font-size:1rem;font-weight:500;color:#e8eeff">Lexique Technique</h2>
+    <div class="section-divider">
+      <span class="num">04</span>
+      <div>
+        <div class="s-label" style="margin-bottom:.2rem">Référence</div>
+        <h2 style="font-family:'IBM Plex Mono',monospace;font-size:1rem;font-weight:500;color:#e8eeff">Lexique Technique</h2>
+      </div>
+      <div class="line"></div>
     </div>
     <div class="lex-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.75rem">
 
@@ -279,14 +511,17 @@ nav{position:sticky;top:0;z-index:50;background:rgba(8,12,20,.92);backdrop-filte
     </div>
   </section>
 
-  <!-- ─── SECTION 3 : ÉVÉNEMENTS ─── -->
+  <!-- ─── SECTION 05 : ÉVÉNEMENTS ─── -->
   <section style="margin-bottom:3rem">
-    <div style="margin-bottom:1.25rem">
-      <div class="s-label" style="margin-bottom:.4rem">Industrie</div>
-      <h2 style="font-family:'IBM Plex Mono',monospace;font-size:1rem;font-weight:500;color:#e8eeff">Calendrier des événements</h2>
+    <div class="section-divider">
+      <span class="num">05</span>
+      <div>
+        <div class="s-label" style="margin-bottom:.2rem">Industrie</div>
+        <h2 style="font-family:'IBM Plex Mono',monospace;font-size:1rem;font-weight:500;color:#e8eeff">Calendrier des événements</h2>
+      </div>
+      <div class="line"></div>
     </div>
     <div class="evt-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.75rem" id="events-grid">
-      <!-- rempli par JS ci-dessous -->
     </div>
   </section>
 
@@ -308,21 +543,21 @@ nav{position:sticky;top:0;z-index:50;background:rgba(8,12,20,.92);backdrop-filte
    CONFIG
 ═══════════════════════════════════════════ */
 const SOURCES = [
-  { id:'unreal',       name:'Unreal Engine',    color:'#38bdf8', shadow:'0 0 6px #38bdf8', url:'https://www.unrealengine.com/en-US/feed' },
-  { id:'unity',        name:'Unity Blog',        color:'#a78bfa', shadow:'0 0 6px #a78bfa', url:'https://blog.unity.com/feed' },
-  { id:'nvidia',       name:'NVIDIA Developer',  color:'#34d399', shadow:'0 0 6px #34d399', url:'https://developer.nvidia.com/blog/feed/' },
-  { id:'digitalfoundry',name:'Digital Foundry',  color:'#f59e0b', shadow:'0 0 6px #f59e0b', url:'https://www.eurogamer.net/?format=rss&type=article&tag=digital-foundry' }
+  { id:'unreal',        name:'Unreal Engine',    color:'#38bdf8', shadow:'0 0 6px #38bdf8', url:'https://www.unrealengine.com/en-US/feed' },
+  { id:'unity',         name:'Unity Blog',        color:'#a78bfa', shadow:'0 0 6px #a78bfa', url:'https://blog.unity.com/feed' },
+  { id:'nvidia',        name:'NVIDIA Developer',  color:'#34d399', shadow:'0 0 6px #34d399', url:'https://developer.nvidia.com/blog/feed/' },
+  { id:'digitalfoundry',name:'Digital Foundry',   color:'#f59e0b', shadow:'0 0 6px #f59e0b', url:'https://www.eurogamer.net/?format=rss&type=article&tag=digital-foundry' }
 ];
 
 const API_BASE  = 'https://api.rss2json.com/v1/api.json';
-const CACHE_KEY = 'rt_dash_v2';
+const CACHE_KEY = 'rt_dash_v3';
 
 let allArticles = [];
 let activeFilter = 'all';
 let searchTerm   = '';
 
 /* ═══════════════════════════════════════════
-   EVENTS — données à jour 2025/2026
+   EVENTS
 ═══════════════════════════════════════════ */
 const EVENTS = [
   {
@@ -368,7 +603,7 @@ const EVENTS = [
 ];
 
 /* ═══════════════════════════════════════════
-   RENDER EVENTS — appelé directement au chargement
+   RENDER EVENTS
 ═══════════════════════════════════════════ */
 function renderEvents() {
   const grid = document.getElementById('events-grid');
@@ -406,27 +641,17 @@ function renderEvents() {
 }
 
 /* ═══════════════════════════════════════════
-   DATE HELPER — badge coloré selon ancienneté
+   DATE BADGE
 ═══════════════════════════════════════════ */
 function dateBadge(dateStr, dateRaw) {
   if (!dateStr) return '';
   const now = Date.now();
-  const diff = now - dateRaw; // ms
+  const diff = now - dateRaw;
   const days = diff / 86400000;
   let cls = '', label = dateStr;
-
-  if (dateRaw === 0) {
-    // fallback — date éditoriale approximative
-    cls = '';
-    label = dateStr;
-  } else if (days <= 7) {
-    cls = 'fresh';
-    label = '🟢 ' + dateStr;
-  } else if (days <= 30) {
-    cls = 'recent';
-    label = dateStr;
-  }
-
+  if (dateRaw === 0) { cls = ''; label = dateStr; }
+  else if (days <= 7)  { cls = 'fresh';  label = '🟢 ' + dateStr; }
+  else if (days <= 30) { cls = 'recent'; label = dateStr; }
   return `
     <span class="art-date-badge ${cls}">
       <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
@@ -449,7 +674,6 @@ function getFiltered() {
 function renderArticles() {
   const grid = document.getElementById('articles-grid');
   const items = getFiltered();
-  document.getElementById('stat-articles').textContent = allArticles.length || '—';
 
   if (items.length === 0) {
     grid.innerHTML = `<div class="no-res">Aucun article ne correspond à « ${searchTerm || activeFilter} »</div>`;
@@ -490,7 +714,7 @@ function filterArticles() {
 }
 
 /* ═══════════════════════════════════════════
-   CACHE (localStorage, TTL 24h)
+   CACHE
 ═══════════════════════════════════════════ */
 function saveCache(data) {
   try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data })); } catch(e) {}
@@ -505,7 +729,7 @@ function loadCache() {
 }
 
 /* ═══════════════════════════════════════════
-   PROGRESS BAR (24h countdown)
+   PROGRESS BAR
 ═══════════════════════════════════════════ */
 let _progInterval;
 function startProgress() {
@@ -523,7 +747,7 @@ function startProgress() {
 }
 
 /* ═══════════════════════════════════════════
-   FETCH RSS via rss2json
+   FETCH RSS
 ═══════════════════════════════════════════ */
 async function fetchFeed(src) {
   const url = `${API_BASE}?rss_url=${encodeURIComponent(src.url)}&api_key=public&count=8`;
@@ -536,9 +760,7 @@ async function fetchFeed(src) {
     tmp.innerHTML = item.description || '';
     const desc = (tmp.textContent || '').trim().replace(/\s+/g,' ').slice(0, 200);
     const pub = item.pubDate ? new Date(item.pubDate) : null;
-    const dateStr = pub
-      ? pub.toLocaleDateString('fr-FR', {day:'numeric', month:'short', year:'numeric'})
-      : '';
+    const dateStr = pub ? pub.toLocaleDateString('fr-FR', {day:'numeric', month:'short', year:'numeric'}) : '';
     return {
       title: item.title || 'Sans titre',
       link:  item.link  || '#',
@@ -554,44 +776,37 @@ async function fetchFeed(src) {
 }
 
 /* ═══════════════════════════════════════════
-   FALLBACK articles (avec vraies dates approximatives)
+   FALLBACK ARTICLES
 ═══════════════════════════════════════════ */
 function getFallback(src) {
   const now = Date.now();
   const d = (daysAgo) => now - daysAgo * 86400000;
   const fmt = (ts) => new Date(ts).toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'});
-
   const map = {
     unreal: [
-      { title:'Unreal Engine 5.5 — Path Tracing & Substrate improvements', link:'https://www.unrealengine.com/en-US/blog', desc:'Nouvelles optimisations du path tracer intégré, support Substrate amélioré et nouvelles capacités Nanite pour les scènes open-world.', ts: d(12) },
-      { title:'Lumen Global Illumination deep dive — UE5 technical breakdown', link:'https://www.unrealengine.com/en-US/blog', desc:'Analyse technique du système Lumen, son fonctionnement hardware ray tracing vs software et ses limites.', ts: d(45) },
-      { title:'UE5 Substrate material system — Next-gen shading', link:'https://www.unrealengine.com/en-US/blog', desc:'Le nouveau système de matériaux Substrate d\'UE5 remplace le shading model classique par une approche physiquement correcte.', ts: d(78) },
+      { title:'Unreal Engine 5.5 — Path Tracing & Substrate improvements', link:'https://www.unrealengine.com/en-US/blog', desc:'Nouvelles optimisations du path tracer intégré, support Substrate amélioré et nouvelles capacités Nanite.', ts: d(12) },
+      { title:'Lumen Global Illumination deep dive — UE5 technical breakdown', link:'https://www.unrealengine.com/en-US/blog', desc:'Analyse technique du système Lumen, hardware ray tracing vs software et ses limites actuelles.', ts: d(45) },
+      { title:'UE5 Substrate material system — Next-gen shading', link:'https://www.unrealengine.com/en-US/blog', desc:'Le nouveau système Substrate remplace le shading model classique par une approche physiquement correcte.', ts: d(78) },
     ],
     unity: [
-      { title:'Unity 6 — HDRP Ray Tracing pipeline & GPU Resident Drawer', link:'https://blog.unity.com', desc:'Guide de performance pour le pipeline ray tracing HDRP Unity 6 avec benchmarks et recommendations AAA.', ts: d(20) },
-      { title:'Universal Render Pipeline 17 — Real-time GI updates', link:'https://blog.unity.com', desc:'Unity 6 introduit de nouvelles capacités GI temps-réel dans URP 17, réduisant la charge CPU pour les grandes scènes.', ts: d(55) },
+      { title:'Unity 6 — HDRP Ray Tracing pipeline & GPU Resident Drawer', link:'https://blog.unity.com', desc:'Guide de performance pour le pipeline ray tracing HDRP Unity 6 avec benchmarks et recommandations AAA.', ts: d(20) },
+      { title:'Universal Render Pipeline 17 — Real-time GI updates', link:'https://blog.unity.com', desc:'Unity 6 introduit de nouvelles capacités GI temps-réel dans URP 17, réduisant la charge CPU.', ts: d(55) },
     ],
     nvidia: [
-      { title:'DLSS 4 Multi Frame Generation — Technical deep dive', link:'https://developer.nvidia.com/blog', desc:'Analyse de la technologie Multi Frame Generation de DLSS 4, capable de générer jusqu\'à 3 images supplémentaires par image rendue.', ts: d(8) },
-      { title:'RTX Path Tracing — Architecture and implementation guide', link:'https://developer.nvidia.com/blog', desc:'Comment implémenter le path tracing complet avec les APIs DirectX Raytracing et le NVIDIA RT SDK dans votre moteur.', ts: d(30) },
+      { title:'DLSS 4 Multi Frame Generation — Technical deep dive', link:'https://developer.nvidia.com/blog', desc:'Analyse de la technologie Multi Frame Generation de DLSS 4, capable de générer jusqu\'à 3 images supplémentaires.', ts: d(8) },
+      { title:'RTX Path Tracing — Architecture and implementation guide', link:'https://developer.nvidia.com/blog', desc:'Comment implémenter le path tracing complet avec les APIs DirectX Raytracing et le NVIDIA RT SDK.', ts: d(30) },
       { title:'NvRTX — Ray tracing extensions for Vulkan and DirectX', link:'https://developer.nvidia.com/blog', desc:'Documentation des extensions NVIDIA pour le ray tracing Vulkan, incluant les capacités Ada Lovelace.', ts: d(62) },
     ],
     digitalfoundry: [
-      { title:'Indiana Jones and the Great Circle — ID Tech 8 engine breakdown', link:'https://www.eurogamer.net/digitalfoundry', desc:'Dissection technique du moteur ID Tech 8 et de son implémentation ray tracing full pour l\'éclairage et les réflexions.', ts: d(15) },
-      { title:'Cyberpunk 2077 Path Tracing — RTX 4090 vs PS5 performance analysis', link:'https://www.eurogamer.net/digitalfoundry', desc:'Analyse complète du rendu path tracing dans Cyberpunk 2077, comparaison PC vs console et impact sur les performances.', ts: d(40) },
+      { title:'Indiana Jones and the Great Circle — ID Tech 8 engine breakdown', link:'https://www.eurogamer.net/digitalfoundry', desc:'Dissection technique du moteur ID Tech 8 et de son implémentation ray tracing full pour l\'éclairage.', ts: d(15) },
+      { title:'Cyberpunk 2077 Path Tracing — RTX 4090 vs PS5 performance analysis', link:'https://www.eurogamer.net/digitalfoundry', desc:'Analyse complète du rendu path tracing dans Cyberpunk 2077, comparaison PC vs console.', ts: d(40) },
     ]
   };
-
   return (map[src.id] || []).map(f => ({
-    title: f.title,
-    link:  f.link,
-    description: f.desc,
-    date:    fmt(f.ts),
-    dateRaw: f.ts,
-    source:       src.id,
-    sourceName:   src.name + ' (cache)',
-    sourceColor:  src.color,
-    sourceShadow: src.shadow
+    title: f.title, link: f.link, description: f.desc,
+    date: fmt(f.ts), dateRaw: f.ts,
+    source: src.id, sourceName: src.name + ' (cache)',
+    sourceColor: src.color, sourceShadow: src.shadow
   }));
 }
 
@@ -623,12 +838,8 @@ async function loadAllFeeds(forceRefresh = false) {
   const errors = [];
 
   results.forEach((r, i) => {
-    if (r.status === 'fulfilled') {
-      allArticles.push(...r.value);
-    } else {
-      errors.push(SOURCES[i].name);
-      allArticles.push(...getFallback(SOURCES[i]));
-    }
+    if (r.status === 'fulfilled') allArticles.push(...r.value);
+    else { errors.push(SOURCES[i].name); allArticles.push(...getFallback(SOURCES[i])); }
   });
 
   allArticles.sort((a, b) => b.dateRaw - a.dateRaw);
@@ -646,9 +857,6 @@ function manualRefresh() {
   loadAllFeeds(true);
 }
 
-/* ═══════════════════════════════════════════
-   AUTO-REFRESH 24h
-═══════════════════════════════════════════ */
 function scheduleAutoRefresh() {
   setTimeout(() => {
     localStorage.removeItem(CACHE_KEY);
@@ -657,12 +865,9 @@ function scheduleAutoRefresh() {
   }, 86400000);
 }
 
-/* ═══════════════════════════════════════════
-   INIT — appelé quand le DOM est prêt
-═══════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', function() {
-  renderEvents();   // ← calendrier rendu immédiatement
-  loadAllFeeds();   // ← flux RSS en asynchrone
+  renderEvents();
+  loadAllFeeds();
   scheduleAutoRefresh();
 });
 </script>
